@@ -45,18 +45,20 @@ class Security_Sniffs_Drupal7_Utils extends Security_Sniffs_Utils {
 	* @return Boolean	Returns TRUE if found, FALSE if not found
 	*/
 	public static function is_token_user_input($t) {
-		if ($t['code'] == T_VARIABLE || $t['code'] == T_STRING) {
-			if (parent::is_token_user_input($t)) {
-				return TRUE;
-			} else {
-				if ($t['content'] == '$form') {
-					return TRUE;
-				} elseif ($t['content'] == 'arg') {
-					return TRUE;
-				}
-			}
-			return FALSE;
+		if (parent::is_token_user_input($t))
+			return TRUE;
+
+		if ($t['code'] == T_VARIABLE) {
+			if (in_array($t['content'], array(
+					'$form', '$form_state'
+				)))	return TRUE;
+		} elseif ($t['code'] == T_STRING) {
+			if (in_array($t['content'], array(
+					'arg', 'drupal_get_query_parameters', 'field_view_value'
+				))) return TRUE;
 		}
+
+		return FALSE;
 	}
 
 

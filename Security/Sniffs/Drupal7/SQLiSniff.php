@@ -33,14 +33,23 @@ class Security_Sniffs_Drupal7_SQLiSniff implements PHP_CodeSniffer_Sniff {
 
 		$tokens = $phpcsFile->getTokens();
 		if ($tokens[$stackPtr]['content'] == 'db_query') {
-			$closer = $tokens[$stackPtr + 1]['parenthesis_closer'];
-			$s = $stackPtr + 1; // to skip the parenthesis opener '('
+			//$closer = $tokens[$stackPtr + 1]['parenthesis_closer'];
+
+			// The first parameter is the one sensible
+			$p1tokens = $utils::get_param_tokens($phpcsFile, $stackPtr, 1);
+
+			if (!$p1tokens) {
+				echo "empty db_query?\n";
+				return;
+			}
+
+			$closer = end($p1tokens)['stackPtr']+1;
+			$s = $stackPtr + 1;
 			$warn = FALSE;
+
 			while ($s < $closer) {
 				$s = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, $s + 1, $closer, true);
-				if (!$s
-				// Paranoia : Sometimes the COMMA is not used for db_query
-				|| ($tokens[$s]['code'] == T_COMMA && !$this->ParanoiaMode)) {
+				if (!$s) {
 					break;
 				}
 				if ($tokens[$s]['code'] != T_CONSTANT_ENCAPSED_STRING) {
@@ -52,6 +61,7 @@ class Security_Sniffs_Drupal7_SQLiSniff implements PHP_CodeSniffer_Sniff {
 					$phpcsFile->addError('Potential SQL injection found in db_query()', $s, 'D7DbQuerySQLi');
 				}
 			}
+
 			if ($warn) {
 				$phpcsFile->addWarning('db_query() is deprecated except when doing a static query', $stackPtr, 'D7NoDbQuery');
 			}
