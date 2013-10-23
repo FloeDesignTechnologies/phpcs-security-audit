@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<ruleset name="Security">
+ <description>Security related coding standard.</description>
+</ruleset>
+
+

@@ -1,0 +1,65 @@
+<?php
+
+
+class Security_Sniffs_BadFunctions_PregReplaceSniff implements PHP_CodeSniffer_Sniff  {
+
+    /**
+     * Framework or CMS used. Must be a class under Security_Sniffs.
+     *
+     * @var String
+     */
+    public $CmsFramework = NULL;
+
+	/**
+	* Returns the token types that this sniff is interested in.
+	*
+	* @return array(int)
+	*/
+	public function register() {
+		return array(T_STRING);
+	}
+
+	/**
+	* Processes the tokens that this sniff is interested in.
+	*
+	* @param PHP_CodeSniffer_File $phpcsFile The file where the token was found.
+	* @param int                  $stackPtr  The position in the stack where
+	*                                        the token was found.
+	*
+	* @return void
+	*/
+	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+		$utils = Security_Sniffs_UtilsFactory::getInstance($this->CmsFramework);
+
+		$tokens = $phpcsFile->getTokens();
+		if ($tokens[$stackPtr]['content'] == 'preg_replace') {
+			$s = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr);
+			$closer = $tokens[$s]['parenthesis_closer'];
+			$s = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, $s + 1, $closer, true);
+			if ($tokens[$s]['code'] == T_CONSTANT_ENCAPSED_STRING) {
+				$pattern = $tokens[$s]['content'];
+				if (substr($pattern, 1, 1) === '/') {
+					// $pattern is a regex
+					if (preg_match('/(\/|\))\w*e\w*"$/', $pattern)) {
+						$phpcsFile->addWarning("Usage of preg_replace with /e modifier is not recommended.", $stackPtr, 'PregReplaceE');
+
+						$s = $phpcsFile->findNext(array(T_COMMA, T_WHITESPACE, T_COMMENT, T_DOC_COMMENT), $s + 1, $closer, true);
+						if ($utils::is_direct_user_input($tokens[$s]['content']))
+							$phpcsFile->addError("User input and /e modifier found in preg_replace, remote code execution possible.", $stackPtr, 'PregReplaceUserInputE');
+					}
+						
+				} else {
+					$phpcsFile->addWarning("Weird usage of preg_replace, please check manually for /e modifier.", $stackPtr, 'PregReplaceWeird');
+				}
+			} elseif ($tokens[$s]['code'] == T_VARIABLE && $utils::is_direct_user_input($tokens[$s]['content'])) {
+				$phpcsFile->addError("User input found in preg_replace, /e modifier could be used for malicious intent.", $stackPtr, 'PregReplaceUserInput');
+			} else {
+				$phpcsFile->addWarning("Dynamic usage of preg_replace, please check manually for /e modifier or user input.", $stackPtr, 'PregReplaceDyn');
+			}
+		}
+
+	}
+
+}
+
+?>

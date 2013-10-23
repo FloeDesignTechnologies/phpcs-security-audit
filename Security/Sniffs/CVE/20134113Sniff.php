@@ -1,0 +1,42 @@
+<?php
+
+
+class Security_Sniffs_CVE_20134113Sniff implements PHP_CodeSniffer_Sniff {
+
+	/**
+	* Returns the token types that this sniff is interested in.
+	*
+	* @return array(int)
+	*/
+	public function register() {
+		return array(T_STRING);
+	}
+
+	/**
+	* Processes the tokens that this sniff is interested in.
+	*
+	* @param PHP_CodeSniffer_File $phpcsFile The file where the token was found.
+	* @param int                  $stackPtr  The position in the stack where
+	*                                        the token was found.
+	*
+	* @return void
+	*/
+	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+		$tokens = $phpcsFile->getTokens();
+		if ($tokens[$stackPtr]['content'] == 'xml_parse_into_struct') {
+			$closer = $tokens[$stackPtr + 1]['parenthesis_closer'];
+			$s = $stackPtr + 1; // to skip the parenthesis opener '('
+						$s = $phpcsFile->findNext(array_merge(PHP_CodeSniffer_Tokens::$emptyTokens, Security_Sniffs_Utils::$staticTokens), $s + 1, $closer, true);
+			if ($s) {
+				$phpcsFile->addWarning('CVE-2013-4113 ext/xml/xml.c in PHP before 5.3.27 does not properly consider parsing depth, which allows remote attackers to cause a denial of service (heap memory corruption) or possibly have unspecified other impact via a crafted document that is processed by the xml_parse_into_struct function.', $stackPtr, 'CVE-2013-4113');
+				if ($tokens[$s]['code'] == T_DOUBLE_QUOTED_STRING) {
+					echo $tokens[$s]['content'];
+				}
+			}
+		}
+	}
+
+}
+
+
+?>
