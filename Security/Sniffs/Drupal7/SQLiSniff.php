@@ -48,10 +48,8 @@ class Security_Sniffs_Drupal7_SQLiSniff implements PHP_CodeSniffer_Sniff {
 				}
 				if ($tokens[$s]['code'] == T_DOUBLE_QUOTED_STRING) {
 					$phpcsFile->addError('Direct variable usage in db_query()', $s, 'D7DbQueryDirectVar');
-				} elseif ($tokens[$s]['code'] == T_VARIABLE) {
-					if ($utils::is_direct_user_input($tokens[$s]['content'])) {
-						$phpcsFile->addError('Potential SQL injection found in db_query()', $s, 'D7DbQuerySQLi');
-					}
+				} elseif ($utils::is_token_user_input($tokens[$s])) {
+					$phpcsFile->addError('Potential SQL injection found in db_query()', $s, 'D7DbQuerySQLi');
 				}
 			}
 			if ($warn) {

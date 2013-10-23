@@ -39,7 +39,7 @@ class Security_Sniffs_BadFunctions_BackticksSniff implements PHP_CodeSniffer_Sni
 		$s = $phpcsFile->findNext(T_VARIABLE, $s, $closer);
         if ($s) {
 			$msg = 'System execution with backticks detected with dynamic parameter';
-			if ($utils::is_direct_user_input($tokens[$s]['content'])) {
+			if ($utils::is_token_user_input($tokens[$s])) {
 				$phpcsFile->addError($msg . ' directly from user input', $stackPtr, 'ErrSystemExec');
 			} else {
 				$phpcsFile->addWarning($msg, $stackPtr, 'WarnSystemExec');

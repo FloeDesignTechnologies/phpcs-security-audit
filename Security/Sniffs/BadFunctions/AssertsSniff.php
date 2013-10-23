@@ -39,7 +39,7 @@ class Security_Sniffs_BadFunctions_AssertsSniff implements PHP_CodeSniffer_Sniff
 			$s = $phpcsFile->findNext(array_merge(PHP_CodeSniffer_Tokens::$emptyTokens, PHP_CodeSniffer_Tokens::$bracketTokens, Security_Sniffs_Utils::$staticTokens, array(T_STRING_CONCAT)), $s, $closer, true);
              if ($s) {
 				$msg = 'Assert eval function ' . $tokens[$stackPtr]['content'] . '() detected with dynamic parameter';
-				if ($utils::is_direct_user_input($tokens[$s]['content'])) {
+				if ($utils::is_token_user_input($tokens[$s])) {
 					$phpcsFile->addError($msg . ' directly from user input', $stackPtr, 'ErrFunctionHandling');
 				} else {
 					$phpcsFile->addWarning($msg, $stackPtr, 'WarnFunctionHandling');

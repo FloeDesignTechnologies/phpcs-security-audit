@@ -7,6 +7,7 @@ class Security_Sniffs_Utils {
 
 	/**
 	* Heavy used function to verify if a string from a token contains user input
+	* @deprecated	We should use is_token_user_input() instead to allow functions in CMS/frameworks as user input.
 	*
     * @param String $var	The string contening the token content to match
 	* @return Boolean	Returns TRUE if found, FALSE if not found
@@ -17,6 +18,26 @@ class Security_Sniffs_Utils {
 		else
 			return FALSE;
 	}
+
+	/**
+	* Heavy used function to verify if a token contains user input
+	*
+    * @param String $t	The token to match
+	* @return Boolean	Returns TRUE if found, FALSE if not found
+	*/
+	public static function is_token_user_input($t) {
+		if ($t['code'] == T_VARIABLE) {
+			if (preg_match('/\$\{?_(GET|POST|REQUEST|COOKIE|SERVER|FILES|ENV)/', $t['content'])) {
+				return TRUE;
+			}
+		} elseif ($t['code'] == T_STRING) {
+			if (preg_match('/^(getenv|apache_getenv)$/', $t['content'])) {
+				return TRUE;
+			}
+		}
+		return FALSE;
+	}
+
 
 	public static function getFilesystemFunctions() {
 		return array(
@@ -89,6 +110,7 @@ class Security_Sniffs_Utils {
 		);
 	}
 
+
 	/**
 	* Set of variables and helpers to collect SQL functions depending of the driver selected
 	*/
@@ -101,6 +123,7 @@ class Security_Sniffs_Utils {
 	public static function addSQLFunction($f) {
 		array_push(Security_Sniffs_Utils::$sqlFunctions, $f);
 	}
+
 
 	/**
 	* Set of variables and helpers to collect SQL objects created by new()

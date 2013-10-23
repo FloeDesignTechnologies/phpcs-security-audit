@@ -39,7 +39,7 @@ class Security_Sniffs_BadFunctions_CallbackFunctionsSniff implements PHP_CodeSni
 			$s = $phpcsFile->findNext(array_merge(PHP_CodeSniffer_Tokens::$emptyTokens, PHP_CodeSniffer_Tokens::$bracketTokens, Security_Sniffs_Utils::$staticTokens, array(T_STRING_CONCAT)), $s, $closer, true);
 			$msg = 'Function ' . $tokens[$stackPtr]['content'] . '() that supports callback detected';
              if ($s) {
-				if ($utils::is_direct_user_input($tokens[$s]['content'])) {
+				if ($utils::is_token_user_input($tokens[$s])) {
 					$phpcsFile->addError($msg . ' with parameter directly from user input', $stackPtr, 'ErrFringestuff');
 				} else {
 					$phpcsFile->addWarning($msg, $stackPtr, 'WarnFringestuff');

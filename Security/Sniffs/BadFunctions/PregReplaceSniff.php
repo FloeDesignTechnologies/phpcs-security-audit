@@ -44,14 +44,14 @@ class Security_Sniffs_BadFunctions_PregReplaceSniff implements PHP_CodeSniffer_S
 						$phpcsFile->addWarning("Usage of preg_replace with /e modifier is not recommended.", $stackPtr, 'PregReplaceE');
 
 						$s = $phpcsFile->findNext(array(T_COMMA, T_WHITESPACE, T_COMMENT, T_DOC_COMMENT), $s + 1, $closer, true);
-						if ($utils::is_direct_user_input($tokens[$s]['content']))
+						if ($utils::is_token_user_input($tokens[$s]))
 							$phpcsFile->addError("User input and /e modifier found in preg_replace, remote code execution possible.", $stackPtr, 'PregReplaceUserInputE');
 					}
 						
 				} else {
 					$phpcsFile->addWarning("Weird usage of preg_replace, please check manually for /e modifier.", $stackPtr, 'PregReplaceWeird');
 				}
-			} elseif ($tokens[$s]['code'] == T_VARIABLE && $utils::is_direct_user_input($tokens[$s]['content'])) {
+			} elseif ($tokens[$s]['code'] == T_VARIABLE && $utils::is_token_user_input($tokens[$s])) {
 				$phpcsFile->addError("User input found in preg_replace, /e modifier could be used for malicious intent.", $stackPtr, 'PregReplaceUserInput');
 			} else {
 				$phpcsFile->addWarning("Dynamic usage of preg_replace, please check manually for /e modifier or user input.", $stackPtr, 'PregReplaceDyn');

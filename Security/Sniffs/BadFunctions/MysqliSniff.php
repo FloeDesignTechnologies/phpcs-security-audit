@@ -50,7 +50,7 @@ class Security_Sniffs_BadFunctions_MysqliSniff implements PHP_CodeSniffer_Sniff 
 					$s = $utils::findDirtyParam($phpcsFile, $next);
 					if ($s) {
 						$msg = 'MYSQLi function ' . $tokens[$next]['content'] . '() detected with dynamic parameter ';
-						if ($utils::is_direct_user_input($tokens[$s]['content'])) {
+						if ($utils::is_token_user_input($tokens[$s])) {
 							$phpcsFile->addError($msg . ' directly from user input', $stackPtr, 'ErrMysqli');
 						} else {
 							$phpcsFile->addWarning($msg, $stackPtr, 'WarnMysqli');
@@ -63,7 +63,7 @@ class Security_Sniffs_BadFunctions_MysqliSniff implements PHP_CodeSniffer_Sniff 
 			if ($prev)
 				$utils::addSQLObjects($tokens[$prev]['content']);
 			$s = $utils::findDirtyParam($phpcsFile, $stackPtr);
-			if ($utils::is_direct_user_input($tokens[$s]['content'])) {
+			if ($utils::is_token_user_input($tokens[$s])) {
 				$phpcsFile->addError('mysqli_connect() param directly from user input', $stackPtr, 'ErrMysqliconnect');
 			}
 		} elseif ($tokens[$stackPtr]['code'] == T_STRING && in_array($tokens[$stackPtr]['content'],array_map(function($v) { return 'mysqli_' . $v; }, $mysqlifunctions))) {
@@ -72,7 +72,7 @@ class Security_Sniffs_BadFunctions_MysqliSniff implements PHP_CodeSniffer_Sniff 
 			$s = $phpcsFile->findNext(array_merge(PHP_CodeSniffer_Tokens::$emptyTokens, PHP_CodeSniffer_Tokens::$bracketTokens, Security_Sniffs_Utils::$staticTokens, array(T_STRING_CONCAT)), $p2[0]['stackPtr'], end($p2)['stackPtr']+1, true);
 			if ($s) {
 				$msg = 'MYSQLi function ' . $tokens[$stackPtr]['content'] . '() detected with dynamic parameter ';
-				if ($utils::is_direct_user_input($tokens[$s]['content'])) {
+				if ($utils::is_token_user_input($tokens[$s])) {
 					$phpcsFile->addError($msg . ' directly from user input', $stackPtr, 'ErrMysqli' . $tokens[$stackPtr]['content']);
 				} else {
 					$phpcsFile->addWarning($msg, $stackPtr, 'WarnMysqli' . $tokens[$stackPtr]['content']);
