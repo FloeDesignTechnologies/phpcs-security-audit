@@ -62,9 +62,52 @@ class Security_Sniffs_Drupal7_Utils extends Security_Sniffs_Utils {
 	}
 
 
-	// List of modules with fixed version and CVE-ID
-	public static $CVEModule = array(
-		'nodeblock' => array(array('7.x-1.3', 'CVE-2013-0325'), array('7.x-2.4', 'CVE-2013-0325'), array('7.x-1.1', 'CVE-2013-0325')),
+	// List of modules with fixed (prior to / upgrade to) version  and CVE-ID (or DRUPAL-SA-CONTRIB-ID if not available)
+	public static $ContribAdvisories = array(
+		'domain' => array(array('7.x-2.4', 'DRUPAL-SA-CONTRIB-2010-096')),
+		'aes' => array(array('7.x-1.5', 'DRUPAL-SA-CONTRIB-2011-005')),
+		'webform' => array(array('7.x-3.10', 'DRUPAL-SA-CONTRIB-2011-021')),
+		'nodereference_url' => array(array('7.x-1.10', 'DRUPAL-SA-CONTRIB-2011-018')),
+		'save_draft' => array(array('7.x-1.4', 'DRUPAL-SA-CONTRIB-2011-017')),
+		'forward' => array(array('7.x-1.1', 'DRUPAL-SA-CONTRIB-2011-035')),
+		'devel' => array(array('7.x-1.1', 'SA-CONTRIB-2011-030')),
+		'taxonomy_filter' => array(array('7.x-1.x-dev', 'DRUPAL-SA-CONTRIB-2011-029')),
+		'simpleclean' => array(array('7.x-1.3', 'DRUPAL-SA-CONTRIB-2011-028')),
+		'facebookshare' => array(array('7.x-1.3', 'DRUPAL-SA-CONTRIB-2011-027')),
+		'rate' => array(array('7.x-1.2', 'DRUPAL-SA-CONTRIB-2011-045')),
+		'webform_civicrm' => array(array('7.x-2.2', 'DRUPAL-SA-CONTRIB-2011-055')),
+		'ckeditor' => array(array('7.x-1.5', 'DRUPAL-SA-CONTRIB-2011-054')),
+		'og' => array(array('7.x-1.2', 'DRUPAL-SA-CONTRIB-2011-050')),
+		'echo' => array(array('7.x-1.7', 'DRUPAL-SA-CONTRIB-2011-046')),
+
+		'supercron' => array(array('abandoned', 'DRUPAL-SA-CONTRIB-2012-006 CVE-2012-1628')),
+		'taxotouch' => array(array('abandoned', 'DRUPAL-SA-CONTRIB-2012-006 CVE-2012-1629')),
+		'taxonomy_navigator' => array(array('abandoned', 'DRUPAL-SA-CONTRIB-2012-006 CVE-2012-1630')),
+		'admin_hover' => array(array('abandoned', 'DRUPAL-SA-CONTRIB-2012-006 CVE-2012-1631')),
+
+
+
+		'fillpdf' => array(array('7.x-1.2', 'DRUPAL-SA-CONTRIB-2012-003 CVE-2012-1625')),
+		'metatags_quick' => array(array('7.x-2.3', 'DRUPAL-SA-CONTRIB-2011-059')),
+		'webform_validation' => array(array('7.x-1.0', 'DRUPAL-SA-CONTRIB-2011-056')),
+
+		'forward' => array(array('7.x-1.3', 'DRUPAL-SA-CONTRIB-2012-016 CVE-2012-1057 CVE-2012-1056')),
+		'commerce' => array(array('7.x-1.2', 'DRUPAL-SA-CONTRIB-2012-014 CVE-2012-1639')),
+		'search_autocomplete' => array(array('7.x-2.1', 'DRUPAL-SA-CONTRIB-2012-013 CVE-2012-1638')),
+		'quicktabs' => array(array('7.x-3.3', 'DRUPAL-SA-CONTRIB-2012-012 CVE-2012-1637')),
+		'stickynote' => array(array('7.x-1.1', 'DRUPAL-SA-CONTRIB-2012-010 CVE-2012-1636')),
+		'revisioning' => array(array('7.x-1.3', 'DRUPAL-SA-CONTRIB-2012-009 CVE-2012-1635')),
+		'video_filter' => array(array('7.x-3.0', 'DRUPAL-SA-CONTRIB-2012-008 CVE-2012-1634')),
+		'mediafront' => array(array('7.x-1.5', 'DRUPAL-SA-CONTRIB-2012-024 CVE-2012-1647')),
+		'cdn' => array(array('7.x-2.3', 'DRUPAL-SA-CONTRIB-2012-022 CVE-2012-1645')),
+		'fp' => array(array('7.x-1.2', 'DRUPAL-SA-CONTRIB-2012-020 CVE-2012-1643')),
+		'finder' => array(array('7.x-2.0-alpha8', 'DRUPAL-SA-CONTRIB-2012-017 CVE-2012-1641')),
+		'aaaaa' => array(array('77777', 'cvedrupal')),
+		'aaaaa' => array(array('77777', 'cvedrupal')),
+		'aaaaa' => array(array('77777', 'cvedrupal')),
+		'aaaaa' => array(array('77777', 'cvedrupal')),
+
+		'nodeblock' => array(array('7.x-1.3', 'CVE-2013-0325'), array('7.x-2.4', 'CVE-2013-0325-1'), array('7.x-1.1', 'CVE-2013-0325-2')),
 	);
 
 

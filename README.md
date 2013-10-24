@@ -46,6 +46,17 @@ FOUND 16 ERROR(S) AND 15 WARNING(S) AFFECTING 22 LINE(S)
 
 ```
 
+Drupal details
+--------------
+
+For the Drupal AdvisoriesContrib you need to change your `/etc/php5/cli/php.ini` to have:
+```
+short_open_tag = On
+```
+in order to get rid of "No PHP code was found in this file" warnings.
+
+Please note that only Drupal modules downloaded from drupal.org are supported. If you are using contrib module but from another source, the version checking will probably won't work and will generate warning.
+
 
 Customize
 =========
