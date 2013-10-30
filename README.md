@@ -98,3 +98,16 @@ Don't forget to set the occurence of param "CmsFramework" in your XML base confi
 You are not required to do your own sniffs for the modification to be useful, since you are specifiying what is a user input for other rules, but you could use the newly created directory to do so.
 
 If you implement any public cms/framework customization please make a pull request to help the project grows.
+
+
+Annoyances
+==========
+
+As any security tools, this one comes with it's share of annoyance. At first a focus on finding vulnerabilities will be done, but later it is planned to have a phase where efforts will be towards reducing annoyances, in particular with the number of false positives.
+
+* It's a generator of false positives. This can actually help you learn what are the weak functions in PHP. Paranoya mode will fix that by doing a major cutoff on warnings when set to 0.
+* It's slow. On big Drupal modules it can take too much time (and RAM, reconfigure cli/php.ini to use 512M if needed) to run. Not sure if it's because of bugs in PHPCS or this set of rules, but will be investigated last. Meanwhile you can configure PHPCS to ignore big contrib modules (and run another instance of PHPCS for .info parsing only for them). An example is og taking hours, usually everything runs under 1-2 minutes and sometime around 5 minute. You can only use one core in PHP since no multithreading is available.
+* For Drupal advisories checking: a module with multiple versions might be secure if a lesser fixed version exists and you'll still get the error or warning. Keep everything updated at latests as recommended on Drupal's website.
+
+
+
