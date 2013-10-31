@@ -41,7 +41,7 @@ class Security_Sniffs_BadFunctions_EasyRFISniff implements PHP_CodeSniffer_Sniff
 		$s = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, $stackPtr, null, true, null, true);
 
 		if ($tokens[$s]['code'] == T_OPEN_PARENTHESIS) {
-                        $closer = $tokens[$s]['parenthesis_closer'];
+			$closer = $tokens[$s]['parenthesis_closer'];
 		} else {
 			$closer = $phpcsFile->findNext(T_SEMICOLON, $stackPtr);
 			$s = $stackPtr;
