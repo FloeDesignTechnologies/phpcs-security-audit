@@ -5,7 +5,7 @@ phpcs-security-audit is a set of [PHP_CodeSniffer](https://github.com/squizlabs/
 
 It currently has core PHP rules as well as Drupal 7 specific rules. Next planned CMS/framework is Symfony 2.
 
-As a bonus set of rules, the tool also check for CVE issues and security advisories related to CMS/framework. You can use it in order to follow the versionning of components during static code analysis.
+As a bonus set of rules, the tool also check for CVE issues and security advisories related to CMS/framework. You can use it in order to follow the versioning of components during static code analysis.
 
 The main reasons of this project for being an extension of PHP_CodeSniffer is to have easy integration into continuous integration systems and to be able to find security bugs that are not detected with object oriented analysis (like in [RIPS](http://rips-scanner.sourceforge.net/) or [PHPMD](http://phpmd.org/)).
 
@@ -17,7 +17,9 @@ phpcs-security-audit is backed by [Phéromone](http://www.pheromone.ca/) and wri
 Usage
 =====
 
-You need http://pear.php.net/package/PHP_CodeSniffer/ installed first.
+You need http://pear.php.net/package/PHP_CodeSniffer/ with PHP 5.4 or later installed first.
+
+Because of the way PHP CodeSniffer works, you need to put the Security/ folder from phpcs-security-audit in /usr/share/php/PHP/CodeSniffer/Standards or do a symlink to it.
 
 Then all you need to do is to configure or use a XML rule file and run it over your code:
 ```
@@ -93,9 +95,9 @@ The main function you'll want to change is `is_direct_user_input` where you'll w
 	}
 ```
 
-Don't forget to set the occurence of param "CmsFramework" in your XML base configuration in order to select your newly added utilities.
+Don't forget to set the occurrence of param "CmsFramework" in your XML base configuration in order to select your newly added utilities.
 
-You are not required to do your own sniffs for the modification to be useful, since you are specifiying what is a user input for other rules, but you could use the newly created directory to do so.
+You are not required to do your own sniffs for the modification to be useful, since you are specifying what is a user input for other rules, but you could use the newly created directory to do so.
 
 If you implement any public cms/framework customization please make a pull request to help the project grows.
 
@@ -105,9 +107,9 @@ Annoyances
 
 As any security tools, this one comes with it's share of annoyance. At first a focus on finding vulnerabilities will be done, but later it is planned to have a phase where efforts will be towards reducing annoyances, in particular with the number of false positives.
 
-* It's a generator of false positives. This can actually help you learn what are the weak functions in PHP. Paranoya mode will fix that by doing a major cutoff on warnings when set to 0.
-* It's slow. On big Drupal modules it can take too much time (and RAM, reconfigure cli/php.ini to use 512M if needed) to run. Not sure if it's because of bugs in PHPCS or this set of rules, but will be investigated last. Meanwhile you can configure PHPCS to ignore big contrib modules (and run another instance of PHPCS for .info parsing only for them). An example is og taking hours, usually everything runs under 1-2 minutes and sometime around 5 minute. You can only use one core in PHP since no multithreading is available.
-* For Drupal advisories checking: a module with multiple versions might be secure if a lesser fixed version exists and you'll still get the error or warning. Keep everything updated at latests as recommended on Drupal's website.
+* It's a generator of false positives. This can actually help you learn what are the weak functions in PHP. Paranoia mode will fix that by doing a major cut-off on warnings when set to 0.
+* It's slow. On big Drupal modules and core it can take too much time (and RAM, reconfigure cli/php.ini to use 512M if needed) to run. Not sure if it's because of bugs in PHPCS or this set of rules, but will be investigated last. Meanwhile you can configure PHPCS to ignore big contrib modules (and run another instance of PHPCS for .info parsing only for them). An example is og taking hours, usually everything runs under 1-2 minutes and sometime around 5 minute. You can only use one core in PHP since no multithreading is available. Possible workaround is to use phpcs --ignore=folder to skip scanning of those parts.
+* For Drupal advisories checking: a module with multiple versions might be secure if a lesser fixed version exists and you'll still get the error or warning. Keep everything updated at latest as recommended on Drupal's website.
 
 
 
