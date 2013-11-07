@@ -29,6 +29,8 @@ class Security_Sniffs_Drupal7_AdvisoriesCoreSniff implements PHP_CodeSniffer_Sni
 	* @return void
 	*/
 	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+		if ($stackPtr > 0)
+			return;
 		$fileName  = $phpcsFile->getFileName();
 		if (!preg_match('/includes\/bootstrap\.inc$/', $fileName))
 			return;
