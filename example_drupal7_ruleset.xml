@@ -1,56 +1,58 @@
 <?xml version="1.0"?>
 <ruleset name="Drupal7">
  <description>Rules for Drupal 7 projects</description>
-
 <!-- Code Reviews Rules -->
 <!--
  <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter"/>
  <rule ref="PEAR"/>
 -->
 
-
 <!-- Security Code Reviews Rules -->
 
- <rule ref="Security"/>
+<!-- Global properties -->
+<!-- Please note that not every sniff uses them and they can be overwritten by rule -->
+<properties>
+	<property name="CmsFramework" value="Drupal7"/>
+	<!-- Paranoya mode: Will generate more alerts but will miss less vulnerabilites -->
+	<property name="ParanoiaMode" value="1"/>
+</properties>
 
- <rule ref="Security.BadFunctions.PregReplace">
-  <properties>
-  <property name="CmsFramework" value="Drupal7"/>
-  </properties>
- </rule>
- <rule ref="Security.BadFunctions.EasyXSS">
-  <properties>
-  <property name="CmsFramework" value="Drupal7"/>
-  <property name="ParanoiaMode" value="1"/>
-  </properties>
- </rule>
- <rule ref="Security.BadFunctions.EasyRFI">
-  <properties>
-  <property name="CmsFramework" value="Drupal7"/>
-  <property name="ParanoiaMode" value="1"/>
-  </properties>
- </rule>
- <rule ref="Security.BadFunctions.FilesystemFunctions">
-  <properties>
-  <property name="CmsFramework" value="Drupal7"/>
-  </properties>
- </rule>
+<!-- BadFunctions -->
+<!-- PHP functions that can lead to security issues -->
 
- <rule ref="Security.Drupal7.SQLi">
-  <properties>
-   <!-- Paranoya mode. Will generate more alerts but will miss less vulnerabilites. -->
-   <property name="ParanoiaMode" value="1"/>
-  </properties>
- </rule>
- <rule ref="Security.Drupal7.SQLi.D7NoDbQuery">
-   <severity>6</severity>
- </rule>
- <rule ref="Security.Drupal7.SQLi.D7DbQuerySQLi">
-   <severity>10</severity>
- </rule>
- <rule ref="Security.Drupal7.SQLi.D7DbQueryDirectVar">
-   <severity>8</severity>
- </rule>
+<rule ref="Security.BadFunctions.Asserts"/>
+<rule ref="Security.BadFunctions.Backticks"/>
+<rule ref="Security.BadFunctions.CallbackFunctions"/>
+<rule ref="Security.BadFunctions.EasyRFI"/>
+<rule ref="Security.BadFunctions.EasyXSS"/>
+<rule ref="Security.BadFunctions.ErrorHandling"/>
+<rule ref="Security.BadFunctions.FilesystemFunctions"/>
+<rule ref="Security.BadFunctions.FringeFunctions"/>
+<rule ref="Security.BadFunctions.FunctionHandlingFunctions"/>
+<rule ref="Security.BadFunctions.Mysqli"/>
+<rule ref="Security.BadFunctions.NoEvals"/>
+<rule ref="Security.BadFunctions.Phpinfos"/>
+<rule ref="Security.BadFunctions.PregReplace"/>
+<rule ref="Security.BadFunctions.SQLFunctions"/>
+<rule ref="Security.BadFunctions.SystemExecFunctions"/>
+
+<!-- CVE -->
+<!-- Entries from CVE database from vendor PHP and bugs.php.net -->
+<rule ref="Security.CVE.20132110"/>
+<rule ref="Security.CVE.20134113"/>
+
+<!-- Drupal7 -->
+<!-- Specific security issues of Drupal7 and advisories  -->
+<rule ref="Security.Drupal7.AdvisoriesContrib">
+	<exclude-pattern>(?&lt;!\.info)$</exclude-pattern>
+</rule>
+<rule ref="Security.Drupal7.AdvisoriesCore">
+	<exclude-pattern>(?&lt;!includes\/bootstrap\.inc)$</exclude-pattern>
+</rule>
+<rule ref="Security.Drupal7.SQLi"/>
+<rule ref="Security.Drupal7.SQLi.D7NoDbQuery"/>
+<rule ref="Security.Drupal7.SQLi.D7DbQuerySQLi"/>
+<rule ref="Security.Drupal7.SQLi.D7DbQueryDirectVar"/>
 
 
 </ruleset>

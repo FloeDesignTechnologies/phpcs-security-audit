@@ -5,6 +5,14 @@
 
 <!-- Security Code Reviews Rules -->
 
+<!-- Global properties -->
+<!-- Please note that not every sniff uses them and they can be overwritten by rule -->
+<properties>
+	<property name="CmsFramework" value=""/>
+	<!-- Paranoya mode: Will generate more alerts but will miss less vulnerabilites -->
+	<property name="ParanoiaMode" value="0"/>
+</properties>
+
 <!-- BadFunctions -->
 <!-- PHP functions that can lead to security issues -->
 
@@ -33,7 +41,7 @@
 <rule ref="Security.BadFunctions.SystemExecFunctions"/>
 
 <!-- CVE -->
-<!-- Entries from CVE databse from vendor PHP and bugs.php.net -->
+<!-- Entries from CVE database from vendor PHP and bugs.php.net -->
 <rule ref="Security.CVE.20132110"/>
 <rule ref="Security.CVE.20134113"/>
 
