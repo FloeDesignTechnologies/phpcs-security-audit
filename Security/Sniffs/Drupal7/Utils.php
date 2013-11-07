@@ -167,7 +167,7 @@ class Security_Sniffs_Drupal7_Utils extends Security_Sniffs_Utils {
 		'twitter_pull' => array(array('7.x-1.0-rc3', 'SA-CONTRIB-2012-150 CVE-2012-5541')),
 		'hostip' => array(array('7.x-1.2', 'SA-CONTRIB-2012-149 CVE-2012-5540')),
 
-		'filefield_sources' => array(array('7.x-1.6', 'SA-CONTRIB-2012-147 CVE-2012-5538'), array('7.x-1.9', 'SA-CONTRIB-2013-084 ')),
+		'filefield_sources' => array(array('7.x-1.6', 'SA-CONTRIB-2012-147 CVE-2012-5538'), array('7.x-1.9', 'SA-CONTRIB-2013-084 SA-CONTRIB-2013-084 CVE-2013-4502')),
 
 		'fonecta_verify' => array(array('7.x-1.6', 'SA-CONTRIB-2012-144')),
 		'spambot' => array(array('7.x-1.1', 'SA-CONTRIB-2012-142 CVE-2012-6582')),
@@ -238,7 +238,7 @@ class Security_Sniffs_Drupal7_Utils extends Security_Sniffs_Utils {
 		'nodeaccess_userreference' => array(array('7.x-3.10', 'SA-CONTRIB-2013-049 CVE-2013-2123')),
 		'edit_limit' => array(array('7.x-1.3', 'SA-CONTRIB-2013-048 CVE-2013-2122')),
 
-		'monster_menus' => array(array('7.x-1.13', 'SA-CONTRIB-2013-066 CVE-2013-4229 CVE-2013-4230'), array('7.x-1.15', 'SA-CONTRIB-2013-086 ')),
+		'monster_menus' => array(array('7.x-1.13', 'SA-CONTRIB-2013-066 CVE-2013-4229 CVE-2013-4230'), array('7.x-1.15', 'SA-CONTRIB-2013-086 CVE-2013-4504')),
 		'persona' => array(array('7.x-1.11', 'SA-CONTRIB-2013-064 CVE-2013-4227')),
 		'authcache' => array(array('7.x-1.5', 'SA-CONTRIB-2013-063 CVE-2013-4226')),
 
@@ -255,9 +255,14 @@ class Security_Sniffs_Drupal7_Utils extends Security_Sniffs_Utils {
 		'entity' => array(array('7.x-1.2', 'SA-CONTRIB-2013-068 CVE-2013-4273')),
 		'botcha' => array(array('7.x-3.3', 'SA-CONTRIB-2013-067 CVE-2013-4272')),
 
-		'bean' => array(array('7.x-1.5', 'SA-CONTRIB-2013-082 ')),
+		'bean' => array(array('7.x-1.5', 'SA-CONTRIB-2013-082 CVE-2013-4499')),
 
 		'gss' => array(array('7.x-1.10', 'SA-CONTRIB-2013-077 CVE-2013-4384')),
+
+		'nodeaccesskeys' => array(array('7.x-1.1', 'SA-CONTRIB-2013-089')),
+		'payment_webform' => array(array('7.x-1.5', 'SA-CONTRIB-2013-087 ')),
+
+
 
 	);
 
