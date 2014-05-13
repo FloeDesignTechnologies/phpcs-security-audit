@@ -54,8 +54,13 @@
 <rule ref="Security.Drupal7.SQLi.D7DbQuerySQLi"/>
 <rule ref="Security.Drupal7.SQLi.D7DbQueryDirectVar"/>
 <rule ref="Security.Drupal7.XSSPTheme"/>
-<rule ref="Security.Drupal7.UserInputWatch"/>
-
+<rule ref="Security.Drupal7.UserInputWatch">
+	<properties>
+		<property name="ParanoiaMode" value="1"/>
+		<property name="FormThreshold" value="10"/>
+		<property name="FormStateThreshold" value="10"/>
+	</properties>
+</rule>
 
 </ruleset>
 
