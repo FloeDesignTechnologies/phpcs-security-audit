@@ -1,7 +1,7 @@
 <?php
 
 
-class Security_Sniffs_Drupal7_XSSPThemeSniff implements PHP_CodeSniffer_Sniff {
+class Security_Sniffs_Drupal7_XSSFormValueSniff implements PHP_CodeSniffer_Sniff {
 
 	/**
 	* Returns the token types that this sniff is interested in.
@@ -29,19 +29,17 @@ class Security_Sniffs_Drupal7_XSSPThemeSniff implements PHP_CodeSniffer_Sniff {
 	* @return void
 	*/
 	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+
 		$utils = Security_Sniffs_UtilsFactory::getInstance($this->CmsFramework);
 		$tokens = $phpcsFile->getTokens();
-
-		if ($tokens[$stackPtr]['content'] == "'#theme'" || $tokens[$stackPtr]['content'] == '"#theme"') {
-			$next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$stringTokens, $stackPtr + 1);
-			if($this->ParanoiaMode && $tokens[$next]['content'] == "'html_tag'") {
-				$phpcsFile->addWarning('Potential XSS found with #theme and html_tag', $stackPtr, 'D7XSSWarhtmltag');
-			} else {
-				$next = $phpcsFile->findNext(array_merge(PHP_CodeSniffer_Tokens::$bracketTokens, PHP_CodeSniffer_Tokens::$emptyTokens, PHP_CodeSniffer_Tokens::$assignmentTokens),
+		if ($tokens[$stackPtr]['content'] == "'#value'" || $tokens[$stackPtr]['content'] == '"#value"') {
+			$next = $phpcsFile->findNext(array_merge(PHP_CodeSniffer_Tokens::$bracketTokens, PHP_CodeSniffer_Tokens::$emptyTokens, PHP_CodeSniffer_Tokens::$assignmentTokens),
 								$stackPtr + 1, null, true);
-				if ($this->ParanoiaMode || $tokens[$next]['code'] != T_CONSTANT_ENCAPSED_STRING) {
-					$phpcsFile->addWarning('Potential XSS found with #theme on ' . $tokens[$next]['content'], $stackPtr, 'D7XSSWarTheme');
-				}
+			if ($utils::is_token_user_input($tokens[$next])) {
+				$phpcsFile->addError('XSS found with #value on ' . $tokens[$next]['content'], $next, 'D7XSSErrFormValue');
+			}
+			if ($this->ParanoiaMode || !in_array($tokens[$next]['content'], $utils::getXSSMitigationFunctions())) {
+				$phpcsFile->addWarning('Potential XSS found with #value on ' . $tokens[$next]['content'], $next, 'D7XSSWarFormValue');
 			}
 		}
 	}

@@ -16,6 +16,11 @@ class Security_Sniffs_Drupal7_Utils extends Security_Sniffs_Utils {
 		));
 	}
 
+	public static function getXSSMitigationFunctions() {
+		return array(
+			'check_plain', 't', 'l', 'url'
+		);
+	}
 
 	/**
 	* Heavy used function to verify if a string from a token contains user input
