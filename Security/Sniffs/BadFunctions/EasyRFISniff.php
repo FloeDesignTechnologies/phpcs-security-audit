@@ -50,7 +50,7 @@ class Security_Sniffs_BadFunctions_EasyRFISniff implements PHP_CodeSniffer_Sniff
 			$s = $phpcsFile->findNext(array_merge(PHP_CodeSniffer_Tokens::$emptyTokens, PHP_CodeSniffer_Tokens::$bracketTokens, Security_Sniffs_Utils::$staticTokens), $s + 1, $closer, true);
 			if ($s && $utils::is_token_user_input($tokens[$s])) {
 				$phpcsFile->addError('Easy RFI detected because of direct user input with ' . $tokens[$s]['content'] . ' on ' . $tokens[$stackPtr]['content'], $s, 'WarnEasyRFI');
-			} elseif ($s && $this->ParanoiaMode) {
+			} elseif ($s && $this->ParanoiaMode && $tokens[$s]['content'] != '.') {
 				$phpcsFile->addWarning('Possible RFI detected with ' . $tokens[$s]['content'] . ' on ' . $tokens[$stackPtr]['content'], $s, 'WarnEasyRFI');
 			}
 		}
