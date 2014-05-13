@@ -54,6 +54,7 @@
 <rule ref="Security.Drupal7.SQLi.D7DbQuerySQLi"/>
 <rule ref="Security.Drupal7.SQLi.D7DbQueryDirectVar"/>
 <rule ref="Security.Drupal7.XSSPTheme"/>
+<rule ref="Security.Drupal7.UserInputWatch"/>
 
 
 </ruleset>

@@ -29,12 +29,10 @@ class Security_Sniffs_Drupal7_XSSPThemeSniff implements PHP_CodeSniffer_Sniff {
 	* @return void
 	*/
 	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+		if (!$this->ParanoiaMode) return;
+
 		$utils = Security_Sniffs_UtilsFactory::getInstance($this->CmsFramework);
 		$tokens = $phpcsFile->getTokens();
-
-		if (!$this->ParanoiaMode) {
-			return;
-		}
 
 		if ($tokens[$stackPtr]['content'] == "'#theme'" || $tokens[$stackPtr]['content'] == '"#theme"') {
 			$next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$stringTokens, $stackPtr + 1);
