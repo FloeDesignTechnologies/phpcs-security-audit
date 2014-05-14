@@ -18,7 +18,7 @@ class Security_Sniffs_Drupal7_Utils extends Security_Sniffs_Utils {
 
 	public static function getXSSMitigationFunctions() {
 		return array(
-			'check_plain', 't', 'l', 'url'
+			'check_plain', 't', 'l', 'url', 'drupal_attributes', 'drupal_render_children', 'drupal_render'
 		);
 	}
 
