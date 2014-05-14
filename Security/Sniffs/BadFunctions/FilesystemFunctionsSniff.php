@@ -20,6 +20,13 @@ class Security_Sniffs_BadFunctions_FilesystemFunctionsSniff implements PHP_CodeS
 	}
 
 	/**
+	* Paranoya mode. Will generate more alerts in order to direct manual code review.
+	*
+	* @var bool
+	*/
+	public $ParanoiaMode = 1;
+
+	/**
 	* Processes the tokens that this sniff is interested in.
 	*
 	* @param PHP_CodeSniffer_File $phpcsFile The file where the token was found.
@@ -38,6 +45,14 @@ class Security_Sniffs_BadFunctions_FilesystemFunctionsSniff implements PHP_CodeS
 			}
             $s = $stackPtr + 1;
 			$opener = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr, null, false, null, true);
+			if (!$opener) {
+				// No opener found, so it's probably not a function call
+				if ($this->ParanoiaMode) {
+					$phpcsFile->addWarning('Filesystem function ' . $tokens[$stackPtr]['content'] . ' used but not as a function', $stackPtr, 'WarnWeirdFilesystem');
+				}
+				return;
+			}
+
 			$closer = $tokens[$opener]['parenthesis_closer'];
 			$s = $phpcsFile->findNext(array_merge(PHP_CodeSniffer_Tokens::$emptyTokens, PHP_CodeSniffer_Tokens::$bracketTokens, Security_Sniffs_Utils::$staticTokens), $s, $closer, true);
             if ($s) {
