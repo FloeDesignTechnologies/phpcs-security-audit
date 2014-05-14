@@ -39,6 +39,11 @@ class Security_Sniffs_Drupal7_XSSFormValueSniff implements PHP_CodeSniffer_Sniff
 				$phpcsFile->addError('XSS found with #value on ' . $tokens[$next]['content'], $next, 'D7XSSErrFormValue');
 			}
 			if ($this->ParanoiaMode || !in_array($tokens[$next]['content'], $utils::getXSSMitigationFunctions())) {
+				// Case of $label = $element['#value'];
+				if ($tokens[$next]['code'] == T_SEMICOLON) {
+					$next = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$assignmentTokens, $next);
+					$next = $phpcsFile->findPrevious(T_VARIABLE, $next);
+				}
 				$phpcsFile->addWarning('Potential XSS found with #value on ' . $tokens[$next]['content'], $next, 'D7XSSWarFormValue');
 			}
 		}
