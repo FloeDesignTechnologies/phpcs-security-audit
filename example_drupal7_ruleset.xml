@@ -44,7 +44,6 @@
 
 <!-- Drupal7 -->
 <!-- Specific security issues of Drupal7 and advisories  -->
-
 <rule ref="Security.Drupal7.AdvisoriesContrib">
 	<exclude-pattern>(?&lt;!\.info)$</exclude-pattern>
 </rule>
@@ -55,7 +54,6 @@
 <rule ref="Security.Drupal7.SQLi.D7NoDbQuery"/>
 <rule ref="Security.Drupal7.SQLi.D7DbQuerySQLi"/>
 <rule ref="Security.Drupal7.SQLi.D7DbQueryDirectVar"/>
-
 <rule ref="Security.Drupal7.XSSPTheme"/>
 <rule ref="Security.Drupal7.UserInputWatch">
 	<properties>
@@ -66,7 +64,7 @@
 </rule>
 <rule ref="Security.Drupal7.XSSFormValue"/>
 <rule ref="Security.Drupal7.XSSHTMLConstruct"/>
-<rule ref="Security.Drupal7.HookQueryAlter"/>
+<rule ref="Security.Drupal7.DbQueryAC"/>
 
 </ruleset>
 

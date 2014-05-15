@@ -22,6 +22,19 @@ class Security_Sniffs_Drupal7_Utils extends Security_Sniffs_Utils {
 		);
 	}
 
+	// Entity types that will need _access addTag
+	// https://drupal.org/node/93737 https://drupal.org/node/310077
+	private static $ACEntityTypes = array('node', 'taxonomy_term', 'term', 'entity_field');
+
+	public static function getACEntityTypes() {
+		return Security_Sniffs_Drupal7_Utils::$ACEntityTypes;
+	}
+
+	public static function addACEntityType($e) {
+		array_push(Security_Sniffs_Drupal7_Utils::$ACEntityTypes, $e);
+	}
+
+
 	/**
 	* Heavy used function to verify if a string from a token contains user input
 	* @deprecated	We should use is_token_user_input() instead to allow functions in CMS/frameworks as user input.
