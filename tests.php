@@ -38,5 +38,51 @@
 	symlink($a);
 
 
+	// Drupal 7 Dynamic queries SQLi
+	$query = db_select('tname', "wn");
+	$query->join('node', 'n', $a);
+	$query->innerJoin('node', 'n', $a);
+	$query->leftJoin('node', 'n', $a);
+	$query->rightJoin('node', 'n', $a);
+	$query->addExpression($a, 'w');
+	$query->groupBy($a);
+
+	$query->orderBy($a, $a);
+	$query->range('safe', 'safe');
+
+	$count = $query
+		->fields("wn")
+		->condition('email', '1', $_GET)
+		->condition('email', '1')
+		->where($a, array(":aaa" => '2'))
+		->havingCondition('email', '', $a)
+		->having($a, $args = array(":aaa" => '2'))
+		->execute()
+		->rowCount();
+	echo $count;
+
+	$query = db_update('tname')
+	->expression($a, $a)
+	->execute();
+
+	$nid = db_insert('tname')
+	->fields(array(
+		$a => 'safe',
+		$b => 'safe',
+		'c' => 'safe',
+
+	))
+	->values(array(
+		'safe' => 'safe',
+	))
+	->execute();
+
+	$query = db_select('node', 'n');
+	$myselect = db_select('mytable')
+	  ->fields($_GET)
+	  ->condition('myfield', 'myvalue');
+	$alias = $query->join($myselect, 'myalias', 'n.nid = myalias.nid');
+
+
 ?>
 

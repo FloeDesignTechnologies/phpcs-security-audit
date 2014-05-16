@@ -65,6 +65,7 @@
 <rule ref="Security.Drupal7.XSSFormValue"/>
 <rule ref="Security.Drupal7.XSSHTMLConstruct"/>
 <rule ref="Security.Drupal7.DbQueryAC"/>
+<rule ref="Security.Drupal7.DynQueries"/>
 
 </ruleset>
 

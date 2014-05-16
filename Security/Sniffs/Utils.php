@@ -205,8 +205,14 @@ class Security_Sniffs_Utils {
 				break;
 			else
 				$t = array();
-			$i++;
-			$s++;
+
+			// Edge case of func()[0], skip.
+			if ($tokens[$s]['code'] == T_OPEN_SQUARE_BRACKET) {
+				$s = $tokens[$s]['bracket_closer'];
+			} else {
+				$i++;
+				$s++;
+			}
 		}
 		return empty($t) ? NULL : $t;
 	}
