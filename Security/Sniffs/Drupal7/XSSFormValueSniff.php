@@ -33,18 +33,25 @@ class Security_Sniffs_Drupal7_XSSFormValueSniff implements PHP_CodeSniffer_Sniff
 		$utils = Security_Sniffs_UtilsFactory::getInstance($this->CmsFramework);
 		$tokens = $phpcsFile->getTokens();
 		if ($tokens[$stackPtr]['content'] == "'#value'" || $tokens[$stackPtr]['content'] == '"#value"') {
+			$closer = $phpcsFile->findNext(T_SEMICOLON, $stackPtr);
 			$next = $phpcsFile->findNext(array_merge(PHP_CodeSniffer_Tokens::$bracketTokens, PHP_CodeSniffer_Tokens::$emptyTokens, PHP_CodeSniffer_Tokens::$assignmentTokens),
-								$stackPtr + 1, null, true);
-			if ($utils::is_token_user_input($tokens[$next])) {
-				$phpcsFile->addError('XSS found with #value on ' . $tokens[$next]['content'], $next, 'D7XSSErrFormValue');
-			}
-			if ($this->ParanoiaMode || !in_array($tokens[$next]['content'], $utils::getXSSMitigationFunctions())) {
+								$stackPtr + 1, $closer + 1, true);
+			if ($next == $closer && $tokens[$next]['code'] == T_SEMICOLON)  {
 				// Case of $label = $element['#value'];
-				if ($tokens[$next]['code'] == T_SEMICOLON) {
-					$next = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$assignmentTokens, $next);
-					$next = $phpcsFile->findPrevious(T_VARIABLE, $next);
-				}
+				$next = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$assignmentTokens, $next);
+				$next = $phpcsFile->findPrevious(T_VARIABLE, $next);
 				$phpcsFile->addWarning('Potential XSS found with #value on ' . $tokens[$next]['content'], $next, 'D7XSSWarFormValue');
+			} elseif ($next && $utils::is_token_user_input($tokens[$next])) {
+				$phpcsFile->addError('XSS found with #value on ' . $tokens[$next]['content'], $next, 'D7XSSErrFormValue');
+			} elseif ($next && $this->ParanoiaMode) {
+				if (in_array($tokens[$next]['content'], $utils::getXSSMitigationFunctions())) {
+					$n = $phpcsFile->findNext($utils::getVariableTokens(), $next + 1, $closer);
+					if ($n) {
+						$phpcsFile->addWarning('Potential XSS found with #value on ' . $tokens[$n]['content'], $n, 'D7XSSWarFormValue');
+					}
+				} else {
+					$phpcsFile->addWarning('Potential XSS found with #value on ' . $tokens[$next]['content'], $next, 'D7XSSWarFormValue');
+				}
 			}
 		}
 	}
