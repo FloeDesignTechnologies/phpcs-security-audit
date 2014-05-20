@@ -33,10 +33,18 @@ class Security_Sniffs_BadFunctions_CallbackFunctionsSniff implements PHP_CodeSni
 		$utils = Security_Sniffs_UtilsFactory::getInstance($this->CmsFramework);
 
 		if (in_array($tokens[$stackPtr]['content'], $utils::getCallbackFunctions())) {
-            $opener = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr, null, false, null, true);
+	        $opener = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr, null, false, null, true);
 			$closer = $tokens[$opener]['parenthesis_closer'];
             $s = $stackPtr + 1;
-			$s = $phpcsFile->findNext(array_merge(PHP_CodeSniffer_Tokens::$emptyTokens, PHP_CodeSniffer_Tokens::$bracketTokens, Security_Sniffs_Utils::$staticTokens, array(T_STRING_CONCAT)), $s, $closer, true);
+			if ($tokens[$stackPtr]['content'] == 'array_filter') {
+				// Case of array_filter() with only one argument
+				$s = $phpcsFile->findNext(T_COMMA, $s, $closer);
+				if (!$s) {
+					return;
+				}
+			}
+			$s = $phpcsFile->findNext(array_merge(PHP_CodeSniffer_Tokens::$emptyTokens, PHP_CodeSniffer_Tokens::$bracketTokens,
+										Security_Sniffs_Utils::$staticTokens, array(T_STRING_CONCAT)), $s, $closer, true);
 			$msg = 'Function ' . $tokens[$stackPtr]['content'] . '() that supports callback detected';
              if ($s) {
 				if ($utils::is_token_user_input($tokens[$s])) {
