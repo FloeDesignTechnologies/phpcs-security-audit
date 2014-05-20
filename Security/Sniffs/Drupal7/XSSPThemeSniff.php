@@ -39,7 +39,7 @@ class Security_Sniffs_Drupal7_XSSPThemeSniff implements PHP_CodeSniffer_Sniff {
 			} else {
 				$next = $phpcsFile->findNext(array_merge(PHP_CodeSniffer_Tokens::$bracketTokens, PHP_CodeSniffer_Tokens::$emptyTokens, PHP_CodeSniffer_Tokens::$assignmentTokens),
 								$stackPtr + 1, null, true);
-				if ($this->ParanoiaMode || $tokens[$next]['code'] != T_CONSTANT_ENCAPSED_STRING) {
+				if ($next && $this->ParanoiaMode && $tokens[$next]['code'] != T_CONSTANT_ENCAPSED_STRING) {
 					$phpcsFile->addWarning('Potential XSS found with #theme on ' . $tokens[$next]['content'], $stackPtr, 'D7XSSWarTheme');
 				}
 			}

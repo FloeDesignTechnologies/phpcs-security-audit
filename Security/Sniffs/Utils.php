@@ -139,6 +139,13 @@ class Security_Sniffs_Utils {
 	}
 
 
+	// Returns the token constants that are considerated as variables
+	public static function getVariableTokens() {
+		return array(
+			T_DOUBLE_QUOTED_STRING, T_VARIABLE
+		);
+	}
+
 	/**
 	* Helper function for get_param_tokens() that recursivly go inside parenthesis
 	*

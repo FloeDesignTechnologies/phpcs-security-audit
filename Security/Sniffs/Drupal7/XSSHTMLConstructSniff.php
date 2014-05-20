@@ -44,7 +44,14 @@ class Security_Sniffs_Drupal7_XSSHTMLConstructSniff implements PHP_CodeSniffer_S
 					if ($utils::is_direct_user_input($tokens[$next]['content'])) {
 						$phpcsFile->addError('HTML construction with direct user input '.$tokens[$next]['content'].' detected.', $stackPtr, 'D7XSSHTMLConstructErr');
 					} elseif ($this->ParanoiaMode && !in_array($tokens[$next]['code'], array_merge(array(T_INLINE_ELSE, T_COMMA), PHP_CodeSniffer_Tokens::$booleanOperators))) {
-						$phpcsFile->addWarning('HTML construction with '.$tokens[$next]['content'].' detected.', $stackPtr, 'D7XSSHTMLConstructWarn');
+						if ($tokens[$next]['code'] == T_CLOSE_PARENTHESIS) {
+							$f = $phpcsFile->findPrevious(T_STRING, $next);
+							if ($f) {
+								$phpcsFile->addWarning('HTML construction with '.$tokens[$f]['content'].'() detected.', $stackPtr, 'D7XSSHTMLConstructWarnF');
+							}
+						} else {
+							$phpcsFile->addWarning('HTML construction with '.$tokens[$next]['content'].' detected.', $stackPtr, 'D7XSSHTMLConstructWarn');
+						}
 					}
 				}
 				$next = $phpcsFile->findNext(T_STRING_CONCAT, $next + 1, $end);
