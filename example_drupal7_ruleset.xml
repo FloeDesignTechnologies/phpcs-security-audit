@@ -66,6 +66,7 @@
 <rule ref="Security.Drupal7.XSSHTMLConstruct"/>
 <rule ref="Security.Drupal7.DbQueryAC"/>
 <rule ref="Security.Drupal7.DynQueries"/>
+<rule ref="Security.Drupal7.Cachei"/>
 
 </ruleset>
 
