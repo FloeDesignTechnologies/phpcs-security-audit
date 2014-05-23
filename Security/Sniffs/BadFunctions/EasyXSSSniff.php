@@ -43,9 +43,9 @@ class Security_Sniffs_BadFunctions_EasyXSSSniff implements PHP_CodeSniffer_Sniff
 		if ($tokens[$stackPtr]['code'] == T_OPEN_TAG_WITH_ECHO) {
 			$closer = $phpcsFile->findNext(T_CLOSE_TAG, $stackPtr);
 		} elseif ($tokens[$s]['code'] == T_OPEN_PARENTHESIS) {
-                        $closer = $tokens[$s]['parenthesis_closer'];
+			$closer = $tokens[$s]['parenthesis_closer'];
 		} else {
-			$closer = $phpcsFile->findNext(T_SEMICOLON, $stackPtr);
+			$closer = $phpcsFile->findNext(array(T_SEMICOLON, T_CLOSE_TAG), $stackPtr);
 			$s = $stackPtr;
 		}
 
@@ -54,6 +54,8 @@ class Security_Sniffs_BadFunctions_EasyXSSSniff implements PHP_CodeSniffer_Sniff
 			$s = $phpcsFile->findNext(array_merge(PHP_CodeSniffer_Tokens::$emptyTokens, PHP_CodeSniffer_Tokens::$bracketTokens, Security_Sniffs_Utils::$staticTokens), $s + 1, $closer, true);
 			if ($s && $utils::is_token_user_input($tokens[$s])) {
 				$phpcsFile->addError('Easy XSS detected because of direct user input with ' . $tokens[$s]['content'] . ' on ' . $tokens[$stackPtr]['content'], $s, 'EasyXSSerr');
+			} elseif ($s && $utils::is_XSS_mitigation($tokens[$s]['content'])) {
+				$s = $tokens[$s+1]['parenthesis_closer'];
 			} elseif ($s && $this->ParanoiaMode && !$warn) {
 				$warn = $s;
 			}

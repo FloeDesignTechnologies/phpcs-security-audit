@@ -147,6 +147,31 @@ class Security_Sniffs_Utils {
 	}
 
 	/**
+	* Array of XSS mitigation function
+	*
+	* @return array(String)	returns the array of functions
+	*/
+	public static function getXSSMitigationFunctions() {
+		return array(
+			'htmlspecialchars', 'htmlentities'
+		);
+	}
+
+	/**
+	* Verify that a function is a XSS mitigation
+	*
+	* @param $var	The variable containing the function string
+	* @return Boolean	returns TRUE if it's a XSS mitigation function, FALSE otherwise
+	*/
+	public static function is_XSS_mitigation($var) {
+		if (in_array($var,  Security_Sniffs_Utils::getXSSMitigationFunctions())) {
+			return TRUE;
+		}
+		return FALSE;
+	}
+
+
+	/**
 	* Helper function for get_param_tokens() that recursivly go inside parenthesis
 	*
     * @param Array $tokens	The array of tokens from $phpcsFile->getTokens()
