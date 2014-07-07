@@ -13,13 +13,6 @@ class Security_Sniffs_Drupal7_XSSFormValueSniff implements PHP_CodeSniffer_Sniff
 	}
 
 	/**
-	* Paranoya mode. Will generate more alerts in order to direct manual code review.
-	*
-	* @var bool
-	*/
-	public $ParanoiaMode = 1;
-
-	/**
 	* Processes the tokens that this sniff is interested in.
 	*
 	* @param PHP_CodeSniffer_File $phpcsFile The file where the token was found.
@@ -30,7 +23,7 @@ class Security_Sniffs_Drupal7_XSSFormValueSniff implements PHP_CodeSniffer_Sniff
 	*/
 	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
 
-		$utils = Security_Sniffs_UtilsFactory::getInstance($this->CmsFramework);
+		$utils = Security_Sniffs_UtilsFactory::getInstance();
 		$tokens = $phpcsFile->getTokens();
 		if ($tokens[$stackPtr]['content'] == "'#value'" || $tokens[$stackPtr]['content'] == '"#value"') {
 			$closer = $phpcsFile->findNext(T_SEMICOLON, $stackPtr);
@@ -43,7 +36,7 @@ class Security_Sniffs_Drupal7_XSSFormValueSniff implements PHP_CodeSniffer_Sniff
 				$phpcsFile->addWarning('Potential XSS found with #value on ' . $tokens[$next]['content'], $next, 'D7XSSWarFormValue');
 			} elseif ($next && $utils::is_token_user_input($tokens[$next])) {
 				$phpcsFile->addError('XSS found with #value on ' . $tokens[$next]['content'], $next, 'D7XSSErrFormValue');
-			} elseif ($next && $this->ParanoiaMode) {
+			} elseif ($next && PHP_CodeSniffer::getConfigData('ParanoiaMode')) {
 				if (in_array($tokens[$next]['content'], $utils::getXSSMitigationFunctions())) {
 					$n = $phpcsFile->findNext($utils::getVariableTokens(), $next + 1, $closer);
 					if ($n) {

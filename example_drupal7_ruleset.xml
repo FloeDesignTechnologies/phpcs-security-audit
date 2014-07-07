@@ -11,16 +11,13 @@
 
 <!-- Global properties -->
 <!-- Please note that not every sniff uses them and they can be overwritten by rule -->
-<properties>
-	<property name="CmsFramework" value="Drupal7"/>
-	<!-- Paranoya mode: Will generate more alerts but will miss less vulnerabilites.
-                        Good for assisting manual code review. -->
-	<property name="ParanoiaMode" value="1"/>
-</properties>
+<!-- Framework or CMS used. Must be a class under Security_Sniffs. -->
+<config name="CmsFramework" value="Drupal7"/>
+<!-- Paranoya mode: Will generate more alerts but will miss less vulnerabilites. Good for assisting manual code review. -->
+<config name="ParanoiaMode" value="1"/>
 
 <!-- BadFunctions -->
 <!-- PHP functions that can lead to security issues -->
-
 <rule ref="Security.BadFunctions.Asserts"/>
 <rule ref="Security.BadFunctions.Backticks"/>
 <rule ref="Security.BadFunctions.CallbackFunctions"/>
@@ -57,14 +54,18 @@
 <rule ref="Security.Drupal7.XSSPTheme"/>
 <rule ref="Security.Drupal7.UserInputWatch">
 	<properties>
-		<property name="ParanoiaMode" value="1"/>
 		<property name="FormThreshold" value="10"/>
 		<property name="FormStateThreshold" value="10"/>
 	</properties>
 </rule>
 <rule ref="Security.Drupal7.XSSFormValue"/>
 <rule ref="Security.Drupal7.XSSHTMLConstruct"/>
-<rule ref="Security.Drupal7.DbQueryAC"/>
+<rule ref="Security.Drupal7.DbQueryAC">
+	<properties>
+		<!-- Comment out to follow global ParanoiaMode -->
+		<property name="forceParanoia" value="1"/>
+	</properties>
+</rule>
 <rule ref="Security.Drupal7.DynQueries"/>
 <rule ref="Security.Drupal7.Cachei"/>
 

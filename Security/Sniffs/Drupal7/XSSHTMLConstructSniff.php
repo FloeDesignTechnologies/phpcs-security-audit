@@ -14,13 +14,6 @@ class Security_Sniffs_Drupal7_XSSHTMLConstructSniff implements PHP_CodeSniffer_S
 	}
 
 	/**
-	* Paranoya mode. Will generate more alerts in order to direct manual code review.
-	*
-	* @var bool
-	*/
-	public $ParanoiaMode = 1;
-
-	/**
 	* Processes the tokens that this sniff is interested in.
 	*
 	* @param PHP_CodeSniffer_File $phpcsFile The file where the token was found.
@@ -30,7 +23,7 @@ class Security_Sniffs_Drupal7_XSSHTMLConstructSniff implements PHP_CodeSniffer_S
 	* @return void
 	*/
 	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
-		$utils = Security_Sniffs_UtilsFactory::getInstance($this->CmsFramework);
+		$utils = Security_Sniffs_UtilsFactory::getInstance();
 		$tokens = $phpcsFile->getTokens();
 		if (preg_match('/<|>/', $tokens[$stackPtr]['content'])) {
 			$end = $phpcsFile->findNext(T_SEMICOLON, $stackPtr + 1);
@@ -43,7 +36,7 @@ class Security_Sniffs_Drupal7_XSSHTMLConstructSniff implements PHP_CodeSniffer_S
 				if ($next && !in_array($tokens[$next]['content'], $utils::getXSSMitigationFunctions())) {
 					if ($utils::is_direct_user_input($tokens[$next]['content'])) {
 						$phpcsFile->addError('HTML construction with direct user input '.$tokens[$next]['content'].' detected.', $stackPtr, 'D7XSSHTMLConstructErr');
-					} elseif ($this->ParanoiaMode && !in_array($tokens[$next]['code'], array_merge(array(T_INLINE_ELSE, T_COMMA), PHP_CodeSniffer_Tokens::$booleanOperators))) {
+					} elseif (PHP_CodeSniffer::getConfigData('ParanoiaMode') && !in_array($tokens[$next]['code'], array_merge(array(T_INLINE_ELSE, T_COMMA), PHP_CodeSniffer_Tokens::$booleanOperators))) {
 						if ($tokens[$next]['code'] == T_CLOSE_PARENTHESIS) {
 							$f = $phpcsFile->findPrevious(T_STRING, $next);
 							if ($f) {

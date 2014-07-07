@@ -13,13 +13,6 @@ class Security_Sniffs_Drupal7_AdvisoriesCoreSniff implements PHP_CodeSniffer_Sni
 	}
 
 	/**
-	* Framework or CMS used. Must be a class under Security_Sniffs.
-	*
-	* @var String
-	*/
-	public $CmsFramework = NULL;
-
-	/**
 	* Processes the tokens that this sniff is interested in.
 	*
 	* @param PHP_CodeSniffer_File $phpcsFile The file where the token was found.

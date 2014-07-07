@@ -11,6 +11,23 @@
 	preg_replace($_GET['b'], $_GET['a'], $_GET['c']);
 	preg_replace($b, $_GET['a'], 'aaaaaa');
 	preg_replace("aaa", $_GET['a'], 'ababaaa');
+	
+
+	// BadFunctions
+	phpinfo();
+	create_function($a);
+	ftp_exec($a);
+	fread($a);
+	array_map($a);
+	`$a`;
+	`$_GET`;
+	include($a);
+	assert($a);
+	assert($_GET);
+	exec($a);
+	exec($_GET);
+	mysql_query($a);
+	mysql_query($_GET);
 
 	// CVEs
 	xml_parse_into_struct(xml_parser_create_ns(), str_repeat("<blah>", 1000), $a);

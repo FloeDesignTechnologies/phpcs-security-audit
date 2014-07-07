@@ -13,13 +13,6 @@ class Security_Sniffs_BadFunctions_CallbackFunctionsSniff implements PHP_CodeSni
 	}
 
 	/**
-	* Framework or CMS used. Must be a class under Security_Sniffs.
-	*
-	* @var String
-	*/
-	public $CmsFramework = NULL;
-
-	/**
 	* Processes the tokens that this sniff is interested in.
 	*
 	* @param PHP_CodeSniffer_File $phpcsFile The file where the token was found.
@@ -30,7 +23,7 @@ class Security_Sniffs_BadFunctions_CallbackFunctionsSniff implements PHP_CodeSni
 	*/
 	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
-		$utils = Security_Sniffs_UtilsFactory::getInstance($this->CmsFramework);
+		$utils = Security_Sniffs_UtilsFactory::getInstance();
 
 		if (in_array($tokens[$stackPtr]['content'], $utils::getCallbackFunctions())) {
 	        $opener = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr, null, false, null, true);

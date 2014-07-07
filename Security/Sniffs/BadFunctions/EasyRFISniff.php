@@ -13,20 +13,6 @@ class Security_Sniffs_BadFunctions_EasyRFISniff implements PHP_CodeSniffer_Sniff
 	}
 
 	/**
-	* Framework or CMS used. Must be a class under Security_Sniffs.
-	*
-	* @var String
-	*/
-	public $CmsFramework = NULL;
-
-	/**
-	* Paranoya mode. Will generate more alerts that direct manual code reivew.
-	*
-	* @var bool
-	*/
-	public $ParanoiaMode = 0;
-
-	/**
 	* Processes the tokens that this sniff is interested in.
 	*
 	* @param PHP_CodeSniffer_File $phpcsFile The file where the token was found.
@@ -36,7 +22,7 @@ class Security_Sniffs_BadFunctions_EasyRFISniff implements PHP_CodeSniffer_Sniff
 	* @return void
 	*/
 	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
-		$utils = Security_Sniffs_UtilsFactory::getInstance($this->CmsFramework);
+		$utils = Security_Sniffs_UtilsFactory::getInstance();
 		$tokens = $phpcsFile->getTokens();
 		$s = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, $stackPtr, null, true, null, true);
 
@@ -50,7 +36,7 @@ class Security_Sniffs_BadFunctions_EasyRFISniff implements PHP_CodeSniffer_Sniff
 			$s = $phpcsFile->findNext(array_merge(PHP_CodeSniffer_Tokens::$emptyTokens, PHP_CodeSniffer_Tokens::$bracketTokens, Security_Sniffs_Utils::$staticTokens), $s + 1, $closer, true);
 			if ($s && $utils::is_token_user_input($tokens[$s])) {
 				$phpcsFile->addError('Easy RFI detected because of direct user input with ' . $tokens[$s]['content'] . ' on ' . $tokens[$stackPtr]['content'], $s, 'WarnEasyRFI');
-			} elseif ($s && $this->ParanoiaMode && $tokens[$s]['content'] != '.') {
+			} elseif ($s && PHP_CodeSniffer::getConfigData('ParanoiaMode') && $tokens[$s]['content'] != '.') {
 				$phpcsFile->addWarning('Possible RFI detected with ' . $tokens[$s]['content'] . ' on ' . $tokens[$stackPtr]['content'], $s, 'WarnEasyRFI');
 			}
 		}

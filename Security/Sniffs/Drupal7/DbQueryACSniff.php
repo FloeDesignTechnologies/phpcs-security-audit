@@ -13,11 +13,11 @@ class Security_Sniffs_Drupal7_DbQueryACSniff implements PHP_CodeSniffer_Sniff {
 	}
 
 	/**
-	* Paranoya mode. Will generate more alerts but will miss less vulnerabilites.
+	* Force the paranoia on or off for this particular rule ignoring global setting ParanoiaMode.
 	*
 	* @var bool
 	*/
-	public $ParanoiaMode = 1;
+	public $forceParanoia = -1;
 
 	// This function can be used as an example of dealing with local defines
 	private static $defines = array();
@@ -33,6 +33,11 @@ class Security_Sniffs_Drupal7_DbQueryACSniff implements PHP_CodeSniffer_Sniff {
 	*/
 	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
 		$utils = new Security_Sniffs_Drupal7_Utils();
+		if ($this->forceParanoia >= 0) {
+			$parano =  $this->forceParanoia ? 1 : 0;
+		} else {
+			$parano = PHP_CodeSniffer::getConfigData('ParanoiaMode') ? 1 : 0;
+		}
 
 		$tokens = $phpcsFile->getTokens();
 		if ($tokens[$stackPtr]['content'] == 'db_query' || $tokens[$stackPtr]['content'] == 'db_query_range') {
@@ -47,7 +52,7 @@ class Security_Sniffs_Drupal7_DbQueryACSniff implements PHP_CodeSniffer_Sniff {
 			$s = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$stringTokens, $stackPtr - 1);
 			if ($tokens[$s]['content'] == "'entity_type'") {
 				// TODO refactor to not have to backtrace for defines, use $utils::addACEntityType
-			} elseif ($this->ParanoiaMode) {
+			} elseif ($parano) {
 				$isdef = $phpcsFile->findPrevious(T_STRING, $s - 1);
 				if ($tokens[$isdef]['content'] == 'define') {
 					array_push(self::$defines, str_replace("'", "", $tokens[$s]['content']));
@@ -74,14 +79,14 @@ class Security_Sniffs_Drupal7_DbQueryACSniff implements PHP_CodeSniffer_Sniff {
 								$n = $phpcsFile->findNext(array_merge(array(T_STRING), PHP_CodeSniffer_Tokens::$stringTokens), $s + 1, $c);
 								$tag = str_replace("'", "", $tokens[$n]['content']);
 								if ($n && in_array($tag, array('node_access','entity_field_access','term_access'))) {
-									// This will not warn if wrong _access is used. Please warn anyways in ParanoiaMode.
+									// This will not warn if wrong _access is used. Please warn anyways when paranoia is enforced.
 									$warn = false;
 								}
 							}
 						}
 						if ($warn) {
 							$phpcsFile->addWarning("EntityFieldQuery with entity type $found should be tagged for access restrictions", $stackPtr, 'D7DbQueryACErr');
-						} elseif ($this->ParanoiaMode) {
+						} elseif ($parano) {
 							$phpcsFile->addWarning("Please validate that EntityFieldQuery with entity type $found is tagged with adequate access restrictions", $stackPtr, 'D7DbQueryACErr');
 						}
 					}
@@ -101,14 +106,14 @@ class Security_Sniffs_Drupal7_DbQueryACSniff implements PHP_CodeSniffer_Sniff {
 						$n = $phpcsFile->findNext(array_merge(array(T_STRING), PHP_CodeSniffer_Tokens::$stringTokens), $s + 1, $c);
 						$tag = str_replace("'", "", $tokens[$n]['content']);
 						if ($n && in_array($tag, array('node_access','entity_field_access','term_access'))) {
-							// This will not warn if wrong _access is used. Please warn anyways in ParanoiaMode.
+							// This will not warn if wrong _access is used. Please warn anyways when paranoia is enforced.
 							$warn = false;
 						}
 					}
 				}
 				if ($warn) {
 					$phpcsFile->addWarning("Dynamic query with db_select on table $matches[0] should be tagged for access restrictions", $stackPtr, 'D7DbQueryACErr');
-				} elseif ($this->ParanoiaMode) {
+				} elseif ($parano) {
 					$phpcsFile->addWarning("Please validate that dynamic query with db_select on table $matches[0] is tagged with adequate access restrictions", $stackPtr, 'D7DbQueryACErr');
 				}
 			}

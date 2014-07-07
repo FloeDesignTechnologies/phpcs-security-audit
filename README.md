@@ -17,7 +17,7 @@ phpcs-security-audit is backed by [Phéromone](http://www.pheromone.ca/) and wri
 Usage
 =====
 
-You need http://pear.php.net/package/PHP_CodeSniffer/ with PHP 5.4 or later installed first.
+You need http://pear.php.net/package/PHP_CodeSniffer/ at version 1.5.1 or later with PHP 5.4 or later installed first.
 
 Because of the way PHP CodeSniffer works, you need to put the Security/ folder from phpcs-security-audit in /usr/share/php/PHP/CodeSniffer/Standards or do a symlink to it.
 
@@ -44,7 +44,6 @@ FOUND 16 ERROR(S) AND 15 WARNING(S) AFFECTING 22 LINE(S)
   8 | WARNING | db_query() is deprecated except when doing a static query
   8 | ERROR   | Potential SQL injection found in db_query()
   9 | WARNING | Usage of preg_replace with /e modifier is not recommended.
- 10 | WARNING | Usage of preg_replace with /e modifier is not recommended.
 
 ```
 
@@ -64,11 +63,13 @@ Customize
 =========
 As in normal PHP CodeSniffer rules, customization is provided in the XML files that are in the top folder of the project.
 
-The `example_subset_ruleset.xml` file will give you all the possible choices and let you customize them or removing the ones you don't like.
-
-These parameters are common in many rules (this is a PHP CodeSniffer limitation, sorry for redundency):
+These global parameters are used in many rules:
 * ParanoiaMode: set to 1 to add more checks. 0 for less.
 * CmsFramework: set to the name of a folder containings rules and Utils.php (such as Drupal7, Symfony2).
+
+They can be setted in the XML files or in command line for permanent config with `--config-set` or at runtime with `--runtime-set`. Note that the XML override all CLI options so remove it if you want to use it. The CLI usage is as follow `phpcs --runtime-set ParanoiaMode 0 --extensions=php --standard=example_base_ruleset.xml tests.php`;
+
+In some case you can force the paranoia mode on or off with the parameter `forceParanoia` inside the XML rule.
 
 
 Specialize

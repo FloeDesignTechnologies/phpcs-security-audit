@@ -13,18 +13,11 @@ class Security_Sniffs_BadFunctions_EasyXSSSniff implements PHP_CodeSniffer_Sniff
 	}
 
 	/**
-	* Framework or CMS used. Must be a class under Security_Sniffs.
-	*
-	* @var String
-	*/
-	public $CmsFramework = NULL;
-
-	/**
-	* Paranoya mode. Will generate more alerts that direct manual code reivew.
+	* Force the paranoia on or off for this particular rule ignoring global setting ParanoiaMode.
 	*
 	* @var bool
 	*/
-	public $ParanoiaMode = 0;
+	public $forceParanoia = -1;
 
 	/**
 	* Processes the tokens that this sniff is interested in.
@@ -36,7 +29,12 @@ class Security_Sniffs_BadFunctions_EasyXSSSniff implements PHP_CodeSniffer_Sniff
 	* @return void
 	*/
 	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
-		$utils = Security_Sniffs_UtilsFactory::getInstance($this->CmsFramework);
+		$utils = Security_Sniffs_UtilsFactory::getInstance();
+		if ($this->forceParanoia >= 0) {
+			$parano =  $this->forceParanoia ? 1 : 0;
+		} else {
+			$parano = PHP_CodeSniffer::getConfigData('ParanoiaMode') ? 1 : 0;
+		}
 		$tokens = $phpcsFile->getTokens();
 		$s = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, $stackPtr, null, true, null, true);
 
@@ -56,7 +54,7 @@ class Security_Sniffs_BadFunctions_EasyXSSSniff implements PHP_CodeSniffer_Sniff
 				$phpcsFile->addError('Easy XSS detected because of direct user input with ' . $tokens[$s]['content'] . ' on ' . $tokens[$stackPtr]['content'], $s, 'EasyXSSerr');
 			} elseif ($s && $utils::is_XSS_mitigation($tokens[$s]['content'])) {
 				$s = $tokens[$s+1]['parenthesis_closer'];
-			} elseif ($s && $this->ParanoiaMode && !$warn) {
+			} elseif ($s && $parano && !$warn) {
 				$warn = $s;
 			}
 		}

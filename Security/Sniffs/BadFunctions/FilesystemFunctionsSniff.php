@@ -2,14 +2,6 @@
 
 
 class Security_Sniffs_BadFunctions_FilesystemFunctionsSniff implements PHP_CodeSniffer_Sniff  {
-
-	/**
-	* Framework or CMS used. Must be a class under Security_Sniffs.
-	*
-	* @var String
-	*/
-	public $CmsFramework = NULL;
-
 	/**
 	* Returns the token types that this sniff is interested in.
 	*
@@ -18,13 +10,6 @@ class Security_Sniffs_BadFunctions_FilesystemFunctionsSniff implements PHP_CodeS
 	public function register() {
 		return array(T_STRING);
 	}
-
-	/**
-	* Paranoya mode. Will generate more alerts in order to direct manual code review.
-	*
-	* @var bool
-	*/
-	public $ParanoiaMode = 1;
 
 	/**
 	* Processes the tokens that this sniff is interested in.
@@ -36,7 +21,7 @@ class Security_Sniffs_BadFunctions_FilesystemFunctionsSniff implements PHP_CodeS
 	* @return void
 	*/
 	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
-		$utils = Security_Sniffs_UtilsFactory::getInstance($this->CmsFramework);
+		$utils = Security_Sniffs_UtilsFactory::getInstance();
 
 		$tokens = $phpcsFile->getTokens();
 		if (in_array($tokens[$stackPtr]['content'], $utils::getFilesystemFunctions())) {
@@ -47,7 +32,7 @@ class Security_Sniffs_BadFunctions_FilesystemFunctionsSniff implements PHP_CodeS
 			$opener = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr, null, false, null, true);
 			if (!$opener) {
 				// No opener found, so it's probably not a function call
-				if ($this->ParanoiaMode) {
+				if (PHP_CodeSniffer::getConfigData('ParanoiaMode')) {
 					$phpcsFile->addWarning('Filesystem function ' . $tokens[$stackPtr]['content'] . ' used but not as a function', $stackPtr, 'WarnWeirdFilesystem');
 				}
 				return;

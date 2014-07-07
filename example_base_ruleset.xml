@@ -12,22 +12,19 @@
 
 <!-- Global properties -->
 <!-- Please note that not every sniff uses them and they can be overwritten by rule -->
-<properties>
-	<property name="CmsFramework" value="Drupal7"/>
-	<!-- Paranoya mode: Will generate more alerts but will miss less vulnerabilites -->
-	<property name="ParanoiaMode" value="1"/>
-</properties>
+<!-- Paranoya mode: Will generate more alerts but will miss less vulnerabilites. Good for assisting manual code review. -->
+<config name="ParanoiaMode" value="1"/>
 
 <!-- BadFunctions -->
 <!-- PHP functions that can lead to security issues -->
-
 <rule ref="Security.BadFunctions.Asserts"/>
 <rule ref="Security.BadFunctions.Backticks"/>
 <rule ref="Security.BadFunctions.CallbackFunctions"/>
 <rule ref="Security.BadFunctions.EasyRFI"/>
 <rule ref="Security.BadFunctions.EasyXSS">
 	<properties>
-		<property name="ParanoiaMode" value="1"/>
+		<!-- Comment out to follow global ParanoiaMode -->
+		<property name="forceParanoia" value="1"/>
 	</properties>
 </rule>
 <rule ref="Security.BadFunctions.ErrorHandling"/>

@@ -13,14 +13,6 @@ class Security_Sniffs_Drupal7_UserInputWatchSniff implements PHP_CodeSniffer_Sni
 	}
 
 	/**
-	* Paranoya mode. Will generate more alerts but will miss less vulnerabilites.
-	* This sniff depends on it to be set, otherwise it won't be excuted.
-	*
-	* @var bool
-	*/
-	public $ParanoiaMode = 1;
-
-	/**
 	* Threshold for $form and $form_state possible user input.
 	* Will generate one alert per file when this threshold is reached.
 	*
@@ -48,7 +40,7 @@ class Security_Sniffs_Drupal7_UserInputWatchSniff implements PHP_CodeSniffer_Sni
 	* @return void
 	*/
 	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
-		if (!$this->ParanoiaMode) return;
+		if (!PHP_CodeSniffer::getConfigData('ParanoiaMode')) return;
 
 		$utils = new Security_Sniffs_Drupal7_Utils();
 		$tokens = $phpcsFile->getTokens();

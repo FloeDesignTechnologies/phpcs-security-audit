@@ -12,20 +12,6 @@ class Security_Sniffs_Misc_IncludeMismatchSniff implements PHP_CodeSniffer_Sniff
 	}
 
 	/**
-	* Framework or CMS used. Must be a class under Security_Sniffs.
-	*
-	* @var String
-	*/
-	public $CmsFramework = NULL;
-
-	/**
-	* Paranoya mode. Will generate more alerts that direct manual code reivew.
-	*
-	* @var bool
-	*/
-	public $ParanoiaMode = 0;
-
-	/**
 	* Processes the tokens that this sniff is interested in.
 	*
 	* @param PHP_CodeSniffer_File $phpcsFile The file where the token was found.

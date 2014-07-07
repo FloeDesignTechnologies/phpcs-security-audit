@@ -13,13 +13,6 @@ class Security_Sniffs_Drupal7_DynQueriesSniff implements PHP_CodeSniffer_Sniff {
 	}
 
 	/**
-	* Paranoya mode. Will generate more alerts but will miss less vulnerabilites.
-	*
-	* @var bool
-	*/
-	public $ParanoiaMode = 1;
-
-	/**
 	* Processes the tokens that this sniff is interested in.
 	*
 	* @param PHP_CodeSniffer_File $phpcsFile The file where the token was found.
@@ -98,7 +91,7 @@ class Security_Sniffs_Drupal7_DynQueriesSniff implements PHP_CodeSniffer_Sniff {
 				}
 			}
 
-			if ($warn && $this->ParanoiaMode) {
+			if ($warn && PHP_CodeSniffer::getConfigData('ParanoiaMode')) {
 				$phpcsFile->addWarning('Potential SQL injection in ' . $tokens[$stackPtr]['content'] . " with param #$paramnum", $stackPtr, 'D7DynQueriesWarn');
 			}
 		}

@@ -13,13 +13,6 @@ class Security_Sniffs_Drupal7_CacheiSniff implements PHP_CodeSniffer_Sniff {
 	}
 
 	/**
-	* Paranoya mode. Will generate more alerts but will miss less vulnerabilites.
-	*
-	* @var bool
-	*/
-	public $ParanoiaMode = 1;
-
-	/**
 	* Processes the tokens that this sniff is interested in.
 	*
 	* @param PHP_CodeSniffer_File $phpcsFile The file where the token was found.
@@ -55,7 +48,7 @@ class Security_Sniffs_Drupal7_CacheiSniff implements PHP_CodeSniffer_Sniff {
 				}
 				if ($utils::is_token_user_input($tokens[$s])) {
 					$phpcsFile->addError("Potential cache injection found in $content()", $s, 'D7Cachei');
-				} elseif ($this->ParanoiaMode && in_array($tokens[$s]['code'], $utils::getVariableTokens())) {
+				} elseif (PHP_CodeSniffer::getConfigData('ParanoiaMode') && in_array($tokens[$s]['code'], $utils::getVariableTokens())) {
 					$phpcsFile->addWarning("Direct variable usage in $content()", $s, 'D7CacheDirectVar');
 				}
 			}
