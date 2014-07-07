@@ -201,10 +201,14 @@ class Security_Sniffs_Utils {
 	* @param int $num	The parameter number desired (starts with 1)
 	* @return Array()	An array containing tokens from the requested param
 	* @return NULL	If no tokens is found or parameter doesn't exists
+	* @return FALSE	If no parameters can be found
 	*/
 	public static function get_param_tokens($phpcsFile, $stackPtr, $num) {
 		$tokens = $phpcsFile->getTokens();
 		$opener = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr, null, false, null, true);
+		if (!isset($tokens[$opener]['parenthesis_closer'])) {
+			return FALSE;
+		}
 		$closer = $tokens[$opener]['parenthesis_closer'];
 		$s = $opener + 1;
 		$i = 1;
