@@ -14,6 +14,7 @@
 	
 
 	// BadFunctions
+	md5();
 	phpinfo();
 	create_function($a);
 	ftp_exec($a);

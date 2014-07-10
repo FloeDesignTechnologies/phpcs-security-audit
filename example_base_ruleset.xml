@@ -20,6 +20,7 @@
 <rule ref="Security.BadFunctions.Asserts"/>
 <rule ref="Security.BadFunctions.Backticks"/>
 <rule ref="Security.BadFunctions.CallbackFunctions"/>
+<rule ref="Security.BadFunctions.CryptoFunctions"/>
 <rule ref="Security.BadFunctions.EasyRFI"/>
 <rule ref="Security.BadFunctions.EasyXSS">
 	<properties>
