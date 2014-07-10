@@ -13,6 +13,6 @@
         "squizlabs/php_codesniffer": "~1.5.1"
     },
     "scripts": {
-        "post-install-cmd": "ln -s ../../../../../Security vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/Security"
+        "post-install-cmd": "if [[ -d vendor/pheromone/phpcs-security-audit/ && -d vendor/squizlabs/php_codesniffer/ ]]; then ln -s ../../../../pheromone/phpcs-security-audit/Security vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/Security; else ln -s ../../../../../Security vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/Security; fi"
     }
 }
