@@ -110,7 +110,7 @@ class Security_Sniffs_Drupal7_Utils extends Security_Sniffs_Utils {
 	public static $ContribAdvisories = array(
 		'domain' => array(array('7.x-2.4', 'DRUPAL-SA-CONTRIB-2010-096')),
 		'aes' => array(array('7.x-1.5', 'DRUPAL-SA-CONTRIB-2011-005')),
-		'webform' => array(array('7.x-3.10', 'DRUPAL-SA-CONTRIB-2011-021'), array('7.x-3.17', 'SA-CONTRIB-2012-035 CVE-2012-1660')),
+		'webform' => array(array('7.x-3.10', 'DRUPAL-SA-CONTRIB-2011-021'), array('7.x-3.17', 'SA-CONTRIB-2012-035 CVE-2012-1660'), array('7.x-3.20', 'SA-CONTRIB-2014-018'), array('7.x-4.1', 'SA-CONTRIB-2014-018')),
 
 		'nodereference_url' => array(array('7.x-1.10', 'DRUPAL-SA-CONTRIB-2011-018')),
 		'save_draft' => array(array('7.x-1.4', 'DRUPAL-SA-CONTRIB-2011-017')),
@@ -123,9 +123,10 @@ class Security_Sniffs_Drupal7_Utils extends Security_Sniffs_Utils {
 		'rate' => array(array('7.x-1.2', 'DRUPAL-SA-CONTRIB-2011-045')),
 		'webform_civicrm' => array(array('7.x-2.2', 'DRUPAL-SA-CONTRIB-2011-055'), array('7.x-3.4', 'SA-CONTRIB-2012-161 CVE-2012-5554')),
 
-		'ckeditor' => array(array('7.x-1.5', 'DRUPAL-SA-CONTRIB-2011-054'), array('7.x-1.7', 'DRUPAL-SA-CONTRIB-2012-040 CVE-2012-2066 CVE-2012-2067')),
+		'ckeditor' => array(array('7.x-1.5', 'DRUPAL-SA-CONTRIB-2011-054'), array('7.x-1.7', 'DRUPAL-SA-CONTRIB-2012-040 CVE-2012-2066 CVE-2012-2067'),
+						array('7.x-1.16', 'SA-CONTRIB-2014-098')),
 
-		'og' => array(array('7.x-1.2', 'DRUPAL-SA-CONTRIB-2011-050'), array('7.x-1.5', 'SA-CONTRIB-2012-148 CVE-2012-5539')),
+		'og' => array(array('7.x-1.2', 'DRUPAL-SA-CONTRIB-2011-050'), array('7.x-1.5', 'SA-CONTRIB-2012-148 CVE-2012-5539'), array('7.x-2.4', 'SA-CONTRIB-2013-095 CVE-2013-7065 CVE-2013-7068'), array('7.x-2.7', 'SA-CONTRIB-2014-049')),
 
 		'echo' => array(array('7.x-1.7', 'DRUPAL-SA-CONTRIB-2011-046')),
 		'supercron' => array(array('abandoned', 'DRUPAL-SA-CONTRIB-2012-006 CVE-2012-1628')),
@@ -134,13 +135,16 @@ class Security_Sniffs_Drupal7_Utils extends Security_Sniffs_Utils {
 		'admin_hover' => array(array('abandoned', 'DRUPAL-SA-CONTRIB-2012-006 CVE-2012-1631')),
 		'fillpdf' => array(array('7.x-1.2', 'DRUPAL-SA-CONTRIB-2012-003 CVE-2012-1625')),
 		'metatags_quick' => array(array('7.x-2.3', 'DRUPAL-SA-CONTRIB-2011-059')),
-		'webform_validation' => array(array('7.x-1.0', 'DRUPAL-SA-CONTRIB-2011-056')),
+		'webform_validation' => array(array('7.x-1.0', 'DRUPAL-SA-CONTRIB-2011-056'), array('7.x-1.4', 'SA-CONTRIB-2014-014')),
 
-		'commerce' => array(array('7.x-1.2', 'DRUPAL-SA-CONTRIB-2012-014 CVE-2012-1639')),
+		'commerce' => array(array('7.x-1.2', 'DRUPAL-SA-CONTRIB-2012-014 CVE-2012-1639'), array('7.x-1.10', 'SA-CONTRIB-2014-087')),
+
 		'search_autocomplete' => array(array('7.x-2.1', 'DRUPAL-SA-CONTRIB-2012-013 CVE-2012-1638')),
 		'quicktabs' => array(array('7.x-3.3', 'DRUPAL-SA-CONTRIB-2012-012 CVE-2012-1637'), array('7.x-3.6', 'SA-CONTRIB-2013-078 CVE-2013-4406')),
 		'stickynote' => array(array('7.x-1.1', 'DRUPAL-SA-CONTRIB-2012-010 CVE-2012-1636')),
-		'revisioning' => array(array('7.x-1.3', 'DRUPAL-SA-CONTRIB-2012-009 CVE-2012-1635')),
+
+		'revisioning' => array(array('7.x-1.3', 'DRUPAL-SA-CONTRIB-2012-009 CVE-2012-1635'), array('7.x-1.6', 'SA-CONTRIB-2013-090 CVE-2013-4597'), array('7.x-1.8', 'SA-CONTRIB-2014-039')),
+
 		'video_filter' => array(array('7.x-3.0', 'DRUPAL-SA-CONTRIB-2012-008 CVE-2012-1634')),
 		'mediafront' => array(array('7.x-1.5', 'DRUPAL-SA-CONTRIB-2012-024 CVE-2012-1647'), array('7.x-2.1', 'SA-CONTRIB-2013-074 CVE-2013-4380')),
 
@@ -150,7 +154,9 @@ class Security_Sniffs_Drupal7_Utils extends Security_Sniffs_Utils {
 
 		'slidebox' => array(array('7.x-1.4', 'SA-CONTRIB-2012-037 CVE-2012-2063'), array('7.x-2.x-dev', 'SA-CONTRIB-2012-037 CVE-2012-2063')),
 
-		'content_lock' => array(array('7.x-1.2', 'SA-CONTRIB-2012-036 CVE-2012-2056')),
+		'content_lock' => array(array('7.x-1.2', 'SA-CONTRIB-2012-036 CVE-2012-2056'), array('7.x-2.0', 'SA-CONTRIB-2014-024')),
+
+
 		'uc_bulk_stock_updater' => array(array('abandoned', 'SA-CONTRIB-2012-036 CVE-2012-2057')),
 		'uc_payflowlink' => array(array('abandoned', 'SA-CONTRIB-2012-036 ')),
 		'ticketyboo' => array(array('abandoned', 'SA-CONTRIB-2012-036 CVE-2012-2059')),
@@ -166,11 +172,13 @@ class Security_Sniffs_Drupal7_Utils extends Security_Sniffs_Utils {
 		'views_lang_switch' => array(array('7.x-1.2', 'SA-CONTRIB-2012-038 CVE-2012-2064')),
 		'print' => array(array('7.x-1.0', 'SA-CONTRIB-2012-057 CVE-2012-2084')),
 		'rpx' => array(array('7.x-2.2', 'SA-CONTRIB-2012-056 CVE-2012-2296')),
-		'ctools' => array(array('7.x-1.0', 'SA-CONTRIB-2012-054 CVE-2012-2082')),
+		'ctools' => array(array('7.x-1.0', 'SA-CONTRIB-2012-054 CVE-2012-2082'), array('7.x-1.4', 'SA-CONTRIB-2014-013')),
+
 		'sharethis' => array(array('7.x-2.2', 'SA-CONTRIB-2012-049 CVE-2012-2076 CVE-2012-2077'), array('7.x-2.5', 'SA-CONTRIB-2012-155 CVE-2012-5545')),
 
 		'linkit' => array(array('7.x-2.3', 'SA-CONTRIB-2012-067 CVE-2012-2304')),
-		'ubercart' => array(array('7.x-3.1', 'SA-CONTRIB-2012-064 CVE-2012-2299 CVE-2012-2300 CVE-2012-2301'), array('7.x-3.4', 'SA-CONTRIB-2013-020 CVE-2013-0322')),
+		'ubercart' => array(array('7.x-3.1', 'SA-CONTRIB-2012-064 CVE-2012-2299 CVE-2012-2300 CVE-2012-2301'), array('7.x-3.4', 'SA-CONTRIB-2013-020 CVE-2013-0322'), array('7.x-3.6', 'SA-CONTRIB-2013-098 CVE-2013-7302'), array('7.x-3.7', 'SA-CONTRIB-2014-085'), array('7.x-3.8', 'SA-CONTRIB-2014-101')),
+
 		'contact_forms' => array(array('7.x-1.3', 'SA-CONTRIB-2012-074 CVE-2012-2340')),
 		'cctags' => array(array('7.x-1.10', 'SA-CONTRIB-2012-072 CVE-2012-2310')),
 
@@ -181,7 +189,7 @@ class Security_Sniffs_Drupal7_Utils extends Security_Sniffs_Utils {
 		'protest' => array(array('7.x-1.2', 'SA-CONTRIB-2012-097 CVE-2012-2726')),
 		'simplenews' => array(array('7.x-1.0-rc1', 'SA-CONTRIB-2012-095 CVE-2012-2724'), array('7.x-1.1', 'SA-CONTRIB-2013-080 CVE-2013-4447')),
 
-		'maestro' => array(array('7.x-1.2', 'SA-CONTRIB-2012-094 CVE-2012-2723 CVE-2012-3799')),
+		'maestro' => array(array('7.x-1.2', 'SA-CONTRIB-2012-094 CVE-2012-2723 CVE-2012-3799'), array('7.x-1.4', 'SA-CONTRIB-2014-021')),
 		'node_embed' => array(array('7.x-1.0', 'SA-CONTRIB-2012-093 CVE-2012-2722')),
 
 		'colorbox_node' => array(array('7.x-2.2', 'SA-CONTRIB-2012-110 CVE-2012-4474')),
@@ -217,7 +225,7 @@ class Security_Sniffs_Drupal7_Utils extends Security_Sniffs_Utils {
 		'spambot' => array(array('7.x-1.1', 'SA-CONTRIB-2012-142 CVE-2012-6582')),
 
 		'om_maximenu' => array(array('7.x-1.44', 'SA-CONTRIB-2012-160 CVE-2012-5553')),
-		'password_policy' => array(array('7.x-1.3', 'SA-CONTRIB-2012-159 CVE-2012-5552'), array('7.x-1.5', 'SA-CONTRIB-2013-069 CVE-2013-4274')),
+		'password_policy' => array(array('7.x-1.3', 'SA-CONTRIB-2012-159 CVE-2012-5552'), array('7.x-1.5', 'SA-CONTRIB-2013-069 CVE-2013-4274'), array('7.x-1.9', 'SA-CONTRIB-2014-070')),
 
 		'mailchimp' => array(array('7.x-2.7', 'SA-CONTRIB-2012-158 CVE-2012-5551')),
 		'time_spent' => array(array('unsupported', 'SA-CONTRIB-2012-157')),
@@ -225,7 +233,7 @@ class Security_Sniffs_Drupal7_Utils extends Security_Sniffs_Utils {
 		'mandrill' => array(array('7.x-1.2', 'SA-CONTRIB-2012-153 CVE-2012-5544')),
 		'feeds' => array(array('7.x-2.0-alpha6', 'SA-CONTRIB-2012-152 CVE-2012-5543')),
 		'multilink' => array(array('7.x-2.7', 'SA-CONTRIB-2012-170 CVE-2012-5589')),
-		'services' => array(array('7.x-3.3', 'SA-CONTRIB-2012-168 CVE-2012-5586'), array('7.x-3.4', 'SA-CONTRIB-2013-051 CVE-2013-2158')),
+		'services' => array(array('7.x-3.3', 'SA-CONTRIB-2012-168 CVE-2012-5586'), array('7.x-3.4', 'SA-CONTRIB-2013-051 CVE-2013-2158'), array('7.x-3.10', 'SA-CONTRIB-2014-092')),
 
 		'user_readonly' => array(array('7.x-1.4', 'SA-CONTRIB-2012-163 CVE-2012-5557')),
 		'restws' => array(array('7.x-1.1', 'SA-CONTRIB-2012-162 CVE-2012-5556'), array('7.x-1.2', 'SA-CONTRIB-2013-003 CVE-2013-0205'), array('7.x-1.3', 'SA-CONTRIB-2013-042 CVE-2013-1946'), array('7.x-2.1', 'SA-CONTRIB-2013-062 CVE-2013-4225')),
@@ -258,7 +266,8 @@ class Security_Sniffs_Drupal7_Utils extends Security_Sniffs_Utils {
 		'taxonomy_manager' => array(array('7.x-1.0-rc1', 'SA-CONTRIB-2013-018 CVE-2013-0320')),
 		'yandex_metrics' => array(array('7.x-1.5', 'SA-CONTRIB-2013-017 CVE-2013-0319')),
 
-		'views' => array(array('7.x-3.6', 'SA-CONTRIB-2013-035 CVE-2013-1887')),
+		'views' => array(array('7.x-3.6', 'SA-CONTRIB-2013-035 CVE-2013-1887'), array('7.x-3.8', 'SA-CONTRIB-2014-054')),
+
 		'corporate' => array(array('7.x-1.4', 'SA-CONTRIB-2013-033 CVE-2013-1787')),
 		'company' => array(array('7.x-1.4', 'SA-CONTRIB-2013-032 CVE-2013-1786')),
 		'responsive' => array(array('7.x-1.6', 'SA-CONTRIB-2013-031 CVE-2013-1785')),
@@ -303,9 +312,82 @@ class Security_Sniffs_Drupal7_Utils extends Security_Sniffs_Utils {
 
 		'gss' => array(array('7.x-1.10', 'SA-CONTRIB-2013-077 CVE-2013-4384')),
 
-		'nodeaccesskeys' => array(array('7.x-1.1', 'SA-CONTRIB-2013-089')),
-		'payment_webform' => array(array('7.x-1.5', 'SA-CONTRIB-2013-087 ')),
+		'nodeaccesskeys' => array(array('7.x-1.1', 'SA-CONTRIB-2013-089 CVE-2013-4596'), array('7.x-1.2', 'SA-CONTRIB-2014-066')),
+		'payment_webform' => array(array('7.x-1.5', 'SA-CONTRIB-2013-087 CVE-2013-4594')),
 
+		'invitation' => array(array('7.x-2.2', 'SA-CONTRIB-2013-093 CVE-2013-7063')),
+		'misery' => array(array('7.x-2.2', 'SA-CONTRIB-2013-092 CVE-2013-4599')),
+
+		'gcc' => array(array('7.x-1.1', 'SA-CONTRIB-2013-091 CVE-2013-4598')),
+
+		'leaflet' => array(array('7.x-1.1', 'SA-CONTRIB-2014-005')),
+		'secure_cookie_data' => array(array('7.x-2.1', 'SA-CONTRIB-2014-004')),
+		'dfp' => array(array('7.x-1.2', 'SA-CONTRIB-2014-003')),
+		'anonymous_posting' => array(array('7.x-1.4', 'SA-CONTRIB-2014-002 CVE-2014-1611')),
+		'entityreference' => array(array('7.x-1.1', 'SA-CONTRIB-2013-096 CVE-2013-7066')),
+
+		'push_notifications' => array(array('7.x-1.1', 'SA-CONTRIB-2014-011')),
+		'tribune' => array(array('unsupported', 'SA-CONTRIB-2014-008')),
+		'lang_dropdown' => array(array('7.x-1.4', 'SA-CONTRIB-2014-006')),
+
+		'openomega' => array(array('7.x-1.1', 'SA-CONTRIB-2014-025')),
+		'content_lock' => array(),
+		'slickgrid' => array(array('7.x-2.0', 'SA-CONTRIB-2014-022')),
+		'commons' => array(array('7.x-3.9', 'SA-CONTRIB-2014-020'), array('7.x-3.10', 'SA-CONTRIB-2014-045')),
+		'easy_social' => array(array('7.x-2.11', 'SA-CONTRIB-2014-019')),
+		'image_resize_filter' => array(array('7.x-1.14', 'SA-CONTRIB-2014-017')),
+
+		'cas' => array(array('7.x-1.3', 'SA-CONTRIB-2014-035')),
+		'custom_search' => array(array('7.x-1.14', 'SA-CONTRIB-2014-034'), array('7.x-1.16', 'SA-CONTRIB-2014-043')),
+		'nivo_slider' => array(array('7.x-1.11', 'SA-CONTRIB-2014-033')),
+		'mimemail' => array(array('7.x-1.0-beta3', 'SA-CONTRIB-2014-029'), array('7.x-1.0-beta2', 'SA-CONTRIB-2014-026')),
+		'masquerade' => array(array('7.x-1.0-rc6', 'SA-CONTRIB-2014-028')),
+		'newsflash' => array(array('7.x-2.5', 'SA-CONTRIB-2014-027')),
+
+		'professional_theme' => array(array('7.x-2.04', 'SA-CONTRIB-2014-044')),
+		'i18n' => array(array('7.x-1.11', 'SA-CONTRIB-2014-042')),
+		'skeletontheme' => array(array('7.x-1.4', 'SA-CONTRIB-2014-040')),
+		'simplecorp' => array(array('7.x-1.1', 'SA-CONTRIB-2014-038')),
+		'bluemasters' => array(array('7.x-2.1', 'SA-CONTRIB-2014-037')),
+
+		'require_login' => array(array('7.x-1.1', 'SA-CONTRIB-2014-055')),
+		'fate' => array(array('7.x-1.1', 'SA-CONTRIB-2014-053')),
+		'addressfield_tokens' => array(array('7.x-1.4', 'SA-CONTRIB-2014-052'), array('7.x-1.5', 'SA-CONTRIB-2014-104')),
+		'realname_registration' => array(array('7.x-2.0', 'SA-CONTRIB-2014-051')),
+		'commerce_postfinance' => array(array('7.x-1.5', 'SA-CONTRIB-2014-050')),
+		'fape' => array(array('7.x-1.2', 'SA-CONTRIB-2014-048')),
+		'zen' => array(array('7.x-3.3', 'SA-CONTRIB-2014-047'), array('7.x-5.5', 'SA-CONTRIB-2014-047')),
+		'context_form_alteration' => array(array('7.x-1.2', 'SA-CONTRIB-2014-046')),
+
+		'custom_meta' => array(array('7.x-1.3', 'SA-CONTRIB-2014-065')),
+		'course' => array(array('7.x-1.2', 'SA-CONTRIB-2014-064')),
+		'videowhisper' => array(array('unsupported', 'SA-CONTRIB-2014-061 CVE-2014-2715')),
+		'petitions' => array(array('7.x-1.2', 'SA-CONTRIB-2014-060')),
+		'touch' => array(array('7.x-1.9', 'SA-CONTRIB-2014-059 CVE-2014-4303')),
+		'webserver_auth' => array(array('7.x-1.4', 'SA-CONTRIB-2014-058 ')),
+
+		'biblio_autocomplete' => array(array('7.x-1.5', 'SA-CONTRIB-2014-075 CVE-2014-5249 CVE-2014-5249 CVE-2014-5250 CVE-2014-5250')),
+		'logintoboggan' => array(array('7.x-1.4', 'SA-CONTRIB-2014-069')),
+		'pane' => array(array('7.x-2.5', 'SA-CONTRIB-2014-068')),
+
+		'rules_link' => array(array('7.x-1.0-beta5', 'SA-CONTRIB-2014-084')),
+		'marketo_ma' => array(array('7.x-1.5', 'SA-CONTRIB-2014-082')),
+		'social_stats' => array(array('7.x-1.5', 'SA-CONTRIB-2014-080')),
+		'notify' => array(array('7.x-1.1', 'SA-CONTRIB-2014-078')),
+		'tablefield' => array(array('7.x-2.3', 'SA-CONTRIB-2014-077 ')),
+
+		'safeword' => array(array('7.x-1.10', 'SA-CONTRIB-2014-095 ')),
+		'twilio' => array(array('7.x-1.9', 'SA-CONTRIB-2014-093')),
+		'survey_builder' => array(array('7.x-1.2', 'SA-CONTRIB-2014-091')),
+		'speech' => array(array('unsupported', 'SA-CONTRIB-2014-090 ')),
+		'geofield_ymap' => array(array('7.x-1.2', 'SA-CONTRIB-2014-089 ')),
+		'custom_breadcrumbs' => array(array('7.x-2.0-beta1', 'SA-CONTRIB-2014-086 ')),
+
+		'document' => array(array('7.x-1.21', 'SA-CONTRIB-2014-102 ')),
+		'badbehavior' => array(array('7.x-2.2216', 'SA-CONTRIB-2014-100 ')),
+		'oa_core' => array(array('7.x-2.22', 'SA-CONTRIB-2014-099 ')),
+		'nodeaccess' => array(array('7.x-1.4', 'SA-CONTRIB-2014-097 ')),
+		'oauth2_client' => array(array('7.x-1.2', 'SA-CONTRIB-2014-096 ')),
 
 
 	);
