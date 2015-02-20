@@ -39,6 +39,33 @@ class Security_Sniffs_Utils {
 	}
 
 
+	public static function getSafeServerVars() {
+		// From http://php.net/manual/en/reserved.variables.server.php
+		return array(
+			'DOCUMENT_ROOT', 'SERVER_ADDR', 'SERVER_PORT', 'REMOTE_ADDR', 'REMOTE_PORT', 
+		);
+	}
+
+	/**
+	* Used to remove false positive for some tokens.
+	* Currently made for $_SERVER['DOCUMENT_ROOT']
+	* @param String $badT	The token to verify
+	* @param String Tparam2T	The second token after the token to verify
+	* @return Boolean	Returns TRUE if it's safe so it's a false positive, FALSE if not.
+	*/
+	public static function is_token_false_positive($badT, $param2T) {
+		if (in_array($badT['content'], array('$_SERVER'))) {
+			$param2 = str_replace(array('"', "'"), '', $param2T['content']);
+			// Safe values for $_SERVER means it's a false positive
+			// Paranoya note: $_SERVER['SAFE' . 'UNSAFE'] can exists 
+			if (in_array($param2, Security_Sniffs_Utils::getSafeServerVars())) {
+				return TRUE;
+			}
+		}
+		return FALSE;
+	}
+
+
 	public static function getFilesystemFunctions() {
 		return array(
 			// From http://www.php.net/manual/en/book.filesystem.php
@@ -215,7 +242,6 @@ class Security_Sniffs_Utils {
 		}
 		return FALSE;
 	}
-
 
 	/**
 	* Helper function for get_param_tokens() that recursivly go inside parenthesis
