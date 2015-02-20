@@ -9,9 +9,9 @@ As a bonus set of rules, the tool also check for CVE issues and security advisor
 
 The main reasons of this project for being an extension of PHP_CodeSniffer is to have easy integration into continuous integration systems and to be able to find security bugs that are not detected with object oriented analysis (like in [RIPS](http://rips-scanner.sourceforge.net/) or [PHPMD](http://phpmd.org/)).
 
-phpcs-security-audit is backed by [Phéromone](http://www.pheromone.ca/) and written by [Jonathan Marcil](http://www.jonathanmarcil.ca/).
+phpcs-security-audit is backed by [Floe design + technologies](https://floedesign.ca/) and written by [Jonathan Marcil](https://www.jonathanmarcil.ca/).
 
-[![Phéromone, agence d'interactions](https://www.owasp.org/images/a/ab/Logo-phero.gif)](http://www.pheromone.ca/)
+[![Floe design + technologies](https://floedesign.ca/img/thumbs/floe.jpg)](https://floedesign.ca/)
 
 
 Usage
