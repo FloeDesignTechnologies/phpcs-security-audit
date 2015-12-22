@@ -1,7 +1,7 @@
 <?php
 
 
-class Security_Sniffs_Drupal7_SQLiSniff implements PHP_CodeSniffer_Sniff {
+class Security_Sniffs_Drupal7_AESModuleSniff implements PHP_CodeSniffer_Sniff {
 
 	/**
 	* Returns the token types that this sniff is interested in.
