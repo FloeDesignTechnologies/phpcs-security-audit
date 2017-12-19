@@ -1,7 +1,11 @@
 <?php
+namespace PHPCS_SecurityAudit\Sniffs\BadFunctions;
+
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
 
 
-class Security_Sniffs_BadFunctions_CallbackFunctionsSniff implements PHP_CodeSniffer_Sniff {
+class CallbackFunctionsSniff implements Sniff {
 
 	/**
 	* Returns the token types that this sniff is interested in.
@@ -15,15 +19,15 @@ class Security_Sniffs_BadFunctions_CallbackFunctionsSniff implements PHP_CodeSni
 	/**
 	* Processes the tokens that this sniff is interested in.
 	*
-	* @param PHP_CodeSniffer_File $phpcsFile The file where the token was found.
+	* @param File $phpcsFile The file where the token was found.
 	* @param int                  $stackPtr  The position in the stack where
 	*                                        the token was found.
 	*
 	* @return void
 	*/
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
-		$utils = Security_Sniffs_UtilsFactory::getInstance();
+		$utils = \PHPCS_SecurityAudit\Sniffs\UtilsFactory::getInstance();
 
 		if (in_array($tokens[$stackPtr]['content'], $utils::getCallbackFunctions())) {
 	        $opener = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr, null, false, null, true);
@@ -36,8 +40,8 @@ class Security_Sniffs_BadFunctions_CallbackFunctionsSniff implements PHP_CodeSni
 					return;
 				}
 			}
-			$s = $phpcsFile->findNext(array_merge(PHP_CodeSniffer_Tokens::$emptyTokens, PHP_CodeSniffer_Tokens::$bracketTokens,
-										Security_Sniffs_Utils::$staticTokens, array(T_STRING_CONCAT)), $s, $closer, true);
+			$s = $phpcsFile->findNext(array_merge(\PHP_CodeSniffer\Util\Tokens::$emptyTokens, \PHP_CodeSniffer\Util\Tokens::$bracketTokens,
+										\PHPCS_SecurityAudit\Sniffs\Utils::$staticTokens, array(T_STRING_CONCAT)), $s, $closer, true);
 			$msg = 'Function ' . $tokens[$stackPtr]['content'] . '() that supports callback detected';
              if ($s) {
 				if ($utils::is_token_user_input($tokens[$s])) {

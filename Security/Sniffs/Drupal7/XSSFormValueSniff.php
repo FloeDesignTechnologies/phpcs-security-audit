@@ -1,7 +1,11 @@
 <?php
+namespace PHPCS_SecurityAudit\Sniffs\Drupal7;
+
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
 
 
-class Security_Sniffs_Drupal7_XSSFormValueSniff implements PHP_CodeSniffer_Sniff {
+class XSSFormValueSniff implements Sniff {
 
 	/**
 	* Returns the token types that this sniff is interested in.
@@ -15,28 +19,28 @@ class Security_Sniffs_Drupal7_XSSFormValueSniff implements PHP_CodeSniffer_Sniff
 	/**
 	* Processes the tokens that this sniff is interested in.
 	*
-	* @param PHP_CodeSniffer_File $phpcsFile The file where the token was found.
+	* @param File $phpcsFile The file where the token was found.
 	* @param int                  $stackPtr  The position in the stack where
 	*                                        the token was found.
 	*
 	* @return void
 	*/
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, $stackPtr) {
 
-		$utils = Security_Sniffs_UtilsFactory::getInstance();
+		$utils = \PHPCS_SecurityAudit\Sniffs\UtilsFactory::getInstance();
 		$tokens = $phpcsFile->getTokens();
 		if ($tokens[$stackPtr]['content'] == "'#value'" || $tokens[$stackPtr]['content'] == '"#value"') {
 			$closer = $phpcsFile->findNext(T_SEMICOLON, $stackPtr);
-			$next = $phpcsFile->findNext(array_merge(PHP_CodeSniffer_Tokens::$bracketTokens, PHP_CodeSniffer_Tokens::$emptyTokens, PHP_CodeSniffer_Tokens::$assignmentTokens),
+			$next = $phpcsFile->findNext(array_merge(\PHP_CodeSniffer\Util\Tokens::$bracketTokens, \PHP_CodeSniffer\Util\Tokens::$emptyTokens, \PHP_CodeSniffer\Util\Tokens::$assignmentTokens),
 								$stackPtr + 1, $closer + 1, true);
 			if ($next == $closer && $tokens[$next]['code'] == T_SEMICOLON)  {
 				// Case of $label = $element['#value'];
-				$next = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$assignmentTokens, $next);
+				$next = $phpcsFile->findPrevious(\PHP_CodeSniffer\Util\Tokens::$assignmentTokens, $next);
 				$next = $phpcsFile->findPrevious(T_VARIABLE, $next);
 				$phpcsFile->addWarning('Potential XSS found with #value on ' . $tokens[$next]['content'], $next, 'D7XSSWarFormValue');
 			} elseif ($next && $utils::is_token_user_input($tokens[$next])) {
 				$phpcsFile->addError('XSS found with #value on ' . $tokens[$next]['content'], $next, 'D7XSSErrFormValue');
-			} elseif ($next && PHP_CodeSniffer::getConfigData('ParanoiaMode')) {
+			} elseif ($next && \PHP_CodeSniffer\Config::getConfigData('ParanoiaMode')) {
 				if (in_array($tokens[$next]['content'], $utils::getXSSMitigationFunctions())) {
 					$n = $phpcsFile->findNext($utils::getVariableTokens(), $next + 1, $closer);
 					if ($n) {

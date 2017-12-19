@@ -1,7 +1,11 @@
 <?php
+namespace PHPCS_SecurityAudit\Sniffs\Drupal7;
+
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
 
 
-class Security_Sniffs_Drupal7_XSSHTMLConstructSniff implements PHP_CodeSniffer_Sniff {
+class XSSHTMLConstructSniff implements Sniff {
 	// TODO maybe this should be a generic sniff?
 
 	/**
@@ -16,19 +20,19 @@ class Security_Sniffs_Drupal7_XSSHTMLConstructSniff implements PHP_CodeSniffer_S
 	/**
 	* Processes the tokens that this sniff is interested in.
 	*
-	* @param PHP_CodeSniffer_File $phpcsFile The file where the token was found.
+	* @param File $phpcsFile The file where the token was found.
 	* @param int                  $stackPtr  The position in the stack where
 	*                                        the token was found.
 	*
 	* @return void
 	*/
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
-		$utils = Security_Sniffs_UtilsFactory::getInstance();
+	public function process(File $phpcsFile, $stackPtr) {
+		$utils = \PHPCS_SecurityAudit\Sniffs\UtilsFactory::getInstance();
 		$tokens = $phpcsFile->getTokens();
 		if (preg_match('/<|>/', $tokens[$stackPtr]['content'])) {
 			$end = $phpcsFile->findNext(T_SEMICOLON, $stackPtr + 1);
 			$next = $stackPtr;
-			while($next && $next = $phpcsFile->findNext(array_merge(array(T_STRING_CONCAT), PHP_CodeSniffer_Tokens::$emptyTokens), $next + 1, $end, true)) {
+			while($next && $next = $phpcsFile->findNext(array_merge(array(T_STRING_CONCAT), \PHP_CodeSniffer\Util\Tokens::$emptyTokens), $next + 1, $end, true)) {
 				// Next token will be checked with this sniff, no need to go further
 				if (in_array($tokens[$next]['code'], $this->register())) {
 					return;
@@ -36,7 +40,7 @@ class Security_Sniffs_Drupal7_XSSHTMLConstructSniff implements PHP_CodeSniffer_S
 				if ($next && !in_array($tokens[$next]['content'], $utils::getXSSMitigationFunctions())) {
 					if ($utils::is_direct_user_input($tokens[$next]['content'])) {
 						$phpcsFile->addError('HTML construction with direct user input '.$tokens[$next]['content'].' detected.', $stackPtr, 'D7XSSHTMLConstructErr');
-					} elseif (PHP_CodeSniffer::getConfigData('ParanoiaMode') && !in_array($tokens[$next]['code'], array_merge(array(T_INLINE_ELSE, T_COMMA), PHP_CodeSniffer_Tokens::$booleanOperators))) {
+					} elseif (\PHP_CodeSniffer\Config::getConfigData('ParanoiaMode') && !in_array($tokens[$next]['code'], array_merge(array(T_INLINE_ELSE, T_COMMA), \PHP_CodeSniffer\Util\Tokens::$booleanOperators))) {
 						if ($tokens[$next]['code'] == T_CLOSE_PARENTHESIS) {
 							$f = $phpcsFile->findPrevious(T_STRING, $next);
 							if ($f) {

@@ -1,6 +1,10 @@
 <?php
+namespace PHPCS_SecurityAudit\Sniffs\Symfony2;
 
-class Security_Sniffs_Symfony2_Utils extends Security_Sniffs_Utils {
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
+
+class Utils extends \PHPCS_SecurityAudit\Sniffs\Utils {
 
 	/**
 	* Heavy used function to verify if a token contains user input

@@ -1,6 +1,6 @@
 <?php
-
-class Security_Sniffs_Utils {
+namespace PHPCS_SecurityAudit\Sniffs;
+class Utils {
 
 	// Tokens that can't containts or use any variables (so no user input)
 	public static $staticTokens = array(T_CONSTANT_ENCAPSED_STRING, T_COMMA, T_LNUMBER, T_DNUMBER);
@@ -42,7 +42,7 @@ class Security_Sniffs_Utils {
 	public static function getSafeServerVars() {
 		// From http://php.net/manual/en/reserved.variables.server.php
 		return array(
-			'DOCUMENT_ROOT', 'SERVER_ADDR', 'SERVER_PORT', 'REMOTE_ADDR', 'REMOTE_PORT', 
+			'DOCUMENT_ROOT', 'SERVER_ADDR', 'SERVER_PORT', 'REMOTE_ADDR', 'REMOTE_PORT',
 		);
 	}
 
@@ -57,8 +57,8 @@ class Security_Sniffs_Utils {
 		if (in_array($badT['content'], array('$_SERVER'))) {
 			$param2 = str_replace(array('"', "'"), '', $param2T['content']);
 			// Safe values for $_SERVER means it's a false positive
-			// Paranoya note: $_SERVER['SAFE' . 'UNSAFE'] can exists 
-			if (in_array($param2, Security_Sniffs_Utils::getSafeServerVars())) {
+			// Paranoya note: $_SERVER['SAFE' . 'UNSAFE'] can exists
+			if (in_array($param2, \PHPCS_SecurityAudit\Sniffs\Utils::getSafeServerVars())) {
 				return TRUE;
 			}
 		}
@@ -81,7 +81,7 @@ class Security_Sniffs_Utils {
 			'chdir', 'chroot', 'dir', 'opendir', 'scandir',
 
 			// From http://ca2.php.net/manual/en/function.mime-content-type.php
-			'finfo_open', 
+			'finfo_open',
 
 			// From http://ca2.php.net/manual/en/book.xattr.php
 			'xattr_get', 'xattr_list', 'xattr_remove', 'xattr_set', 'xattr_supported',
@@ -108,6 +108,8 @@ class Security_Sniffs_Utils {
 			// Various functions that open/read files
 			'get_meta_tags', 'hash_file', 'hash_hmac_file', 'hash_update_file', 'md5_file', 'sha1_file',
 			'bzopen',
+//Curl Functions
+'curl_exec','curl_multi_exec',
 		);
 	}
 
@@ -164,9 +166,9 @@ class Security_Sniffs_Utils {
 
 			// http://php.net/manual/en/book.openssl.php
 			'openssl_cipher_iv_length', 'openssl_csr_export_to_file', 'openssl_csr_export', 'openssl_csr_get_public_key', 'openssl_csr_get_subject',
-			'openssl_csr_new', 'openssl_csr_sign', 'openssl_decrypt', 'openssl_dh_compute_key', 'openssl_digest', 'openssl_encrypt','openssl_error_string', 
-			'openssl_free_key', 'openssl_get_cipher_methods', 'openssl_get_md_methods', 'openssl_get_privatekey', 'openssl_get_publickey', 'openssl_open', 
-			'openssl_pbkdf2', 'openssl_pkcs12_export_to_file', 'openssl_pkcs12_export', 'openssl_pkcs12_read', 'openssl_pkcs7_decrypt', 'openssl_pkcs7_encrypt', 
+			'openssl_csr_new', 'openssl_csr_sign', 'openssl_decrypt', 'openssl_dh_compute_key', 'openssl_digest', 'openssl_encrypt','openssl_error_string',
+			'openssl_free_key', 'openssl_get_cipher_methods', 'openssl_get_md_methods', 'openssl_get_privatekey', 'openssl_get_publickey', 'openssl_open',
+			'openssl_pbkdf2', 'openssl_pkcs12_export_to_file', 'openssl_pkcs12_export', 'openssl_pkcs12_read', 'openssl_pkcs7_decrypt', 'openssl_pkcs7_encrypt',
 			'openssl_pkcs7_sign', 'openssl_pkcs7_verify', 'openssl_pkey_export_to_file', 'openssl_pkey_export', 'openssl_pkey_free', 'openssl_pkey_get_details',
 			'openssl_pkey_get_private', 'openssl_pkey_get_public', 'openssl_pkey_new', 'openssl_private_decrypt', 'openssl_private_encrypt', 'openssl_public_decrypt',
 			'openssl_public_encrypt', 'openssl_random_pseudo_bytes', 'openssl_seal', 'openssl_sign', 'openssl_spki_export_challenge', 'openssl_spki_export',
@@ -174,7 +176,7 @@ class Security_Sniffs_Utils {
 			'openssl_x509_export', 'openssl_x509_free', 'openssl_x509_parse', 'openssl_x509_read',
 
 			// http://php.net/manual/en/book.password.php
-			'password_get_info', 'password_hash', 'password_needs_rehash', 'password_verify', 
+			'password_get_info', 'password_hash', 'password_needs_rehash', 'password_verify',
 
 			// Guesses
 			'encrypt', 'decrypt', 'mc_encrypt', 'mc_decrypt', 'crypto', 'scrypt', 'bcrypt', 'password_crypt',
@@ -190,11 +192,11 @@ class Security_Sniffs_Utils {
 	public static $sqlFunctions = array();
 
 	public static function getSQLFunctions() {
-		return Security_Sniffs_Utils::$sqlFunctions;
+		return \PHPCS_SecurityAudit\Sniffs\Utils::$sqlFunctions;
 	}
 
 	public static function addSQLFunction($f) {
-		array_push(Security_Sniffs_Utils::$sqlFunctions, $f);
+		array_push(\PHPCS_SecurityAudit\Sniffs\Utils::$sqlFunctions, $f);
 	}
 
 
@@ -204,11 +206,11 @@ class Security_Sniffs_Utils {
 	public static $sqlObjects = array();
 
 	public static function getSQLObjects() {
-		return Security_Sniffs_Utils::$sqlObjects;
+		return \PHPCS_SecurityAudit\Sniffs\Utils::$sqlObjects;
 	}
 
 	public static function addSQLObjects($o) {
-		array_push(Security_Sniffs_Utils::$sqlObjects, $o);
+		array_push(\PHPCS_SecurityAudit\Sniffs\Utils::$sqlObjects, $o);
 	}
 
 
@@ -237,7 +239,7 @@ class Security_Sniffs_Utils {
 	* @return Boolean	returns TRUE if it's a XSS mitigation function, FALSE otherwise
 	*/
 	public static function is_XSS_mitigation($var) {
-		if (in_array($var,  Security_Sniffs_Utils::getXSSMitigationFunctions())) {
+		if (in_array($var,  \PHPCS_SecurityAudit\Sniffs\Utils::getXSSMitigationFunctions())) {
 			return TRUE;
 		}
 		return FALSE;
@@ -259,7 +261,7 @@ class Security_Sniffs_Utils {
 			$t[] = $tokens[$s];
 			$s++;
 			if ($tokens[$s]['code'] == T_OPEN_PARENTHESIS)
-				list($s, $t) = Security_Sniffs_Utils::crawl_open_parenthesis($tokens, $s, $t);
+				list($s, $t) = \PHPCS_SecurityAudit\Sniffs\Utils::crawl_open_parenthesis($tokens, $s, $t);
 		}
 		return array($s, $t);
 	}
@@ -268,7 +270,7 @@ class Security_Sniffs_Utils {
 	/**
 	* Returns the tokens contained in the function paramters such as f(param1token1 . param1token3, param2token1)
 	*
-    * @param PHP_CodeSniffer_File $phpcsFile	The working instance of PHP_CodeSniffer
+    * @param File $phpcsFile	The working instance of PHP_CodeSniffer
 	* @param int $stackPtr	The $stackPtr from PHP_CodeSniffer where the function is
 	* @param int $num	The parameter number desired (starts with 1)
 	* @return Array()	An array containing tokens from the requested param
@@ -303,7 +305,7 @@ class Security_Sniffs_Utils {
 			}
 			while ($s < $pcloser) {
 				if ($tokens[$s]['code'] == T_OPEN_PARENTHESIS) {
-					list($s, $t) = Security_Sniffs_Utils::crawl_open_parenthesis($tokens, $s, $t);
+					list($s, $t) = \PHPCS_SecurityAudit\Sniffs\Utils::crawl_open_parenthesis($tokens, $s, $t);
 				}
 				$tokens[$s]['stackPtr'] = $s;
 				$t[] = $tokens[$s];
@@ -329,7 +331,7 @@ class Security_Sniffs_Utils {
 	/**
 	* Returns a dirty param found in the parameter of a function call
 	*
-    * @param PHP_CodeSniffer_File $phpcsFile	The working instance of PHP_CodeSniffer
+    * @param File $phpcsFile	The working instance of PHP_CodeSniffer
 	* @param int $stackPtr	The $stackPtr from PHP_CodeSniffer where the function is.
 	*
 	* @return int The stackPtr of the param found, false if nothing is found
@@ -339,7 +341,7 @@ class Security_Sniffs_Utils {
 		$opener = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr, null, false, null, true);
 		$closer = $tokens[$opener]['parenthesis_closer'];
 		$s = $opener + 1;
-		$s = $phpcsFile->findNext(array_merge(PHP_CodeSniffer_Tokens::$emptyTokens, PHP_CodeSniffer_Tokens::$bracketTokens, Security_Sniffs_Utils::$staticTokens, array(T_STRING_CONCAT)), $s, $closer, true);
+		$s = $phpcsFile->findNext(array_merge(\PHP_CodeSniffer\Util\Tokens::$emptyTokens, \PHP_CodeSniffer\Util\Tokens::$bracketTokens, \PHPCS_SecurityAudit\Sniffs\Utils::$staticTokens, array(T_STRING_CONCAT)), $s, $closer, true);
 		return $s;
 	}
 

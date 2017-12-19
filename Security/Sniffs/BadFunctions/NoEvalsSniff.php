@@ -1,7 +1,11 @@
 <?php
+namespace PHPCS_SecurityAudit\Sniffs\BadFunctions;
+
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
 
 
-class Security_Sniffs_BadFunctions_NoEvalsSniff implements PHP_CodeSniffer_Sniff {
+class NoEvalsSniff implements Sniff {
 
 	/**
 	* Returns the token types that this sniff is interested in.
@@ -15,13 +19,13 @@ class Security_Sniffs_BadFunctions_NoEvalsSniff implements PHP_CodeSniffer_Sniff
 	/**
 	* Processes the tokens that this sniff is interested in.
 	*
-	* @param PHP_CodeSniffer_File $phpcsFile The file where the token was found.
+	* @param File $phpcsFile The file where the token was found.
 	* @param int                  $stackPtr  The position in the stack where
 	*                                        the token was found.
 	*
 	* @return void
 	*/
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 		$error = 'Please do not use eval() functions';
 		$phpcsFile->addError($error, $stackPtr, 'NoEvals');
