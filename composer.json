@@ -12,7 +12,12 @@
         "php": ">=5.4",
         "squizlabs/php_codesniffer": "~1.5.1||>=2.3.3"
     },
+    "autoload": {
+        "psr-4": {
+            "PHPCS_SecurityAudit\\": "Security/"
+        }
+    },
     "scripts": {
-        "post-install-cmd": "ln -s ../../../../../Security vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/Security"
+        "post-install-cmd": "ln -s ../../../../pheromone/phpcs-security-audit/Security vendor/squizlabs/php_codesniffer/src/Standards/Security"
     }
 }
