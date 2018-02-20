@@ -1,7 +1,11 @@
 <?php
+namespace PHPCS_SecurityAudit\Sniffs\BadFunctions;
+
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
 
 
-class Security_Sniffs_BadFunctions_PregReplaceSniff implements PHP_CodeSniffer_Sniff  {
+class PregReplaceSniff implements Sniff  {
 
 	/**
 	* Returns the token types that this sniff is interested in.
@@ -15,20 +19,20 @@ class Security_Sniffs_BadFunctions_PregReplaceSniff implements PHP_CodeSniffer_S
 	/**
 	* Processes the tokens that this sniff is interested in.
 	*
-	* @param PHP_CodeSniffer_File $phpcsFile The file where the token was found.
+	* @param File $phpcsFile The file where the token was found.
 	* @param int                  $stackPtr  The position in the stack where
 	*                                        the token was found.
 	*
 	* @return void
 	*/
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
-		$utils = Security_Sniffs_UtilsFactory::getInstance();
+	public function process(File $phpcsFile, $stackPtr) {
+		$utils = \PHPCS_SecurityAudit\Sniffs\UtilsFactory::getInstance();
 
 		$tokens = $phpcsFile->getTokens();
 		if ($tokens[$stackPtr]['content'] == 'preg_replace') {
 			$s = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr);
 			$closer = $tokens[$s]['parenthesis_closer'];
-			$s = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, $s + 1, $closer, true);
+			$s = $phpcsFile->findNext(\PHP_CodeSniffer\Util\Tokens::$emptyTokens, $s + 1, $closer, true);
 			if ($tokens[$s]['code'] == T_CONSTANT_ENCAPSED_STRING) {
 				$pattern = $tokens[$s]['content'];
 				if (substr($pattern, 1, 1) === '/') {
@@ -40,7 +44,7 @@ class Security_Sniffs_BadFunctions_PregReplaceSniff implements PHP_CodeSniffer_S
 						if ($utils::is_token_user_input($tokens[$s]))
 							$phpcsFile->addError("User input and /e modifier found in preg_replace, remote code execution possible.", $stackPtr, 'PregReplaceUserInputE');
 					}
-						
+
 				} else {
 					$phpcsFile->addWarning("Weird usage of preg_replace, please check manually for /e modifier.", $stackPtr, 'PregReplaceWeird');
 				}

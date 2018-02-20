@@ -1,7 +1,11 @@
 <?php
+namespace PHPCS_SecurityAudit\Sniffs\Drupal7;
+
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
 
 
-class Security_Sniffs_Drupal7_CacheiSniff implements PHP_CodeSniffer_Sniff {
+class CacheiSniff implements Sniff {
 
 	/**
 	* Returns the token types that this sniff is interested in.
@@ -15,14 +19,14 @@ class Security_Sniffs_Drupal7_CacheiSniff implements PHP_CodeSniffer_Sniff {
 	/**
 	* Processes the tokens that this sniff is interested in.
 	*
-	* @param PHP_CodeSniffer_File $phpcsFile The file where the token was found.
+	* @param File $phpcsFile The file where the token was found.
 	* @param int                  $stackPtr  The position in the stack where
 	*                                        the token was found.
 	*
 	* @return void
 	*/
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
-		$utils = new Security_Sniffs_Drupal7_Utils();
+	public function process(File $phpcsFile, $stackPtr) {
+		$utils = new Utils();
 
 		$tokens = $phpcsFile->getTokens();
 		$content = $tokens[$stackPtr]['content'];
@@ -42,13 +46,13 @@ class Security_Sniffs_Drupal7_CacheiSniff implements PHP_CodeSniffer_Sniff {
 			$s = $stackPtr + 1;
 
 			while ($s < $closer) {
-				$s = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, $s + 1, $closer, true);
+				$s = $phpcsFile->findNext(\PHP_CodeSniffer\Util\Tokens::$emptyTokens, $s + 1, $closer, true);
 				if (!$s) {
 					break;
 				}
 				if ($utils::is_token_user_input($tokens[$s])) {
 					$phpcsFile->addError("Potential cache injection found in $content()", $s, 'D7Cachei');
-				} elseif (PHP_CodeSniffer::getConfigData('ParanoiaMode') && in_array($tokens[$s]['code'], $utils::getVariableTokens())) {
+				} elseif (\PHP_CodeSniffer\Config::getConfigData('ParanoiaMode') && in_array($tokens[$s]['code'], $utils::getVariableTokens())) {
 					$phpcsFile->addWarning("Direct variable usage in $content()", $s, 'D7CacheDirectVar');
 				}
 			}

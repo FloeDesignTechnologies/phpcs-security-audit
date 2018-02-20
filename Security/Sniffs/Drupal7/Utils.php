@@ -1,6 +1,10 @@
 <?php
+namespace PHPCS_SecurityAudit\Sniffs\Drupal7;
 
-class Security_Sniffs_Drupal7_Utils extends Security_Sniffs_Utils {
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
+use PHPCS_SecurityAudit\Sniffs\Utils as BaseUtils;
+class Utils extends BaseUtils {
 
 	public static function getFilesystemFunctions() {
 		return array_merge(parent::getFilesystemFunctions(), array(
@@ -41,7 +45,7 @@ class Security_Sniffs_Drupal7_Utils extends Security_Sniffs_Utils {
 		if ($isparent && parent::is_XSS_mitigation($var)) {
 			return TRUE;
 		} else {
-			if (in_array($var,  Security_Sniffs_Drupal7_Utils::getXSSMitigationFunctions())) {
+			if (in_array($var,  Utils::getXSSMitigationFunctions())) {
 				return TRUE;
 			}
 		}
@@ -53,11 +57,11 @@ class Security_Sniffs_Drupal7_Utils extends Security_Sniffs_Utils {
 	private static $ACEntityTypes = array('node', 'taxonomy_term', 'term', 'entity_field');
 
 	public static function getACEntityTypes() {
-		return Security_Sniffs_Drupal7_Utils::$ACEntityTypes;
+		return Utils::$ACEntityTypes;
 	}
 
 	public static function addACEntityType($e) {
-		array_push(Security_Sniffs_Drupal7_Utils::$ACEntityTypes, $e);
+		array_push(Utils::$ACEntityTypes, $e);
 	}
 
 
@@ -408,7 +412,7 @@ class Security_Sniffs_Drupal7_Utils extends Security_Sniffs_Utils {
 
 
 	/**
-	* Parses data in Drupal's .info format. Directly copied from Drupal source code 
+	* Parses data in Drupal's .info format. Directly copied from Drupal source code
 	* https://api.drupal.org/api/drupal/includes%21common.inc/function/drupal_parse_info_format/7
 	*
 	* Data should be in an .ini-like format to specify values. White-space

@@ -1,7 +1,11 @@
 <?php
+namespace PHPCS_SecurityAudit\Sniffs\BadFunctions;
+
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
 
 
-class Security_Sniffs_BadFunctions_BackticksSniff implements PHP_CodeSniffer_Sniff {
+class BackticksSniff implements Sniff {
 
 	/**
 	* Returns the token types that this sniff is interested in.
@@ -15,14 +19,14 @@ class Security_Sniffs_BadFunctions_BackticksSniff implements PHP_CodeSniffer_Sni
 	/**
 	* Processes the tokens that this sniff is interested in.
 	*
-	* @param PHP_CodeSniffer_File $phpcsFile The file where the token was found.
+	* @param File $phpcsFile The file where the token was found.
 	* @param int                  $stackPtr  The position in the stack where
 	*                                        the token was found.
 	*
 	* @return void
 	*/
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
-		$utils = Security_Sniffs_UtilsFactory::getInstance();
+	public function process(File $phpcsFile, $stackPtr) {
+		$utils = \PHPCS_SecurityAudit\Sniffs\UtilsFactory::getInstance();
 		$tokens = $phpcsFile->getTokens();
         $closer = $phpcsFile->findNext(T_BACKTICK, $stackPtr + 1, null, false, null, true);
 		if (!$closer) {

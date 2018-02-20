@@ -1,6 +1,6 @@
 <?php
 
-class Security_Sniffs_Drupal8_Utils extends Security_Sniffs_Symfony2_Utils {
+class Utils extends Security_Sniffs_Symfony2_Utils {
 
 	/**
 	* Heavy used function to verify if a token contains user input
