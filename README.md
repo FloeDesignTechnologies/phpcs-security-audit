@@ -11,13 +11,13 @@ The main reason of this project for being an extension of PHP_CodeSniffer is to 
 
 phpcs-security-audit is backed by [Floe design + technologies](https://floedesign.ca/) and written by [Jonathan Marcil](https://twitter.com/jonathanmarcil).
 
-[![Floe design + technologies](https://floedesign.ca/img/thumbs/floe.jpg =100x)](https://floedesign.ca/)
+[<img src="https://floedesign.ca/img/thumbs/floe.jpg" alt="Floe design + technologies" width="100">](https://floedesign.ca/)
 
 
 Install
 =====
 
-You need http://pear.php.net/package/PHP_CodeSniffer/ at version 1.5+ or 2.x with PHP 5.4 or later installed first.
+Requires http://pear.php.net/package/PHP_CodeSniffer/ at version 1.5+ or 2.x with PHP 5.4+.
 
 Because of the way PHP CodeSniffer works, you need to put the Security/ folder from phpcs-security-audit in /usr/share/php/PHP/CodeSniffer/Standards or do a symlink to it.
 
