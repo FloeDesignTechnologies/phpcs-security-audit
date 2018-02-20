@@ -1,6 +1,8 @@
 About
 =====
 
+_use this legacy version 1.x to maintains compatibility with PHP Code Sniffer 1.5+ and 2.x_
+
 phpcs-security-audit is a set of [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer) rules that finds vulnerabilities and weaknesses related to security in PHP code.
 
 It currently has core PHP rules as well as Drupal 7 specific rules.
