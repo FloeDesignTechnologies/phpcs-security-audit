@@ -1,6 +1,8 @@
-About
-=====
+phpcs-security-audit v2
+=======================
 
+About
+-----
 phpcs-security-audit is a set of [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer) rules that finds vulnerabilities and weaknesses related to security in PHP code.
 
 It currently has core PHP rules as well as Drupal 7 specific rules.
@@ -15,7 +17,7 @@ phpcs-security-audit is backed by [Floe design + technologies](https://floedesig
 
 
 Install
-=====
+-------
 
 Requires [PHP CodeSniffer](http://pear.php.net/package/PHP_CodeSniffer/) version 3.x with PHP 5.4 or higher.
 
@@ -30,6 +32,7 @@ composer install
 The package is also on [Packagist](https://packagist.org/packages/pheromone/phpcs-security-audit):
 ```
 composer require pheromone/phpcs-security-audit
+sh vendor/pheromone/phpcs-security-audit/symlink.sh
 ./vendor/bin/phpcs --standard=./vendor/pheromone/phpcs-security-audit/example_base_ruleset.xml ./vendor/pheromone/phpcs-security-audit/tests.php
 ```
 
@@ -37,7 +40,7 @@ If you want to integrate it all with Jenkins, go see http://jenkins-php.org/ for
 
 
 Usage
-=====
+-----
 
 Simply point to any XML ruleset file and a folder:
 ```
@@ -63,8 +66,7 @@ FOUND 16 ERROR(S) AND 15 WARNING(S) AFFECTING 22 LINE(S)
 
 ```
 
-Drupal details
---------------
+#### Drupal note
 
 For the Drupal AdvisoriesContrib you need to change your `/etc/php5/cli/php.ini` to have:
 ```
@@ -76,7 +78,7 @@ Please note that only Drupal modules downloaded from drupal.org are supported. I
 
 
 Customize
-=========
+---------
 As in normal PHP CodeSniffer rules, customization is provided in the XML files that are in the top folder of the project.
 
 These global parameters are used in many rules:
@@ -89,7 +91,7 @@ In some case you can force the paranoia mode on or off with the parameter `force
 
 
 Specialize
-==========
+----------
 
 If you want to fork and help or just do your own sniffs you can use the utilities provided by phpcs-security-audit rules in order to facilitate the process.
 
@@ -120,7 +122,7 @@ If you implement any public cms/framework customization please make a pull reque
 
 
 Annoyances
-==========
+----------
 
 As any security tools, this one comes with it's share of annoyance. At first a focus on finding vulnerabilities will be done, but later it is planned to have a phase where efforts will be towards reducing annoyances, in particular with the number of false positives.
 
