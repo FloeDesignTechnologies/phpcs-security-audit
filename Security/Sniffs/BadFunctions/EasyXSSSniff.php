@@ -53,7 +53,9 @@ class Security_Sniffs_BadFunctions_EasyXSSSniff implements PHP_CodeSniffer_Sniff
 			if ($s && $utils::is_token_user_input($tokens[$s])) {
 				$phpcsFile->addError('Easy XSS detected because of direct user input with ' . $tokens[$s]['content'] . ' on ' . $tokens[$stackPtr]['content'], $s, 'EasyXSSerr');
 			} elseif ($s && $utils::is_XSS_mitigation($tokens[$s]['content'])) {
-				$s = $tokens[$s+1]['parenthesis_closer'];
+				if (array_key_exists('parenthesis_closer', $tokens[$s+1])) {
+					$s = $tokens[$s+1]['parenthesis_closer'];
+				}
 			} elseif ($s && $parano && !$warn) {
 				$warn = $s;
 			}
