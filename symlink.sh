@@ -4,5 +4,9 @@ if [ ! -d "vendor/squizlabs/php_codesniffer/src/Standards/Security" ]; then
 	else
 		ln -s ../../../../../Security vendor/squizlabs/php_codesniffer/src/Standards/Security
 	fi
-	echo "Symlink created."
+	if [ -n "$WINDIR" ]; then
+		echo "Looks like you're on Windows... folder copied."
+	else
+		echo "Symlink created."
+	fi
 fi
