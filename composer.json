@@ -10,7 +10,7 @@
     ],
     "require": {
         "php": ">=5.4",
-        "squizlabs/php_codesniffer": "~1.5.1||>=2.3.3"
+        "squizlabs/php_codesniffer": "~1.5.1 || >=2.3.3 <3.0"
     },
     "scripts": {
         "post-install-cmd": "ln -s ../../../../../Security vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/Security"

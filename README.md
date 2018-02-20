@@ -1,34 +1,47 @@
 About
 =====
 
-phpcs-security-audit is a set of [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer) rules that finds flaws or weaknesses related to security in PHP and its popular CMS or frameworks.
+phpcs-security-audit is a set of [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer) rules that finds vulnerabilities and weaknesses related to security in PHP code.
 
-It currently has core PHP rules as well as Drupal 7 specific rules. Next planned CMS/framework is Symfony 2.
+It currently has core PHP rules as well as Drupal 7 specific rules.
 
-As a bonus set of rules, the tool also check for CVE issues and security advisories related to CMS/framework. You can use it in order to follow the versioning of components during static code analysis.
+The tool also checks for CVE issues and security advisories related to CMS/framework. Using it, you can follow the versioning of components during static code analysis.
 
-The main reasons of this project for being an extension of PHP_CodeSniffer is to have easy integration into continuous integration systems and to be able to find security bugs that are not detected with object oriented analysis (like in [RIPS](http://rips-scanner.sourceforge.net/) or [PHPMD](http://phpmd.org/)).
+The main reason of this project for being an extension of PHP_CodeSniffer is to have easy integration into continuous integration systems. It is also able to find security bugs that are not detected with object oriented analysis (like in [RIPS](http://rips-scanner.sourceforge.net/) or [PHPMD](http://phpmd.org/)).
 
-phpcs-security-audit is backed by [Floe design + technologies](https://floedesign.ca/) and written by [Jonathan Marcil](https://www.jonathanmarcil.ca/).
+phpcs-security-audit is backed by [Floe design + technologies](https://floedesign.ca/) and written by [Jonathan Marcil](https://twitter.com/jonathanmarcil).
 
-[![Floe design + technologies](https://floedesign.ca/img/thumbs/floe.jpg)](https://floedesign.ca/)
+[![Floe design + technologies](https://floedesign.ca/img/thumbs/floe.jpg =100x)](https://floedesign.ca/)
+
+
+Install
+=====
+
+You need http://pear.php.net/package/PHP_CodeSniffer/ at version 1.5+ or 2.x with PHP 5.4 or later installed first.
+
+Because of the way PHP CodeSniffer works, you need to put the Security/ folder from phpcs-security-audit in /usr/share/php/PHP/CodeSniffer/Standards or do a symlink to it.
+
+The easiest way to install is to git clone and then run `composer install` as it creates the symlink for you.
+
+You can also quick install from [Packagist](https://packagist.org/packages/pheromone/phpcs-security-audit):
+```
+composer require pheromone/phpcs-security-audit
+ln -s ../../../../../vendor/pheromone/phpcs-security-audit/Security vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/
+./vendor/bin/phpcs --standard=./vendor/pheromone/phpcs-security-audit/example_base_ruleset.xml ./vendor/pheromone/phpcs-security-audit/tests.php
+```
+
+If you want to integrate it all with Jenkins, go see http://jenkins-php.org/ for extensive help.
 
 
 Usage
 =====
 
-You need http://pear.php.net/package/PHP_CodeSniffer/ at version 1.5.1 or later with PHP 5.4 or later installed first.
-
-Because of the way PHP CodeSniffer works, you need to put the Security/ folder from phpcs-security-audit in /usr/share/php/PHP/CodeSniffer/Standards or do a symlink to it.
-
-Then all you need to do is to configure or use a XML rule file and run it over your code:
+Simply point to any XML ruleset file and a folder:
 ```
 phpcs --extensions=php,inc,lib,module,info --standard=example_base_ruleset.xml /your/php/files/
 ```
 
 Specifying extensions is important since for example PHP code is within .module files in Drupal.
-
-If you want to integrate it all with Jenkins, go see http://jenkins-php.org/ for extensive help.
 
 To have a quick example of output you can use the provided tests.php file:
 ```
