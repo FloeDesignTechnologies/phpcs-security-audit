@@ -17,16 +17,19 @@ phpcs-security-audit is backed by [Floe design + technologies](https://floedesig
 Install
 =====
 
-Requires http://pear.php.net/package/PHP_CodeSniffer/ at version 1.5+ or 2.x with PHP 5.4+.
+Requires [PHP CodeSniffer](http://pear.php.net/package/PHP_CodeSniffer/) version 3.x with PHP 5.4 or higher.
 
-Because of the way PHP CodeSniffer works, you need to put the Security/ folder from phpcs-security-audit in /usr/share/php/PHP/CodeSniffer/Standards or do a symlink to it.
+Because of the way PHP CodeSniffer works, you need to put the `Security/` folder from phpcs-security-audit in `/usr/share/php/PHP/CodeSniffer/Standards` or do a symlink to it.
 
-The easiest way to install is to git clone and then run `composer install` as it creates the symlink for you.
+The easiest way to install is to git clone and use composer that will create the symlink for you:
+```
+composer install
+./vendor/bin/phpcs --standard=example_base_ruleset.xml tests.php
+```
 
-You can also quick install from [Packagist](https://packagist.org/packages/pheromone/phpcs-security-audit):
+The package is also on [Packagist](https://packagist.org/packages/pheromone/phpcs-security-audit):
 ```
 composer require pheromone/phpcs-security-audit
-ln -s ../../../../../vendor/pheromone/phpcs-security-audit/Security vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/
 ./vendor/bin/phpcs --standard=./vendor/pheromone/phpcs-security-audit/example_base_ruleset.xml ./vendor/pheromone/phpcs-security-audit/tests.php
 ```
 
