@@ -39,6 +39,9 @@
 	xml_parse_into_struct(xml_parser_create_ns(), str_repeat("<blah>", 1000), $a);
 	quoted_printable_encode(str_repeat("\xf4", 1000));
 
+	// Misc
+	$a->withHeader('Access-Control-Allow-Origin', '*');
+	include('abc.xyz');
 
 	// Easy user input
 	$_GET['a'] = 'xss';

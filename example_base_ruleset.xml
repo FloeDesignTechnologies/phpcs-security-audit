@@ -44,6 +44,9 @@
 <rule ref="Security.CVE.20132110"/>
 <rule ref="Security.CVE.20134113"/>
 
+<!-- Misc -->
+<rule ref="Security.Misc.BadCorsHeader"/>
+<rule ref="Security.Misc.IncludeMismatch"/>
 
 </ruleset>
 
