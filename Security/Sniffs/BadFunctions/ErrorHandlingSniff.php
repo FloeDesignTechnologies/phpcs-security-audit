@@ -31,7 +31,7 @@ class ErrorHandlingSniff implements Sniff {
 
 		if ($tokens[$stackPtr]['content'] == 'error_reporting') {
 			$p = $utils::get_param_tokens($phpcsFile, $stackPtr, 1);
-			if (count($p) == 1 && $p[0]['content'] === '0') {
+			if (is_array($p) && count($p) == 1 && $p[0]['content'] === '0') {
 				$error = 'Please do not disable error_reporting, it could be useful';
 				$phpcsFile->addWarning($error, $stackPtr, 'ErrorReporting0');
 			}
