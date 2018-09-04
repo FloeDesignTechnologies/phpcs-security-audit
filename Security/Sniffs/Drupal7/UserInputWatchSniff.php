@@ -52,12 +52,12 @@ class UserInputWatchSniff implements Sniff {
 			if ($tokens[$stackPtr]['content'] == '$form') {
 				// $form and $form_state are generating too much noise, let's do a count and make a generic warning for the file instead for each line
 				if (++self::$form_count == $this->FormThreshold) {
-					$phpcsFile->addWarning('At least '.$this->FormThreshold.' possible user input detetected with '.$tokens[$stackPtr]['content'].'.', $stackPtr, 'D7UserInWaFormWarn');
+					$phpcsFile->addWarning('At least '.$this->FormThreshold.' possible user input detected with '.$tokens[$stackPtr]['content'].'.', $stackPtr, 'D7UserInWaFormWarn');
 				}
 			} elseif ($tokens[$stackPtr]['content'] == '$form_state') {
 				// $form and $form_state are generating too much noise, let's do a count and make a generic warning for the file instead for each line
 				if (++self::$form_state_count == $this->FormStateThreshold) {
-					$phpcsFile->addWarning('At least '.$this->FormStateThreshold.' possible user input detetected with '.$tokens[$stackPtr]['content'].'.', $stackPtr, 'D7UserInWaFormStateWarn');
+					$phpcsFile->addWarning('At least '.$this->FormStateThreshold.' possible user input detected with '.$tokens[$stackPtr]['content'].'.', $stackPtr, 'D7UserInWaFormStateWarn');
 				}
 			} else {
 				$phpcsFile->addWarning('User input detetected with '.$tokens[$stackPtr]['content'].'.', $stackPtr, 'D7UserInWaWarn');
