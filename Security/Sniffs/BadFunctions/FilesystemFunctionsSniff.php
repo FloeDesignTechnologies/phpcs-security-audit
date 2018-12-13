@@ -32,6 +32,11 @@ class FilesystemFunctionsSniff implements Sniff  {
 			if ($tokens[$stackPtr]['content'] == 'symlink') {
 				$phpcsFile->addWarning('Allowing symlink() while open_basedir is used is actually a security risk. Disabled by default in Suhosin >= 0.9.6', $stackPtr, 'WarnSymlink');
 			}
+			
+			if ($tokens[$stackPtr - 1]['code'] == T_OBJECT_OPERATOR) {
+				return;
+			}
+			
             $s = $stackPtr + 1;
 			$opener = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr, null, false, null, true);
 			if (!$opener) {
