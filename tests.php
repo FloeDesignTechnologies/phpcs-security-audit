@@ -62,7 +62,7 @@
 	// FilesystemFunctions
 	file_create_filename(arg(1));
 	symlink($a);
-
+	delete($a);
 
 	// Drupal 7 Dynamic queries SQLi
 	$query = db_select('tname', "wn");
