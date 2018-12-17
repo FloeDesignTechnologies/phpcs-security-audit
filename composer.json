@@ -1,5 +1,6 @@
 {
     "name": "pheromone/phpcs-security-audit",
+	"type" : "phpcodesniffer-standard",
     "description": "phpcs-security-audit is a set of PHP_CodeSniffer rules that finds vulnerabilities and weaknesses related to security in PHP code",
     "license": "GPL-3.0-or-later",
     "authors": [
