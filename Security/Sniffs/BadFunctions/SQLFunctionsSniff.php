@@ -38,9 +38,9 @@ class SQLFunctionsSniff implements Sniff {
              if ($s) {
 				$msg = 'SQL function ' . $tokens[$stackPtr]['content'] . '() detected with dynamic parameter ';
 				if ($utils::is_token_user_input($tokens[$s])) {
-					$phpcsFile->addError($msg . ' directly from user input', $stackPtr, 'ErrFilesystem');
+					$phpcsFile->addError($msg . ' directly from user input', $stackPtr, 'ErrSQLFunction');
 				} else {
-					$phpcsFile->addWarning($msg, $stackPtr, 'WarnFilesystem');
+					$phpcsFile->addWarning($msg, $stackPtr, 'WarnSQLFunction');
 				}
 			}
 		}
