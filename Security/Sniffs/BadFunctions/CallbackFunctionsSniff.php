@@ -45,9 +45,9 @@ class CallbackFunctionsSniff implements Sniff {
 			$msg = 'Function ' . $tokens[$stackPtr]['content'] . '() that supports callback detected';
              if ($s) {
 				if ($utils::is_token_user_input($tokens[$s])) {
-					$phpcsFile->addError($msg . ' with parameter directly from user input', $stackPtr, 'ErrFringestuff');
+					$phpcsFile->addError($msg . ' with parameter directly from user input', $stackPtr, 'ErrCallbackFunctions');
 				} else {
-					$phpcsFile->addWarning($msg, $stackPtr, 'WarnFringestuff');
+					$phpcsFile->addWarning($msg, $stackPtr, 'WarnCallbackFunctions');
 				}
 			}
 		}
