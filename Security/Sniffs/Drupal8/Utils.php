@@ -11,15 +11,15 @@ class Utils extends Security_Sniffs_Symfony2_Utils {
 	public static function is_token_user_input($t) {
 		if ($t['code'] == T_VARIABLE || $t['code'] == T_STRING) {
 			if (parent::is_token_user_input($t)) {
-				return TRUE;
+				return true;
 			} else {
 				if ($t['content'] == '$form') {
-					return TRUE;
+					return true;
 				} elseif ($t['content'] == 'arg') {
-					return TRUE;
+					return true;
 				}
 			}
-			return FALSE;
+			return false;
 		}
 	}
 
