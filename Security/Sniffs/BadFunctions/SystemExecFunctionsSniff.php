@@ -31,6 +31,9 @@ class SystemExecFunctionsSniff implements Sniff {
 
 		if (in_array($tokens[$stackPtr]['content'], $utils::getSystemexecFunctions())) {
             $opener = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr, null, false, null, true);
+            if (!isset($tokens[$opener]['parenthesis_closer'])) {
+              return;
+            }
 			$closer = $tokens[$opener]['parenthesis_closer'];
             $s = $stackPtr + 1;
 			$s = $phpcsFile->findNext(array_merge(\PHP_CodeSniffer\Util\Tokens::$emptyTokens, \PHP_CodeSniffer\Util\Tokens::$bracketTokens, \PHPCS_SecurityAudit\Sniffs\Utils::$staticTokens, array(T_STRING_CONCAT)), $s, $closer, true);
