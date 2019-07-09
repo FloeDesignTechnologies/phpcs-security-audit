@@ -30,6 +30,9 @@ class SystemExecFunctionsSniff implements Sniff {
 		$tokens = $phpcsFile->getTokens();
 
 		if (in_array($tokens[$stackPtr]['content'], $utils::getSystemexecFunctions())) {
+            if ($tokens[$stackPtr - 1]['code'] == T_OBJECT_OPERATOR) {
+                return;
+            }
             $opener = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr, null, false, null, true);
 			$closer = $tokens[$opener]['parenthesis_closer'];
             $s = $stackPtr + 1;
