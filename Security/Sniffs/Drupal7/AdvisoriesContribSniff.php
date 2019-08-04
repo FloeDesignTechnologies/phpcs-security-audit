@@ -52,11 +52,13 @@ class AdvisoriesContribSniff implements Sniff {
 							if ($a != $info['core'])
 								echo "WARNING Drupal core version inconsistence!!";
 							list ($a, $mversion) = explode('-', $info['version']);
+							$CVEversion = preg_replace('/^(\d+)\.(\d)$/','${1}.0${2}', $CVEversion);
 							$CVEversion = (float) $CVEversion;
 							if (preg_match('/dev/', $vcve[0]))
 								$phpcsFile->addWarning("WARNING module " . $info['project'] . " does not have any release for the security fix, manual checking required. Details: " . $vcve[1], $stackPtr, 'D7WarnAdvisoriesContribDev');
 							if (preg_match('/rc|alpha|beta/', $vcve[0]))
 								$phpcsFile->addWarning("WARNING module " . $info['project'] . " is using special version tagging around the security fix, manual checking recommanded. Details: " . $vcve[1], $stackPtr, 'D7WarnAdvisoriesContribrc');
+							$mversion = preg_replace('/^(\d+)\.(\d)$/','${1}.0${2}', $mversion);
 							$mversion = (float) $mversion;
 							$diff = $CVEversion - $mversion;
 							if ($diff > 0 && $diff < 1)
