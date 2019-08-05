@@ -34,6 +34,9 @@ class SystemExecFunctionsSniff implements Sniff {
                 return;
             }
             $opener = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr, null, false, null, true);
+            if (!$opener) {
+              return;
+            }
 			$closer = $tokens[$opener]['parenthesis_closer'];
             $s = $stackPtr + 1;
 			$s = $phpcsFile->findNext(array_merge(\PHP_CodeSniffer\Util\Tokens::$emptyTokens, \PHP_CodeSniffer\Util\Tokens::$bracketTokens, \PHPCS_SecurityAudit\Sniffs\Utils::$staticTokens, array(T_STRING_CONCAT)), $s, $closer, true);
