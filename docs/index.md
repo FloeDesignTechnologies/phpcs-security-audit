@@ -70,12 +70,12 @@ Placeholder for NoEvals documentation.
 
 
 ## Phpinfos
-<a name="BadFunctions-Phpinfos"></a>
+
 Placeholder for Phpinfos documentation.
 
 
+<div name="BadFunctions-PregReplace" data-unique="BadFunctions-PregReplace" id="BadFunctions-PregReplace"></div>
 ## PregReplace
-<div id="BadFunctions-PregReplace"></div>
 Placeholder for PregReplace documentation.
 
 
