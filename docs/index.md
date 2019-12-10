@@ -7,12 +7,12 @@ For installation and tooling related documentation, please consult the [README o
 
 # BadFunctions
 
-## Asserts (#BadFunctions-Asserts)
+## Asserts
 
 Placeholder for Asserts documentation.
 
 
-## Backticks <a name="#BadFunctions-Backticks">:link:</a>
+## Backticks
 
 Placeholder for Backticks documentation.
 
@@ -20,7 +20,7 @@ See documentation on [SystemExecFunctions](#SystemExecFunctions).
 
 
 ## CallbackFunctions 
-<a name="#BadFunctions-CallbackFunctions">:link:</a>
+
 Placeholder for CallbackFunctions documentation.
 
 
@@ -70,7 +70,7 @@ Placeholder for NoEvals documentation.
 
 
 ## Phpinfos
-
+<a name="#BadFunctions-Phpinfos">-</a>
 Placeholder for Phpinfos documentation.
 
 
