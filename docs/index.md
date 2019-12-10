@@ -39,6 +39,7 @@ Placeholder for EasyRFI documentation.
 Placeholder for EasyXSS documentation.
 
 
+<div name="BadFunctions-ErrorHandling" id="BadFunctions-ErrorHandling"></div>
 ## ErrorHandling
 
 Placeholder for ErrorHandling documentation.
@@ -74,8 +75,9 @@ Placeholder for NoEvals documentation.
 Placeholder for Phpinfos documentation.
 
 
-<div name="BadFunctions-PregReplace" data-unique="BadFunctions-PregReplace" id="BadFunctions-PregReplace"></div>
+<div name="BadFunctions-PregReplace" id="BadFunctions-PregReplace"></div>
 ## PregReplace
+
 Placeholder for PregReplace documentation.
 
 
