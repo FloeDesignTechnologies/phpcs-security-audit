@@ -1,5 +1,5 @@
 <?php
-namespace PHPCS_SecurityAudit\Sniffs\Drupal7;
+namespace PHPCS_SecurityAudit\Security\Sniffs\Drupal7;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;

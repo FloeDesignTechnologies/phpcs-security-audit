@@ -1,5 +1,5 @@
 <?php
-namespace PHPCS_SecurityAudit\Sniffs\BadFunctions;
+namespace PHPCS_SecurityAudit\Security\Sniffs\BadFunctions;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
@@ -26,7 +26,7 @@ class SQLFunctionsSniff implements Sniff {
 	* @return void
 	*/
 	public function process(File $phpcsFile, $stackPtr) {
-		$utils = \PHPCS_SecurityAudit\Sniffs\UtilsFactory::getInstance();
+		$utils = \PHPCS_SecurityAudit\Security\Sniffs\UtilsFactory::getInstance();
 		$tokens = $phpcsFile->getTokens();
 
 		// http://www.php.net/manual/en/book.mysql.php
@@ -34,7 +34,7 @@ class SQLFunctionsSniff implements Sniff {
             $opener = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr, null, false, null, true);
 			$closer = $tokens[$opener]['parenthesis_closer'];
             $s = $stackPtr + 1;
-			$s = $phpcsFile->findNext(array_merge(\PHP_CodeSniffer\Util\Tokens::$emptyTokens, \PHP_CodeSniffer\Util\Tokens::$bracketTokens, \PHPCS_SecurityAudit\Sniffs\Utils::$staticTokens, array(T_STRING_CONCAT)), $s, $closer, true);
+			$s = $phpcsFile->findNext(array_merge(\PHP_CodeSniffer\Util\Tokens::$emptyTokens, \PHP_CodeSniffer\Util\Tokens::$bracketTokens, \PHPCS_SecurityAudit\Security\Sniffs\Utils::$staticTokens, array(T_STRING_CONCAT)), $s, $closer, true);
              if ($s) {
 				$msg = 'SQL function ' . $tokens[$stackPtr]['content'] . '() detected with dynamic parameter ';
 				if ($utils::is_token_user_input($tokens[$s])) {

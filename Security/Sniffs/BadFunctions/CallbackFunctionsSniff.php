@@ -1,5 +1,5 @@
 <?php
-namespace PHPCS_SecurityAudit\Sniffs\BadFunctions;
+namespace PHPCS_SecurityAudit\Security\Sniffs\BadFunctions;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
@@ -27,7 +27,7 @@ class CallbackFunctionsSniff implements Sniff {
 	*/
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
-		$utils = \PHPCS_SecurityAudit\Sniffs\UtilsFactory::getInstance();
+		$utils = \PHPCS_SecurityAudit\Security\Sniffs\UtilsFactory::getInstance();
 
 		if (in_array($tokens[$stackPtr]['content'], $utils::getCallbackFunctions())) {
 	        $opener = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr, null, false, null, true);
@@ -41,7 +41,7 @@ class CallbackFunctionsSniff implements Sniff {
 				}
 			}
 			$s = $phpcsFile->findNext(array_merge(\PHP_CodeSniffer\Util\Tokens::$emptyTokens, \PHP_CodeSniffer\Util\Tokens::$bracketTokens,
-										\PHPCS_SecurityAudit\Sniffs\Utils::$staticTokens, array(T_STRING_CONCAT)), $s, $closer, true);
+										\PHPCS_SecurityAudit\Security\Sniffs\Utils::$staticTokens, array(T_STRING_CONCAT)), $s, $closer, true);
 			$msg = 'Function ' . $tokens[$stackPtr]['content'] . '() that supports callback detected';
              if ($s) {
 				if ($utils::is_token_user_input($tokens[$s])) {

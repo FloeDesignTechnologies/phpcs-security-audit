@@ -1,5 +1,5 @@
 <?php
-namespace PHPCS_SecurityAudit\Sniffs;
+namespace PHPCS_SecurityAudit\Security\Sniffs;
 class UtilsFactory {
 
 	public static function getInstance() {
@@ -12,7 +12,7 @@ class UtilsFactory {
 				exit("ERROR - Invalid CmsFramework value \"$cmsframework\" in config. Must be a class under Security_Sniffs.\n");
 			}
 		}
-		return new \PHPCS_SecurityAudit\Sniffs\Utils();
+		return new \PHPCS_SecurityAudit\Security\Sniffs\Utils();
 	}
 
 }
