@@ -26,7 +26,13 @@ class IncludeMismatchSniff implements Sniff {
 	*/
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
-		$s = $phpcsFile->findNext(\PHP_CodeSniffer\Util\Tokens::$stringTokens, $stackPtr + 1);
+
+		$end = $phpcsFile->findEndOfStatement($stackPtr);
+		$s   = $phpcsFile->findPrevious(\PHP_CodeSniffer\Util\Tokens::$stringTokens, $end, $stackPtr);
+		if ($s === false) {
+			return;
+		}
+
 		if (preg_match('/\.(\w+)(?:\'|\")$/', $tokens[$s]['content'], $matches)) {
 			$ext = $matches[1];
 			if (!array_key_exists($ext, $phpcsFile->config->extensions)) {
