@@ -13,7 +13,7 @@ class TypeJuggleSniff implements Sniff {
 	* @return array(int)
 	*/
 	public function register() {
-		return array(T_IS_EQUAL);
+		return array(T_IS_EQUAL, T_IS_NOT_EQUAL);
 	}
 
 	/**
