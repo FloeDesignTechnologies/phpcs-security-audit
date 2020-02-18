@@ -1,5 +1,5 @@
 <?php
-namespace PHPCS_SecurityAudit\Sniffs\Drupal7;
+namespace PHPCS_SecurityAudit\Security\Sniffs\Drupal7;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
@@ -27,7 +27,7 @@ class XSSHTMLConstructSniff implements Sniff {
 	* @return void
 	*/
 	public function process(File $phpcsFile, $stackPtr) {
-		$utils = \PHPCS_SecurityAudit\Sniffs\UtilsFactory::getInstance();
+		$utils = \PHPCS_SecurityAudit\Security\Sniffs\UtilsFactory::getInstance();
 		$tokens = $phpcsFile->getTokens();
 		if (preg_match('/<|>/', $tokens[$stackPtr]['content'])) {
 			$end = $phpcsFile->findNext(T_SEMICOLON, $stackPtr + 1);

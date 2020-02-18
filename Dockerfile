@@ -8,7 +8,6 @@ RUN addgroup -S tool && adduser -S -G tool tool && \
 # Install phpcs-security-audit
 RUN composer global require pheromone/phpcs-security-audit
 WORKDIR /tmp
-RUN sh ./vendor/pheromone/phpcs-security-audit/symlink.sh
 
 # change user
 USER tool

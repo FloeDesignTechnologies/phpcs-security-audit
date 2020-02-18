@@ -1,5 +1,5 @@
 <?php
-namespace PHPCS_SecurityAudit\Sniffs;
+namespace PHPCS_SecurityAudit\Security\Sniffs;
 class Utils {
 
 	// Tokens that can't containts or use any variables (so no user input)
@@ -58,7 +58,7 @@ class Utils {
 			$param2 = str_replace(array('"', "'"), '', $param2T['content']);
 			// Safe values for $_SERVER means it's a false positive
 			// Paranoya note: $_SERVER['SAFE' . 'UNSAFE'] can exists
-			if (in_array($param2, \PHPCS_SecurityAudit\Sniffs\Utils::getSafeServerVars())) {
+			if (in_array($param2, \PHPCS_SecurityAudit\Security\Sniffs\Utils::getSafeServerVars())) {
 				return TRUE;
 			}
 		}
@@ -192,11 +192,11 @@ class Utils {
 	public static $sqlFunctions = array();
 
 	public static function getSQLFunctions() {
-		return \PHPCS_SecurityAudit\Sniffs\Utils::$sqlFunctions;
+		return \PHPCS_SecurityAudit\Security\Sniffs\Utils::$sqlFunctions;
 	}
 
 	public static function addSQLFunction($f) {
-		array_push(\PHPCS_SecurityAudit\Sniffs\Utils::$sqlFunctions, $f);
+		array_push(\PHPCS_SecurityAudit\Security\Sniffs\Utils::$sqlFunctions, $f);
 	}
 
 
@@ -206,11 +206,11 @@ class Utils {
 	public static $sqlObjects = array();
 
 	public static function getSQLObjects() {
-		return \PHPCS_SecurityAudit\Sniffs\Utils::$sqlObjects;
+		return \PHPCS_SecurityAudit\Security\Sniffs\Utils::$sqlObjects;
 	}
 
 	public static function addSQLObjects($o) {
-		array_push(\PHPCS_SecurityAudit\Sniffs\Utils::$sqlObjects, $o);
+		array_push(\PHPCS_SecurityAudit\Security\Sniffs\Utils::$sqlObjects, $o);
 	}
 
 
@@ -239,7 +239,7 @@ class Utils {
 	* @return Boolean	returns TRUE if it's a XSS mitigation function, FALSE otherwise
 	*/
 	public static function is_XSS_mitigation($var) {
-		if (in_array($var,  \PHPCS_SecurityAudit\Sniffs\Utils::getXSSMitigationFunctions())) {
+		if (in_array($var,  \PHPCS_SecurityAudit\Security\Sniffs\Utils::getXSSMitigationFunctions())) {
 			return TRUE;
 		}
 		return FALSE;
@@ -261,7 +261,7 @@ class Utils {
 			$t[] = $tokens[$s];
 			$s++;
 			if ($tokens[$s]['code'] == T_OPEN_PARENTHESIS)
-				list($s, $t) = \PHPCS_SecurityAudit\Sniffs\Utils::crawl_open_parenthesis($tokens, $s, $t);
+				list($s, $t) = \PHPCS_SecurityAudit\Security\Sniffs\Utils::crawl_open_parenthesis($tokens, $s, $t);
 		}
 		return array($s, $t);
 	}
@@ -305,7 +305,7 @@ class Utils {
 			}
 			while ($s < $pcloser) {
 				if ($tokens[$s]['code'] == T_OPEN_PARENTHESIS) {
-					list($s, $t) = \PHPCS_SecurityAudit\Sniffs\Utils::crawl_open_parenthesis($tokens, $s, $t);
+					list($s, $t) = \PHPCS_SecurityAudit\Security\Sniffs\Utils::crawl_open_parenthesis($tokens, $s, $t);
 				}
 				$tokens[$s]['stackPtr'] = $s;
 				$t[] = $tokens[$s];
@@ -341,7 +341,7 @@ class Utils {
 		$opener = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr, null, false, null, true);
 		$closer = $tokens[$opener]['parenthesis_closer'];
 		$s = $opener + 1;
-		$s = $phpcsFile->findNext(array_merge(\PHP_CodeSniffer\Util\Tokens::$emptyTokens, \PHP_CodeSniffer\Util\Tokens::$bracketTokens, \PHPCS_SecurityAudit\Sniffs\Utils::$staticTokens, array(T_STRING_CONCAT)), $s, $closer, true);
+		$s = $phpcsFile->findNext(array_merge(\PHP_CodeSniffer\Util\Tokens::$emptyTokens, \PHP_CodeSniffer\Util\Tokens::$bracketTokens, \PHPCS_SecurityAudit\Security\Sniffs\Utils::$staticTokens, array(T_STRING_CONCAT)), $s, $closer, true);
 		return $s;
 	}
 

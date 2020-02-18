@@ -1,5 +1,5 @@
 <?php
-namespace PHPCS_SecurityAudit\Sniffs\BadFunctions;
+namespace PHPCS_SecurityAudit\Security\Sniffs\BadFunctions;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
@@ -27,7 +27,7 @@ class ErrorHandlingSniff implements Sniff {
 	*/
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
-		$utils = new \PHPCS_SecurityAudit\Sniffs\Utils();
+		$utils = new \PHPCS_SecurityAudit\Security\Sniffs\Utils();
 
 		if ($tokens[$stackPtr]['content'] == 'error_reporting') {
 			$p = $utils::get_param_tokens($phpcsFile, $stackPtr, 1);

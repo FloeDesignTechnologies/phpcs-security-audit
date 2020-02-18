@@ -42,6 +42,7 @@
 	// Misc
 	$a->withHeader('Access-Control-Allow-Origin', '*');
 	include('abc.xyz');
+	require_once EXTENSION_PATH . '/path/to' . $name . '.jkl';
 
 	// Easy user input
 	$_GET['a'] = 'xss';
