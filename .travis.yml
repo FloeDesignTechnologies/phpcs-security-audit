@@ -1,0 +1,66 @@
+dist: trusty
+
+language: php
+
+## Cache composer and apt downloads.
+cache:
+  apt: true
+  directories:
+    # Cache directory for older Composer versions.
+    - $HOME/.composer/cache/files
+    # Cache directory for more recent Composer versions.
+    - $HOME/.cache/composer/files
+
+php:
+  - 5.4
+  - 7.4
+  - "nightly"
+
+# Define the stages used.
+stages:
+  - name: sniff
+  - name: test
+
+jobs:
+  fast_finish: true
+
+  include:
+    #### SNIFF STAGE ####
+    - stage: sniff
+      php: 7.4
+      addons:
+        apt:
+          packages:
+            - libxml2-utils
+      script:
+        # Validate the composer.json file.
+        # @link https://getcomposer.org/doc/03-cli.md#validate
+        - composer validate --no-check-all --strict
+
+        # Validate the xml files.
+        # @link http://xmlsoft.org/xmllint.html
+        - xmllint --noout --schema ./vendor/squizlabs/php_codesniffer/phpcs.xsd ./Security/ruleset.xml
+        - xmllint --noout --schema ./vendor/squizlabs/php_codesniffer/phpcs.xsd ./example_base_ruleset.xml
+        - xmllint --noout --schema ./vendor/squizlabs/php_codesniffer/phpcs.xsd ./example_drupal7_ruleset.xml
+
+        # Check the code-style consistency of the xml files.
+        - diff -B ./Security/ruleset.xml <(xmllint --format "./Security/ruleset.xml")
+        - diff -B ./example_base_ruleset.xml <(xmllint --format "./example_base_ruleset.xml")
+        - diff -B ./example_drupal7_ruleset.xml <(xmllint --format "./example_drupal7_ruleset.xml")
+
+  allow_failures:
+    # Allow failures for unstable builds.
+    - php: "nightly"
+
+before_install:
+  # Speed up build time by disabling Xdebug when its not needed.
+  - phpenv config-rm xdebug.ini || echo 'No xdebug config.'
+
+  - export XMLLINT_INDENT="    "
+
+  # --prefer-dist will allow for optimal use of the travis caching ability.
+  - composer install --prefer-dist --no-suggest
+
+script:
+  # Lint PHP files against parse errors.
+  - composer lint
