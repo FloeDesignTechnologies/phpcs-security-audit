@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<ruleset name="Drupal7Security">
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Drupal7Security" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/squizlabs/PHP_CodeSniffer/master/phpcs.xsd">
  <description>Rules for Drupal 7 projects</description>
 <!-- Code Reviews Rules -->
 <!--
