@@ -1,6 +1,7 @@
 <?php
+namespace PHPCS_SecurityAudit\Security\Sniffs\Drupal8;
 
-class Utils extends Security_Sniffs_Symfony2_Utils {
+class Utils extends PHPCS_SecurityAudit\Security\Sniffs\Symfony2\Utils {
 
 	/**
 	* Heavy used function to verify if a token contains user input

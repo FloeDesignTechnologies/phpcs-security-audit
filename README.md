@@ -21,20 +21,15 @@ Install
 
 Requires [PHP CodeSniffer](http://pear.php.net/package/PHP_CodeSniffer/) version 3.x with PHP 5.4 or higher.
 
-Because of the way PHP CodeSniffer works, you need to put the `Security/` folder from phpcs-security-audit in `/usr/share/php/PHP/CodeSniffer/Standards` or do a symlink to it.
-
-The easiest way to install is to git clone and use composer that will create the symlink for you:
+The easiest way to install is using [Composer](https://getcomposer.org/):
 ```
-composer install
-./vendor/bin/phpcs --standard=example_base_ruleset.xml tests.php
-```
-
-The package is also on [Packagist](https://packagist.org/packages/pheromone/phpcs-security-audit):
-```
-composer require pheromone/phpcs-security-audit
-sh vendor/pheromone/phpcs-security-audit/symlink.sh
+composer require --dev pheromone/phpcs-security-audit
 ./vendor/bin/phpcs --standard=./vendor/pheromone/phpcs-security-audit/example_base_ruleset.xml ./vendor/pheromone/phpcs-security-audit/tests.php
 ```
+
+This will also install the [DealerDirect Composer PHPCS plugin](https://github.com/Dealerdirect/phpcodesniffer-composer-installer/) which will register the `Security` standard with PHP_CodeSniffer.
+
+It is also possible to install this based on a git clone. In that case, you will need to [register the package with PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer/wiki/Configuration-Options#setting-the-installed-standard-paths) yourself.
 
 If you want to integrate it all with Jenkins, go see http://jenkins-php.org/ for extensive help.
 
@@ -44,14 +39,14 @@ Usage
 
 Simply point to any XML ruleset file and a folder:
 ```
-phpcs --extensions=php,inc,lib,module,info --standard=example_base_ruleset.xml /your/php/files/
+phpcs --extensions=php,inc,lib,module,info --standard=./vendor/pheromone/phpcs-security-audit/example_base_ruleset.xml /your/php/files/
 ```
 
 Specifying extensions is important since for example PHP code is within .module files in Drupal.
 
 To have a quick example of output you can use the provided tests.php file:
 ```
-$ phpcs --extensions=php,inc,lib,module,info --standard=example_base_ruleset.xml tests.php
+$ phpcs --extensions=php,inc,lib,module,info --standard=./vendor/pheromone/phpcs-security-audit/example_base_ruleset.xml ./vendor/pheromone/phpcs-security-audit/tests.php
 
 FILE: tests.php
 --------------------------------------------------------------------------------
@@ -85,7 +80,7 @@ These global parameters are used in many rules:
 * ParanoiaMode: set to 1 to add more checks. 0 for less.
 * CmsFramework: set to the name of a folder containings rules and Utils.php (such as Drupal7, Symfony2).
 
-They can be setted in the XML files or in command line for permanent config with `--config-set` or at runtime with `--runtime-set`. Note that the XML override all CLI options so remove it if you want to use it. The CLI usage is as follow `phpcs --runtime-set ParanoiaMode 0 --extensions=php --standard=example_base_ruleset.xml tests.php`;
+They can be set in a custom ruleset `phpcs.xml[.dist]` XML file or from the command line for permanent config with `--config-set` or at runtime with `--runtime-set`. Note that the XML override all CLI options so remove it if you want to use it. The CLI usage is as follow `phpcs --runtime-set ParanoiaMode 0 --extensions=php --standard=./vendor/pheromone/phpcs-security-audit/example_base_ruleset.xml tests.php`;
 
 In some case you can force the paranoia mode on or off with the parameter `forceParanoia` inside the XML rule.
 

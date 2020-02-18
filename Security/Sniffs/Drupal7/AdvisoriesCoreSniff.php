@@ -1,5 +1,5 @@
 <?php
-namespace PHPCS_SecurityAudit\Sniffs\Drupal7;
+namespace PHPCS_SecurityAudit\Security\Sniffs\Drupal7;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
@@ -31,7 +31,7 @@ class AdvisoriesCoreSniff implements Sniff {
 		$fileName  = $phpcsFile->getFileName();
 		if (!preg_match('/includes\/bootstrap\.inc$/', $fileName))
 			return;
-		$utils = \PHPCS_SecurityAudit\Sniffs\UtilsFactory::getInstance('Drupal7');
+		$utils = \PHPCS_SecurityAudit\Security\Sniffs\UtilsFactory::getInstance('Drupal7');
 		$tokens = $phpcsFile->getTokens();
 
 		if ($tokens[$stackPtr]['content'] == "'VERSION'") {
