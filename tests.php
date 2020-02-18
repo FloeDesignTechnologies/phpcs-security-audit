@@ -24,6 +24,7 @@
 	`$_GET`;
 	include($a);
 	assert($a);
+	assert(TRUE,$a);
 	assert($_GET);
 	exec($a);
 	exec($_GET);

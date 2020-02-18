@@ -34,7 +34,13 @@ class AssertsSniff implements Sniff {
 			$closer = $tokens[$opener]['parenthesis_closer'];
             $s = $stackPtr + 1;
 			$s = $phpcsFile->findNext(array_merge(\PHP_CodeSniffer\Util\Tokens::$emptyTokens, \PHP_CodeSniffer\Util\Tokens::$bracketTokens, \PHPCS_SecurityAudit\Security\Sniffs\Utils::$staticTokens, array(T_STRING_CONCAT)), $s, $closer, true);
-             if ($s) {
+
+			// Accept true/false as the first parameter
+			if (in_array(strtolower($tokens[$s]['content']), array('true', 'false'))) {
+				$s = $phpcsFile->findNext(array_merge(\PHP_CodeSniffer\Util\Tokens::$emptyTokens, \PHP_CodeSniffer\Util\Tokens::$bracketTokens, \PHPCS_SecurityAudit\Security\Sniffs\Utils::$staticTokens, array(T_STRING_CONCAT)), $s + 1, $closer, true);
+			}
+
+			if ($s) {
 				$msg = 'Assert eval function ' . $tokens[$stackPtr]['content'] . '() detected with dynamic parameter';
 				if ($utils::is_token_user_input($tokens[$s])) {
 					$phpcsFile->addError($msg . ' directly from user input', $stackPtr, 'ErrFunctionHandling');
