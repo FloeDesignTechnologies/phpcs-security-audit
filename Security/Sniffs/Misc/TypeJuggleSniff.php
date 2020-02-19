@@ -28,7 +28,9 @@ class TypeJuggleSniff implements Sniff {
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 		$warning = 'You are using a comparison that converts type and may cause unintended results.';
-		$phpcsFile->addWarning($warning, $stackPtr, 'TypeJuggle');
+		if (\PHP_CodeSniffer\Config::getConfigData('ParanoiaMode')) {
+			$phpcsFile->addWarning($warning, $stackPtr, 'TypeJuggle');
+		}
 	}
 
 }
