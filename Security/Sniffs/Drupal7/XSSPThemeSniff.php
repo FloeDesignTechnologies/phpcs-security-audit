@@ -1,5 +1,5 @@
 <?php
-namespace PHPCS_SecurityAudit\Sniffs\Drupal7;
+namespace PHPCS_SecurityAudit\Security\Sniffs\Drupal7;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
@@ -26,7 +26,7 @@ class XSSPThemeSniff implements Sniff {
 	* @return void
 	*/
 	public function process(File $phpcsFile, $stackPtr) {
-		$utils = \PHPCS_SecurityAudit\Sniffs\UtilsFactory::getInstance();
+		$utils = \PHPCS_SecurityAudit\Security\Sniffs\UtilsFactory::getInstance();
 		$tokens = $phpcsFile->getTokens();
 
 		if ($tokens[$stackPtr]['content'] == "'#theme'" || $tokens[$stackPtr]['content'] == '"#theme"') {

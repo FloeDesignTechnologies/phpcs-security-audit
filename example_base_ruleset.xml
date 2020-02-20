@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<ruleset name="Drupal7">
+<ruleset name="PHPSecurity">
  <description>Rules for standard PHP projects</description>
 
 <!-- Code Reviews Rules -->
@@ -12,7 +12,7 @@
 
 <!-- Global properties -->
 <!-- Please note that not every sniff uses them and they can be overwritten by rule -->
-<!-- Paranoya mode: Will generate more alerts but will miss less vulnerabilites. Good for assisting manual code review. -->
+<!-- Paranoia mode: Will generate more alerts but will miss less vulnerabilites. Good for assisting manual code review. -->
 <config name="ParanoiaMode" value="1"/>
 
 <!-- BadFunctions -->
@@ -41,8 +41,8 @@
 
 <!-- CVE -->
 <!-- Entries from CVE database from vendor PHP and bugs.php.net -->
-<rule ref="Security.CVE.20132110"/>
-<rule ref="Security.CVE.20134113"/>
+<rule ref="Security.CVE.CVE20132110"/>
+<rule ref="Security.CVE.CVE20134113"/>
 
 <!-- Misc -->
 <rule ref="Security.Misc.BadCorsHeader"/>

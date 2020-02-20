@@ -24,6 +24,7 @@
 	`$_GET`;
 	include($a);
 	assert($a);
+	assert(TRUE,$a);
 	assert($_GET);
 	exec($a);
 	exec($_GET);
@@ -42,6 +43,7 @@
 	// Misc
 	$a->withHeader('Access-Control-Allow-Origin', '*');
 	include('abc.xyz');
+	require_once EXTENSION_PATH . '/path/to' . $name . '.jkl';
 
 	// Easy user input
 	$_GET['a'] = 'xss';

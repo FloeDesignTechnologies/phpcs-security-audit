@@ -1,5 +1,5 @@
 <?php
-namespace PHPCS_SecurityAudit\Sniffs\BadFunctions;
+namespace PHPCS_SecurityAudit\Security\Sniffs\BadFunctions;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
@@ -25,7 +25,7 @@ class FilesystemFunctionsSniff implements Sniff  {
 	* @return void
 	*/
 	public function process(File $phpcsFile, $stackPtr) {
-		$utils = \PHPCS_SecurityAudit\Sniffs\UtilsFactory::getInstance();
+		$utils = \PHPCS_SecurityAudit\Security\Sniffs\UtilsFactory::getInstance();
 
 		$tokens = $phpcsFile->getTokens();
 		if (in_array($tokens[$stackPtr]['content'], $utils::getFilesystemFunctions())) {
@@ -48,7 +48,7 @@ class FilesystemFunctionsSniff implements Sniff  {
 			}
 
 			$closer = $tokens[$opener]['parenthesis_closer'];
-			$s = $phpcsFile->findNext(array_merge(\PHP_CodeSniffer\Util\Tokens::$emptyTokens, \PHP_CodeSniffer\Util\Tokens::$bracketTokens, \PHPCS_SecurityAudit\Sniffs\Utils::$staticTokens), $s, $closer, true);
+			$s = $phpcsFile->findNext(array_merge(\PHP_CodeSniffer\Util\Tokens::$emptyTokens, \PHP_CodeSniffer\Util\Tokens::$bracketTokens, \PHPCS_SecurityAudit\Security\Sniffs\Utils::$staticTokens), $s, $closer, true);
             if ($s) {
 				$msg = 'Filesystem function ' . $tokens[$stackPtr]['content'] . '() detected with dynamic parameter';
 				if ($utils::is_token_user_input($tokens[$s])) {

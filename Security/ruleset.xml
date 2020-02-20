@@ -1,5 +1,4 @@
 <?xml version="1.0"?>
-<ruleset name="Security" namespace="PHPCS_SecurityAudit">
+<ruleset name="Security" namespace="PHPCS_SecurityAudit\Security">
  <description>Security related coding standard.</description>
- <namespace>PHPCS_SecurityAudit</namespace>
 </ruleset>

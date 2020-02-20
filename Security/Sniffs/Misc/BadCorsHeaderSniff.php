@@ -1,5 +1,5 @@
 <?php
-namespace PHPCS_SecurityAudit\Sniffs\Misc;
+namespace PHPCS_SecurityAudit\Security\Sniffs\Misc;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
@@ -25,7 +25,7 @@ class BadCorsHeaderSniff implements Sniff  {
 	* @return void
 	*/
 	public function process(File $phpcsFile, $stackPtr) {
-		$utils = \PHPCS_SecurityAudit\Sniffs\UtilsFactory::getInstance();
+		$utils = \PHPCS_SecurityAudit\Security\Sniffs\UtilsFactory::getInstance();
 		$tokens = $phpcsFile->getTokens();
 		if (stristr($tokens[$stackPtr]['content'], 'Access-Control-Allow-Origin')) {
 			$closer = $phpcsFile->findNext(T_CLOSE_PARENTHESIS, $stackPtr);

@@ -1,9 +1,9 @@
 <?php
-namespace PHPCS_SecurityAudit\Sniffs\Drupal7;
+namespace PHPCS_SecurityAudit\Security\Sniffs\Drupal7;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
-use PHPCS_SecurityAudit\Sniffs\Utils as BaseUtils;
+use PHPCS_SecurityAudit\Security\Sniffs\Utils as BaseUtils;
 class Utils extends BaseUtils {
 
 	public static function getFilesystemFunctions() {
