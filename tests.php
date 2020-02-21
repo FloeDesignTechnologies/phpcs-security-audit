@@ -11,7 +11,7 @@
 	preg_replace($_GET['b'], $_GET['a'], $_GET['c']);
 	preg_replace($b, $_GET['a'], 'aaaaaa');
 	preg_replace("aaa", $_GET['a'], 'ababaaa');
-	
+
 
 	// BadFunctions
 	md5();
@@ -44,6 +44,7 @@
 	$a->withHeader('Access-Control-Allow-Origin', '*');
 	include('abc.xyz');
 	require_once EXTENSION_PATH . '/path/to' . $name . '.jkl';
+	0 == '0 cats';
 
 	// Easy user input
 	$_GET['a'] = 'xss';
