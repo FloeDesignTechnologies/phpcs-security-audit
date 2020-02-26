@@ -7,6 +7,7 @@ RUN addgroup -S tool && adduser -S -G tool tool && \
 
 # Install phpcs-security-audit
 RUN composer global require pheromone/phpcs-security-audit
+RUN /tmp/vendor/bin/phpcs --config-set installed_paths /tmp/vendor/pheromone/phpcs-security-audit/
 WORKDIR /tmp
 
 # change user
