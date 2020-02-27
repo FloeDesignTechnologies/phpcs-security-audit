@@ -47,6 +47,7 @@
 <!-- Misc -->
 <rule ref="Security.Misc.BadCorsHeader"/>
 <rule ref="Security.Misc.IncludeMismatch"/>
+<rule ref="Security.Misc.TypeJuggle"/>
 
 </ruleset>
 
