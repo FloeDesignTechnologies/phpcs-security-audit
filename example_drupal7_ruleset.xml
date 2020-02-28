@@ -1,79 +1,79 @@
 <?xml version="1.0"?>
-<ruleset name="Drupal7Security">
- <description>Rules for Drupal 7 projects</description>
-<!-- Code Reviews Rules -->
-<!--
- <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter"/>
- <rule ref="PEAR"/>
--->
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Drupal7Security" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/squizlabs/PHP_CodeSniffer/master/phpcs.xsd">
+    <description>Rules for Drupal 7 projects</description>
 
-<!-- Security Code Reviews Rules -->
+    <!-- Code Reviews Rules -->
+    <!--
+    <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter"/>
+    <rule ref="PEAR"/>
+    -->
 
-<!-- Global properties -->
-<!-- Please note that not every sniff uses them and they can be overwritten by rule -->
-<!-- Framework or CMS used. Must be a class under Security_Sniffs. -->
-<config name="CmsFramework" value="Drupal7"/>
-<!-- Paranoia mode: Will generate more alerts but will miss less vulnerabilites. Good for assisting manual code review. -->
-<config name="ParanoiaMode" value="1"/>
+    <!-- Security Code Reviews Rules -->
 
-<!-- BadFunctions -->
-<!-- PHP functions that can lead to security issues -->
-<rule ref="Security.BadFunctions.Asserts"/>
-<rule ref="Security.BadFunctions.Backticks"/>
-<rule ref="Security.BadFunctions.CallbackFunctions"/>
-<rule ref="Security.BadFunctions.CryptoFunctions"/>
-<rule ref="Security.BadFunctions.EasyRFI"/>
-<rule ref="Security.BadFunctions.EasyXSS"/>
-<rule ref="Security.BadFunctions.ErrorHandling"/>
-<rule ref="Security.BadFunctions.FilesystemFunctions"/>
-<rule ref="Security.BadFunctions.FringeFunctions"/>
-<rule ref="Security.BadFunctions.FunctionHandlingFunctions"/>
-<rule ref="Security.BadFunctions.Mysqli"/>
-<rule ref="Security.BadFunctions.NoEvals"/>
-<rule ref="Security.BadFunctions.Phpinfos"/>
-<rule ref="Security.BadFunctions.PregReplace"/>
-<rule ref="Security.BadFunctions.SQLFunctions"/>
-<rule ref="Security.BadFunctions.SystemExecFunctions"/>
+    <!-- Global properties. -->
+    <!-- Please note that not every sniff uses them and they can be overwritten per rule. -->
+    <!-- Framework or CMS used. Must be a class under Security_Sniffs. -->
+    <config name="CmsFramework" value="Drupal7"/>
+    <!-- Paranoia mode: Will generate more alerts but will miss less vulnerabilites. Good for assisting manual code review. -->
+    <config name="ParanoiaMode" value="1"/>
 
-<!-- CVE -->
-<!-- Entries from CVE database from vendor PHP and bugs.php.net -->
-<rule ref="Security.CVE.CVE20132110"/>
-<rule ref="Security.CVE.CVE20134113"/>
+    <!-- BadFunctions -->
+    <!-- PHP functions that can lead to security issues -->
+    <rule ref="Security.BadFunctions.Asserts"/>
+    <rule ref="Security.BadFunctions.Backticks"/>
+    <rule ref="Security.BadFunctions.CallbackFunctions"/>
+    <rule ref="Security.BadFunctions.CryptoFunctions"/>
+    <rule ref="Security.BadFunctions.EasyRFI"/>
+    <rule ref="Security.BadFunctions.EasyXSS"/>
+    <rule ref="Security.BadFunctions.ErrorHandling"/>
+    <rule ref="Security.BadFunctions.FilesystemFunctions"/>
+    <rule ref="Security.BadFunctions.FringeFunctions"/>
+    <rule ref="Security.BadFunctions.FunctionHandlingFunctions"/>
+    <rule ref="Security.BadFunctions.Mysqli"/>
+    <rule ref="Security.BadFunctions.NoEvals"/>
+    <rule ref="Security.BadFunctions.Phpinfos"/>
+    <rule ref="Security.BadFunctions.PregReplace"/>
+    <rule ref="Security.BadFunctions.SQLFunctions"/>
+    <rule ref="Security.BadFunctions.SystemExecFunctions"/>
 
-<!-- Misc -->
-<rule ref="Security.Misc.BadCorsHeader"/>
-<rule ref="Security.Misc.IncludeMismatch"/>
+    <!-- CVE -->
+    <!-- Entries from CVE database from vendor PHP and bugs.php.net. -->
+    <rule ref="Security.CVE.CVE20132110"/>
+    <rule ref="Security.CVE.CVE20134113"/>
 
-<!-- Drupal7 -->
-<!-- Specific security issues of Drupal7 and advisories  -->
-<rule ref="Security.Drupal7.AdvisoriesContrib">
-	<exclude-pattern>(?&lt;!\.info)$</exclude-pattern>
-</rule>
-<rule ref="Security.Drupal7.AdvisoriesCore">
-	<exclude-pattern>(?&lt;!includes\/bootstrap\.inc)$</exclude-pattern>
-</rule>
-<rule ref="Security.Drupal7.SQLi"/>
-<rule ref="Security.Drupal7.SQLi.D7NoDbQuery"/>
-<rule ref="Security.Drupal7.SQLi.D7DbQuerySQLi"/>
-<rule ref="Security.Drupal7.SQLi.D7DbQueryDirectVar"/>
-<rule ref="Security.Drupal7.XSSPTheme"/>
-<rule ref="Security.Drupal7.UserInputWatch">
-	<properties>
-		<property name="FormThreshold" value="10"/>
-		<property name="FormStateThreshold" value="10"/>
-	</properties>
-</rule>
-<rule ref="Security.Drupal7.XSSFormValue"/>
-<rule ref="Security.Drupal7.XSSHTMLConstruct"/>
-<rule ref="Security.Drupal7.DbQueryAC">
-	<properties>
-		<!-- Comment out to follow global ParanoiaMode -->
-		<property name="forceParanoia" value="1"/>
-	</properties>
-</rule>
-<rule ref="Security.Drupal7.DynQueries"/>
-<rule ref="Security.Drupal7.Cachei"/>
-<rule ref="Security.Drupal7.HttpRequest"/>
+    <!-- Misc -->
+    <rule ref="Security.Misc.BadCorsHeader"/>
+    <rule ref="Security.Misc.IncludeMismatch"/>
+
+    <!-- Drupal 7 -->
+    <!-- Specific security issues of Drupal7 and advisories.  -->
+    <rule ref="Security.Drupal7.AdvisoriesContrib">
+        <exclude-pattern>(?&lt;!\.info)$</exclude-pattern>
+    </rule>
+    <rule ref="Security.Drupal7.AdvisoriesCore">
+        <exclude-pattern>(?&lt;!includes\/bootstrap\.inc)$</exclude-pattern>
+    </rule>
+    <rule ref="Security.Drupal7.SQLi"/>
+    <rule ref="Security.Drupal7.SQLi.D7NoDbQuery"/>
+    <rule ref="Security.Drupal7.SQLi.D7DbQuerySQLi"/>
+    <rule ref="Security.Drupal7.SQLi.D7DbQueryDirectVar"/>
+    <rule ref="Security.Drupal7.XSSPTheme"/>
+    <rule ref="Security.Drupal7.UserInputWatch">
+        <properties>
+            <property name="FormThreshold" value="10"/>
+            <property name="FormStateThreshold" value="10"/>
+        </properties>
+    </rule>
+    <rule ref="Security.Drupal7.XSSFormValue"/>
+    <rule ref="Security.Drupal7.XSSHTMLConstruct"/>
+    <rule ref="Security.Drupal7.DbQueryAC">
+        <properties>
+            <!-- Comment out to follow global ParanoiaMode -->
+            <property name="forceParanoia" value="1"/>
+        </properties>
+    </rule>
+    <rule ref="Security.Drupal7.DynQueries"/>
+    <rule ref="Security.Drupal7.Cachei"/>
+    <rule ref="Security.Drupal7.HttpRequest"/>
 
 </ruleset>
-
