@@ -13,13 +13,30 @@ cache:
 
 php:
   - 5.4
-  - 7.4
-  - "nightly"
+  - 5.5
+  - 5.6
+  - 7.0
+  - 7.1
+  - 7.2
+
+env:
+  jobs:
+    # `master`
+    - PHPCS_VERSION="dev-master" LINT=1
+    # Lowest supported PHPCS version.
+    - PHPCS_VERSION="3.1.0"
 
 # Define the stages used.
+# For non-PRs, only the sniff and quicktest stages are run.
+# For pull requests and merges, the full script is run (skipping quicktest).
+# Note: for pull requests, "master" is the base branch name.
+# See: https://docs.travis-ci.com/user/conditions-v1
 stages:
   - name: sniff
+  - name: quicktest
+    if: type = push AND branch NOT IN (master)
   - name: test
+    if: branch IN (master)
 
 jobs:
   fast_finish: true
@@ -48,6 +65,37 @@ jobs:
         - diff -B ./example_base_ruleset.xml <(xmllint --format "./example_base_ruleset.xml")
         - diff -B ./example_drupal7_ruleset.xml <(xmllint --format "./example_drupal7_ruleset.xml")
 
+    #### QUICK TEST STAGE ####
+    # This is a much quicker test which only runs the unit tests and linting against the low/high
+    # supported PHP/PHPCS combinations.
+    - stage: quicktest
+      php: 7.4
+      env: PHPCS_VERSION="dev-master" LINT=1
+    - php: 7.2
+      # PHP 7.3 is only supported since PHPCS 3.3.1, PHP 7.4 since PHPCS 3.5.0, so running low against PHP 7.2.
+      env: PHPCS_VERSION="3.1.0"
+
+    - php: 5.4
+      env: PHPCS_VERSION="dev-master" LINT=1
+    - php: 5.4
+      env: PHPCS_VERSION="3.1.0"
+
+    #### TEST STAGE ####
+    # Additional builds to prevent issues with PHPCS versions incompatible with certain PHP versions.
+    # PHP 7.3 is only supported since PHPCS 3.3.1, PHP 7.4 since PHPCS 3.5.0.
+    - stage: test
+      php: 7.4
+      env: PHPCS_VERSION="dev-master" LINT=1
+    - php: 7.4
+      env: PHPCS_VERSION="3.5.0"
+    - php: 7.3
+      env: PHPCS_VERSION="dev-master" LINT=1
+    - php: 7.3
+      env: PHPCS_VERSION="3.3.1"
+
+    - php: "nightly"
+      env: PHPCS_VERSION="n/a" LINT=1
+
   allow_failures:
     # Allow failures for unstable builds.
     - php: "nightly"
@@ -58,9 +106,35 @@ before_install:
 
   - export XMLLINT_INDENT="    "
 
+  # On stable PHPCS versions, allow for PHP deprecation notices.
+  # Unit tests don't need to fail on those for stable releases where those issues won't get fixed anymore.
+  - |
+    if [[ "$TRAVIS_BUILD_STAGE_NAME" != "Sniff" && $PHPCS_BRANCH != "dev-master" && "$PHPCS_VERSION" != "n/a" ]]; then
+      echo 'error_reporting = E_ALL & ~E_DEPRECATED' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+    fi
+
+install:
+  # Set up test environment using Composer.
+  - |
+    if [[ $PHPCS_VERSION != "n/a" ]]; then
+      composer require --no-update --no-scripts squizlabs/php_codesniffer:${PHPCS_VERSION}
+    fi
+  - |
+    if [[ "$TRAVIS_BUILD_STAGE_NAME" == "Sniff" || $PHPCS_VERSION == "n/a" ]]; then
+      # The sniff stage doesn't run the unit tests, so no need for PHPUnit.
+      # The build on nightly also doesn't run the tests (yet).
+      composer remove --dev phpunit/phpunit --no-update --no-scripts
+    fi
+
   # --prefer-dist will allow for optimal use of the travis caching ability.
   - composer install --prefer-dist --no-suggest
 
 script:
   # Lint PHP files against parse errors.
-  - composer lint
+  - if [[ "$LINT" == "1" ]]; then composer lint; fi
+
+  # Run the unit tests.
+  - |
+    if [[ $PHPCS_VERSION != "n/a" ]]; then
+      composer test
+    fi
