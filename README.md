@@ -22,7 +22,7 @@ It currently has core PHP rules as well as Drupal 7 specific rules.
 
 The tool also checks for CVE issues and security advisories related to the CMS/framework. This enables you to follow the versioning of components during static code analysis.
 
-The main reason for this project being an extension of PHP_CodeSniffer is to have easy integration into continuous integration systems. It also allow for finding security bugs that are not detected with some object oriented analysis (such as [PHPMD](http://phpmd.org/)).
+The main reason for this project being an extension of PHP_CodeSniffer is to have easy integration into continuous integration systems. It also allows for finding security bugs that are not detected with some object oriented analysis (such as [PHPMD](http://phpmd.org/)).
 
 phpcs-security-audit in its beginning was backed by Pheromone (later on named Floe design + technologies) and written by [Jonathan Marcil](https://twitter.com/jonathanmarcil).
 
@@ -57,26 +57,26 @@ Usage
 
 Simply set the standard to `Security` or point to any XML ruleset file and to a folder to scan:
 ```
-phpcs --standard=Security /your/php/files/ --extensions=php,inc,lib,module,info
+phpcs --extensions=php,inc,lib,module,info --standard=./vendor/pheromone/phpcs-security-audit/example_base_ruleset.xml /your/php/files/
 ```
 
 Specifying extensions is important since, for example, PHP code is within `.module` files in Drupal.
 
 To have a quick example of output you can use the provided `tests.php` file:
 ```
-$ phpcs --standard=Security ./vendor/pheromone/phpcs-security-audit/tests.php
+$ phpcs --extensions=php,inc,lib,module,info --standard=./vendor/pheromone/phpcs-security-audit/example_base_ruleset.xml ./vendor/pheromone/phpcs-security-audit/tests.php
 
 FILE: tests.php
 --------------------------------------------------------------------------------
-FOUND 22 ERRORS AND 37 WARNINGS AFFECTING 52 LINES
+FOUND 18 ERRORS AND 36 WARNINGS AFFECTING 44 LINES
 --------------------------------------------------------------------------------
 
-   6 | ERROR   | Easy XSS detected because of direct user input with $_POST on echo
-   8 | WARNING | db_query() is deprecated except when doing a static query
-   8 | WARNING | db_query() is deprecated except when doing a static query
-   8 | ERROR   | Potential SQL injection found in db_query()
-   8 | ERROR   | Potential SQL injection found in db_query()
-   9 | WARNING | Usage of preg_replace with /e modifier is not recommended.
+  6 | WARNING | Possible XSS detected with . on echo
+  6 | ERROR   | Easy XSS detected because of direct user input with $_POST on echo
+  9 | WARNING | Usage of preg_replace with /e modifier is not recommended.
+ 10 | WARNING | Usage of preg_replace with /e modifier is not recommended.
+ 10 | ERROR   | User input and /e modifier found in preg_replace, remote code execution possible.
+ 11 | ERROR   | User input found in preg_replace, /e modifier could be used for malicious intent.
    ...
 ```
 
@@ -176,7 +176,7 @@ As with any security tool, this one comes with it's share of annoyance. At first
 
 * It's a generator of false positives. This can actually help you learn what are the weak functions in PHP. Paranoia mode will fix that by doing a major cut-off on warnings when set to 0.
 * This tool was created around 10 years ago. Some of its parts might look outdated, and support for old PHP code will still be present. The reality is that many code base scanned with it might be as old as the tool.
-* It's slow. On big Drupal modules and core it can take too much time (and RAM, reconfigure `cli/php.ini` to use 512M if needed) to run. Not sure if it's because of bugs in PHPCS or this set of rules, but will be investigated last. Meanwhile you can configure PHPCS to ignore big contrib modules (and run another instance of PHPCS for `.info` parsing only for them). An example is og taking hours, usually everything runs under 1-2 minutes and sometimes around 5 minute. You can try using the `--parallel=8` (or another number) option to try and speed things up on supported OSes. Possible workaround is to use `phpcs --ignore=folder` to skip scanning of those parts.
+* It's slow. On big Drupal modules and core it can take too much time (and RAM, reconfigure `cli/php.ini` to use 512M if needed) to run. Not sure if it's because of bugs in PHPCS or this set of rules, but will be investigated last. Meanwhile you can configure PHPCS to ignore big contrib modules (and run another instance of PHPCS for `.info` parsing only for them). An example is og taking hours, usually everything runs under 1-2 minutes and sometimes around 5 minute. You can try using the `--parallel=8` (or another number) option to try and speed things up on supported OSes. Possible work-around is to use `phpcs --ignore=folder` to skip scanning of those parts.
 * For Drupal advisories checking: a module with multiple versions might be secure if a lesser fixed version exists and you'll still get the error or warning. Keep everything updated at latest as recommended on Drupal's website.
 
 
