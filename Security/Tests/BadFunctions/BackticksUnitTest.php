@@ -26,6 +26,7 @@ class BackticksUnitTest extends AbstractSecurityTestCase
 			case 'BackticksUnitTest.inc':
 				return [
 					9  => 1,
+					13 => 1,
 				];
 
 			case 'BackticksUnitTest.Drupal7.inc':
@@ -70,6 +71,7 @@ class BackticksUnitTest extends AbstractSecurityTestCase
 					7  => 1,
 					8  => 1,
 					11 => 1,
+					13 => 1,
 				];
 
 			case 'BackticksUnitTest.Drupal7.inc':
