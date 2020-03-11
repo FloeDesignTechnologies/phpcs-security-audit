@@ -37,9 +37,9 @@ class BackticksSniff implements Sniff {
 		while (($s = $phpcsFile->findNext(T_VARIABLE, ($s + 1), $closer)) !== false) {
 			$msg = 'System execution with backticks detected with dynamic parameter';
 			if ($utils::is_token_user_input($tokens[$s])) {
-				$phpcsFile->addError($msg . ' directly from user input', $stackPtr, 'ErrSystemExec');
+				$phpcsFile->addError($msg . ' directly from user input', $s, 'ErrSystemExec');
 			} else {
-				$phpcsFile->addWarning($msg, $stackPtr, 'WarnSystemExec');
+				$phpcsFile->addWarning($msg, $s, 'WarnSystemExec');
 			}
 		}
 

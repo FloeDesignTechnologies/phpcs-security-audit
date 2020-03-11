@@ -12,6 +12,10 @@ $output = `git blame --date=short "$filename"`; // Warning.
 
 $output = `git blame --date=$_POST['key'] "$filename"`; // Warning + error.
 
+$output = `git blame
+	--date=$_POST['key'] // Error.
+	"$filename"`; // Warning.
+
 // Incomplete command. Ignore.
 // Intentional parse error. This should be the last test in the file.
 $output = `ls
