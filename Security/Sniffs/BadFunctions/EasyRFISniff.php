@@ -8,11 +8,23 @@ use PHP_CodeSniffer\Files\File;
 class EasyRFISniff implements Sniff {
 
 	/**
+	 * Tokens to search for within an include/require statement.
+	 *
+	 * @var array
+	 */
+	private $search = [];
+
+	/**
 	* Returns the token types that this sniff is interested in.
 	*
 	* @return array(int)
 	*/
 	public function register() {
+		// Set the $search property.
+		$this->search  = \PHP_CodeSniffer\Util\Tokens::$emptyTokens;
+		$this->search += \PHP_CodeSniffer\Util\Tokens::$bracketTokens;
+		$this->search += \PHPCS_SecurityAudit\Security\Sniffs\Utils::$staticTokens;
+
 		return array(T_INCLUDE, T_INCLUDE_ONCE, T_REQUIRE, T_REQUIRE_ONCE);
 	}
 
@@ -37,7 +49,7 @@ class EasyRFISniff implements Sniff {
 			$s = $stackPtr;
 		}
 		while ($s) {
-			$s = $phpcsFile->findNext(array_merge(\PHP_CodeSniffer\Util\Tokens::$emptyTokens, \PHP_CodeSniffer\Util\Tokens::$bracketTokens, \PHPCS_SecurityAudit\Security\Sniffs\Utils::$staticTokens), $s + 1, $closer, true);
+			$s = $phpcsFile->findNext($this->search, $s + 1, $closer, true);
 			if ($s && $utils::is_token_user_input($tokens[$s])) {
 				if (\PHP_CodeSniffer\Config::getConfigData('ParanoiaMode') || !$utils::is_token_false_positive($tokens[$s], $tokens[$s+2])) {
 					$phpcsFile->addError('Easy RFI detected because of direct user input with ' . $tokens[$s]['content'] . ' on ' . $tokens[$stackPtr]['content'], $s, 'ErrEasyRFI');

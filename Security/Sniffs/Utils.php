@@ -3,7 +3,12 @@ namespace PHPCS_SecurityAudit\Security\Sniffs;
 class Utils {
 
 	// Tokens that can't containts or use any variables (so no user input)
-	public static $staticTokens = array(T_CONSTANT_ENCAPSED_STRING, T_COMMA, T_LNUMBER, T_DNUMBER);
+	public static $staticTokens = array(
+		T_CONSTANT_ENCAPSED_STRING => T_CONSTANT_ENCAPSED_STRING,
+		T_COMMA                    => T_COMMA,
+		T_LNUMBER                  => T_LNUMBER,
+		T_DNUMBER                  => T_DNUMBER,
+	);
 
 	/**
 	* Heavy used function to verify if a string from a token contains user input
