@@ -38,16 +38,12 @@ class EasyRFISniff implements Sniff {
 	* @return void
 	*/
 	public function process(File $phpcsFile, $stackPtr) {
-		$utils = \PHPCS_SecurityAudit\Security\Sniffs\UtilsFactory::getInstance();
-		$tokens = $phpcsFile->getTokens();
-		$s = $phpcsFile->findNext(\PHP_CodeSniffer\Util\Tokens::$emptyTokens, $stackPtr, null, true, null, true);
+		$closer = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
 
-		if ($tokens[$s]['code'] == T_OPEN_PARENTHESIS) {
-			$closer = $tokens[$s]['parenthesis_closer'];
-		} else {
-			$closer = $phpcsFile->findNext(T_SEMICOLON, $stackPtr);
-			$s = $stackPtr;
-		}
+		$utils  = \PHPCS_SecurityAudit\Security\Sniffs\UtilsFactory::getInstance();
+		$tokens = $phpcsFile->getTokens();
+		$s      = $stackPtr;
+
 		while ($s) {
 			$s = $phpcsFile->findNext($this->search, $s + 1, $closer, true);
 

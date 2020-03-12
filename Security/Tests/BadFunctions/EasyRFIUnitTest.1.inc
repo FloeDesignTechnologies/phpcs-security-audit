@@ -6,7 +6,7 @@
  
 // Base.
 include ( 'path/to/' . $_GET['filename'] ); // Error.
-include 'path/to/' . "$filename" . '.' . $extension; // Warning x 2.
+include ('path/to/' . "$filename") . '.' . $extension; // Warning x 2.
 include getenv('PATHTOFILE'); // Error.
 
 // Drupal 7.
