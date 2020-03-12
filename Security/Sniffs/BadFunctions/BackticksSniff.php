@@ -26,14 +26,14 @@ class BackticksSniff implements Sniff {
 	* @return void
 	*/
 	public function process(File $phpcsFile, $stackPtr) {
-		$utils = \PHPCS_SecurityAudit\Security\Sniffs\UtilsFactory::getInstance();
-		$tokens = $phpcsFile->getTokens();
 		$closer = $phpcsFile->findNext(T_BACKTICK, $stackPtr + 1, null, false, null, true);
 		if (!$closer) {
 			return;
 		}
 
-		$s = $stackPtr;
+		$utils  = \PHPCS_SecurityAudit\Security\Sniffs\UtilsFactory::getInstance();
+		$tokens = $phpcsFile->getTokens();
+		$s      = $stackPtr;
 		while (($s = $phpcsFile->findNext(T_VARIABLE, ($s + 1), $closer)) !== false) {
 			$msg = 'System execution with backticks detected with dynamic parameter';
 			if ($utils::is_token_user_input($tokens[$s])) {
