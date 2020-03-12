@@ -38,7 +38,7 @@ class EasyRFISniff implements Sniff {
 	* @return void
 	*/
 	public function process(File $phpcsFile, $stackPtr) {
-		$closer = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
+		$closer = $phpcsFile->findNext(array(T_SEMICOLON, T_CLOSE_TAG), ($stackPtr + 1));
 		if ($closer === false) {
 			// Live coding or parse error.
 			return;

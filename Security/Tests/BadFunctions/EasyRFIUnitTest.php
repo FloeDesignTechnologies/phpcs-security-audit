@@ -29,6 +29,7 @@ class EasyRFIUnitTest extends AbstractSecurityTestCase
 				return [
 					8  => 1,
 					10 => 1,
+					20 => 1,
 				];
 
 			case 'EasyRFIUnitTest.1.inc':
@@ -36,6 +37,7 @@ class EasyRFIUnitTest extends AbstractSecurityTestCase
 					8  => 1,
 					10 => 1,
 					17 => 1,
+					20 => 1,
 				];
 
 			case 'EasyRFIUnitTest.Drupal7.1.inc':
