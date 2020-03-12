@@ -15,3 +15,6 @@ include arg(2) . drupal_get_query_parameters()['param']; // Warning x 2.
 
 // Prevent false positives on safe $_SERVER variables.
 include $_SERVER['DOCUMENT_ROOT'] . '/filename.php'; // Error.
+
+// Intentional parse error. This should be the last test in the file.
+require $_GET['path']

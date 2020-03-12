@@ -39,6 +39,10 @@ class EasyRFISniff implements Sniff {
 	*/
 	public function process(File $phpcsFile, $stackPtr) {
 		$closer = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
+		if ($closer === false) {
+			// Live coding or parse error.
+			return;
+		}
 
 		$utils  = \PHPCS_SecurityAudit\Security\Sniffs\UtilsFactory::getInstance();
 		$tokens = $phpcsFile->getTokens();
