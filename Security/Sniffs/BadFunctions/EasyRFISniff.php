@@ -48,19 +48,18 @@ class EasyRFISniff implements Sniff {
 		$tokens = $phpcsFile->getTokens();
 		$s      = $stackPtr;
 
-		while ($s) {
-			$s = $phpcsFile->findNext($this->search, $s + 1, $closer, true);
 
+		while (($s = $phpcsFile->findNext($this->search, $s + 1, $closer, true)) !== false) {
 			$data = array(
 				$tokens[$s]['content'],
 				$tokens[$stackPtr]['content'],
 			);
 
-			if ($s && $utils::is_token_user_input($tokens[$s])) {
+			if ($utils::is_token_user_input($tokens[$s])) {
 				if (\PHP_CodeSniffer\Config::getConfigData('ParanoiaMode') || !$utils::is_token_false_positive($tokens[$s], $tokens[$s+2])) {
 					$phpcsFile->addError('Easy RFI detected because of direct user input with %s on %s', $s, 'ErrEasyRFI', $data);
 				}
-			} elseif ($s && \PHP_CodeSniffer\Config::getConfigData('ParanoiaMode') && $tokens[$s]['content'] != '.') {
+			} elseif (\PHP_CodeSniffer\Config::getConfigData('ParanoiaMode') && $tokens[$s]['content'] != '.') {
 				$phpcsFile->addWarning('Possible RFI detected with %s on %s', $s, 'WarnEasyRFI', $data);
 			}
 		}
