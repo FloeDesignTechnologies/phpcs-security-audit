@@ -24,6 +24,7 @@ class EasyRFISniff implements Sniff {
 		$this->search  = \PHP_CodeSniffer\Util\Tokens::$emptyTokens;
 		$this->search += \PHP_CodeSniffer\Util\Tokens::$bracketTokens;
 		$this->search += \PHPCS_SecurityAudit\Security\Sniffs\Utils::$staticTokens;
+		$this->search[T_STRING_CONCAT] = T_STRING_CONCAT;
 
 		return \PHP_CodeSniffer\Util\Tokens::$includeTokens;
 	}
@@ -59,7 +60,7 @@ class EasyRFISniff implements Sniff {
 				if (\PHP_CodeSniffer\Config::getConfigData('ParanoiaMode') || !$utils::is_token_false_positive($tokens[$s], $tokens[$s+2])) {
 					$phpcsFile->addError('Easy RFI detected because of direct user input with %s on %s', $s, 'ErrEasyRFI', $data);
 				}
-			} elseif (\PHP_CodeSniffer\Config::getConfigData('ParanoiaMode') && $tokens[$s]['content'] != '.') {
+			} elseif (\PHP_CodeSniffer\Config::getConfigData('ParanoiaMode')) {
 				$phpcsFile->addWarning('Possible RFI detected with %s on %s', $s, 'WarnEasyRFI', $data);
 			}
 		}
