@@ -26,10 +26,10 @@ class TypeJuggleSniff implements Sniff {
 	* @return void
 	*/
 	public function process(File $phpcsFile, $stackPtr) {
-		$tokens = $phpcsFile->getTokens();
 		if (\PHP_CodeSniffer\Config::getConfigData('ParanoiaMode')) {
-			$warning = 'You are using the comparison operator "'. $tokens[$stackPtr]['content'] .'" that converts type and may cause unintended results.';
-			$phpcsFile->addWarning($warning, $stackPtr, 'TypeJuggle');
+			$tokens  = $phpcsFile->getTokens();
+			$warning = 'You are using the comparison operator "%s" that converts type and may cause unintended results.';
+			$phpcsFile->addWarning($warning, $stackPtr, 'TypeJuggle', array($tokens[$stackPtr]['content']));
 		}
 	}
 
