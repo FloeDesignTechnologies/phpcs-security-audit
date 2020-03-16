@@ -36,19 +36,6 @@ class BackticksUnitTest extends AbstractSecurityTestCase
 					5 => 1,
 				];
 
-			case 'BackticksUnitTest.Drupal8.inc':
-				return [
-					3 => 1,
-					4 => 1,
-					5 => 1,
-				];
-
-			case 'BackticksUnitTest.Symfony2.inc':
-				return [
-					4 => 1,
-					5 => 1,
-				];
-
 			default:
 				return [];
 		}
@@ -79,11 +66,6 @@ class BackticksUnitTest extends AbstractSecurityTestCase
 			case 'BackticksUnitTest.Drupal7.inc':
 				return [
 					4 => 1,
-				];
-
-			case 'BackticksUnitTest.Symfony2.inc':
-				return [
-					3 => 1,
 				];
 
 			default:
