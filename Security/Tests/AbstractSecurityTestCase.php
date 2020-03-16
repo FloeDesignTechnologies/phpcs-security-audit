@@ -70,14 +70,6 @@ abstract class AbstractSecurityTestCase extends AbstractSniffUnitTest
 				$config->setConfigData('CmsFramework', 'Drupal7', true);
 				break;
 
-			case 'Drupal8':
-				$config->setConfigData('CmsFramework', 'Drupal8', true);
-				break;
-
-			case 'Symfony2':
-				$config->setConfigData('CmsFramework', 'Symfony2', true);
-				break;
-
 			default:
 				$config->setConfigData('CmsFramework', null, true);
 				break;
