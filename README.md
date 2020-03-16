@@ -31,7 +31,7 @@ phpcs-security-audit in its beginning was backed by Pheromone (later on named Fl
 Install
 -------
 
-Requires [PHP CodeSniffer](http://pear.php.net/package/PHP_CodeSniffer/) version 3.x with PHP 5.4 or higher.
+Requires [PHP CodeSniffer](http://pear.php.net/package/PHP_CodeSniffer/) version 3.1.0 or higher with PHP 5.4 or higher.
 
 The easiest way to install is using [Composer](https://getcomposer.org/):
 ```bash

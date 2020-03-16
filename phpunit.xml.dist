@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/6.5/phpunit.xsd"
+    backupGlobals="true"
+    bootstrap="./phpunit-bootstrap.php"
+    beStrictAboutTestsThatDoNotTestAnything="false"
+    colors="true"
+    forceCoversAnnotation="true">
+
+    <testsuites>
+        <testsuite name="Security">
+            <directory suffix="UnitTest.php">./Security/Tests/</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
