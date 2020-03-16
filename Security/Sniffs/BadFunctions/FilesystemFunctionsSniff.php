@@ -47,6 +47,11 @@ class FilesystemFunctionsSniff implements Sniff  {
 				return;
 			}
 
+			// Skip user defined functions which has similar names with a filesystem function.
+			if ($tokens[$stackPtr - 2]['content'] == 'function') {
+				return;
+			}
+
 			$closer = $tokens[$opener]['parenthesis_closer'];
 			$s = $phpcsFile->findNext(array_merge(\PHP_CodeSniffer\Util\Tokens::$emptyTokens, \PHP_CodeSniffer\Util\Tokens::$bracketTokens, \PHPCS_SecurityAudit\Security\Sniffs\Utils::$staticTokens), $s, $closer, true);
             if ($s) {
