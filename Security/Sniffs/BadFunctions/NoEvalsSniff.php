@@ -26,8 +26,7 @@ class NoEvalsSniff implements Sniff {
 	* @return void
 	*/
 	public function process(File $phpcsFile, $stackPtr) {
-		$tokens = $phpcsFile->getTokens();
-		$error = 'Please do not use eval() functions';
+		$error = 'Please do not use eval()';
 		$phpcsFile->addError($error, $stackPtr, 'NoEvals');
 	}
 
