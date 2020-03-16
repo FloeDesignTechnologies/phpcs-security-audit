@@ -1,12 +1,14 @@
 <?php
-/**
- * Unit test class for the Backticks sniff.
- */
 
 namespace PHPCS_SecurityAudit\Security\Tests\BadFunctions;
 
 use PHPCS_SecurityAudit\Security\Tests\AbstractSecurityTestCase;
 
+/**
+ * Unit test class for the Backticks sniff.
+ *
+ * @covers \PHPCS_SecurityAudit\Security\Sniffs\BadFunctions\BackticksSniff
+ */
 class BackticksUnitTest extends AbstractSecurityTestCase
 {
 
