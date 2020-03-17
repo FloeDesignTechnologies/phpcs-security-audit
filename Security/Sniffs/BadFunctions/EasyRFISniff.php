@@ -25,7 +25,7 @@ class EasyRFISniff implements Sniff {
 		$this->search += \PHP_CodeSniffer\Util\Tokens::$bracketTokens;
 		$this->search += \PHPCS_SecurityAudit\Security\Sniffs\Utils::$staticTokens;
 
-		return array(T_INCLUDE, T_INCLUDE_ONCE, T_REQUIRE, T_REQUIRE_ONCE);
+		return \PHP_CodeSniffer\Util\Tokens::$includeTokens;
 	}
 
 	/**
