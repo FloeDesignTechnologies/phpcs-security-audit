@@ -109,7 +109,7 @@ before_install:
   # On stable PHPCS versions, allow for PHP deprecation notices.
   # Unit tests don't need to fail on those for stable releases where those issues won't get fixed anymore.
   - |
-    if [[ "$TRAVIS_BUILD_STAGE_NAME" != "Sniff" && $PHPCS_BRANCH != "dev-master" && "$PHPCS_VERSION" != "n/a" ]]; then
+    if [[ "${TRAVIS_BUILD_STAGE_NAME^}" != "Sniff" && $PHPCS_BRANCH != "dev-master" && "$PHPCS_VERSION" != "n/a" ]]; then
       echo 'error_reporting = E_ALL & ~E_DEPRECATED' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
     fi
 
@@ -120,7 +120,7 @@ install:
       composer require --no-update --no-scripts squizlabs/php_codesniffer:${PHPCS_VERSION}
     fi
   - |
-    if [[ "$TRAVIS_BUILD_STAGE_NAME" == "Sniff" || $PHPCS_VERSION == "n/a" ]]; then
+    if [[ "${TRAVIS_BUILD_STAGE_NAME^}" == "Sniff" || $PHPCS_VERSION == "n/a" ]]; then
       # The sniff stage doesn't run the unit tests, so no need for PHPUnit.
       # The build on nightly also doesn't run the tests (yet).
       composer remove --dev phpunit/phpunit --no-update --no-scripts
