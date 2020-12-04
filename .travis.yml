@@ -82,9 +82,13 @@ jobs:
 
     #### TEST STAGE ####
     # Additional builds to prevent issues with PHPCS versions incompatible with certain PHP versions.
-    # PHP 7.3 is only supported since PHPCS 3.3.1, PHP 7.4 since PHPCS 3.5.0.
+    # PHP 7.3 is only supported since PHPCS 3.3.1, PHP 7.4 since PHPCS 3.5.0, PHP 8.0 as of PHPCS 3.5.7.
     - stage: test
-      php: 7.4
+      php: 8.0
+      env: PHPCS_VERSION="dev-master" LINT=1
+    - php: 8.0
+      env: PHPCS_VERSION="3.5.7"
+    - php: 7.4
       env: PHPCS_VERSION="dev-master" LINT=1
     - php: 7.4
       env: PHPCS_VERSION="3.5.0"
@@ -94,7 +98,7 @@ jobs:
       env: PHPCS_VERSION="3.3.1"
 
     - php: "nightly"
-      env: PHPCS_VERSION="n/a" LINT=1
+      env: PHPCS_VERSION="dev-master" LINT=1
 
   allow_failures:
     # Allow failures for unstable builds.
@@ -115,19 +119,20 @@ before_install:
 
 install:
   # Set up test environment using Composer.
-  - |
-    if [[ $PHPCS_VERSION != "n/a" ]]; then
-      composer require --no-update --no-scripts squizlabs/php_codesniffer:${PHPCS_VERSION}
-    fi
+  - travis_retry composer require --no-update --no-scripts squizlabs/php_codesniffer:${PHPCS_VERSION}
   - |
     if [[ "$TRAVIS_BUILD_STAGE_NAME" == "Sniff" || $PHPCS_VERSION == "n/a" ]]; then
       # The sniff stage doesn't run the unit tests, so no need for PHPUnit.
       # The build on nightly also doesn't run the tests (yet).
       composer remove --dev phpunit/phpunit --no-update --no-scripts
     fi
-
-  # --prefer-dist will allow for optimal use of the travis caching ability.
-  - composer install --prefer-dist --no-suggest
+  - |
+    if [[ $TRAVIS_PHP_VERSION == "nightly" || $TRAVIS_PHP_VERSION == "8.0" ]]; then
+      # Allow for installing PHPUnit 7 on PHP 8.
+      travis_retry composer install --prefer-dist --no-suggest --ignore-platform-reqs
+    else
+      travis_retry composer install --prefer-dist --no-suggest
+    fi
 
 script:
   # Lint PHP files against parse errors.
